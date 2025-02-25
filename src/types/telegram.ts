@@ -12,6 +12,7 @@ export interface TelegramWebAppInitData {
   user?: TelegramWebAppUser
   chat_instance?: string
   chat_type?: string
-  auth_date: number
+  auth_date: number | string
+  signature: string
   hash: string
 }

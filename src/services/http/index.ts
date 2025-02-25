@@ -1,15 +1,16 @@
 import axios from 'axios'
 import config from '@/config'
+import { useAuthStore } from '@/stores/auth'
 
 const axiosInstance = axios.create({
   baseURL: config.API_URL
 })
 
-axiosInstance.interceptors.request.use(async function(config) {
+axiosInstance.interceptors.request.use(function(config) {
   try {
-    const token = await window.Telegram.WebApp.CloudStorage.getItem('ACCESS_TOKEN')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    const { ACCESS_TOKEN } = useAuthStore()
+    if (ACCESS_TOKEN) {
+      config.headers.Authorization = `Bearer ${ACCESS_TOKEN}`
     }
   } catch (error) {
     // Ошибка при получении токена
