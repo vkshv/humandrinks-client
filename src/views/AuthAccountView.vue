@@ -113,7 +113,7 @@ async function register() {
     const { token, ...userRegData } = response.data
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
-    router.push('/')
+    router.push('/feed')
   } catch (error) {
     notificationsStore.error('Что-то пошло не так. Повторите попытку позже')
   }

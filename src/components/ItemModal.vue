@@ -1,0 +1,103 @@
+<template>
+  <div class="overlay-container">
+    <Transition>
+      <div
+        v-if="props.modelValue"
+        class="overlay"
+        @click="emit('update:modelValue', false)"
+      >
+      </div>
+    </Transition>
+  </div>
+  <div class="modal-container">
+    <Transition>
+      <div
+        v-if="props.modelValue"
+        class="modal"
+      >
+        <div
+          class="close"
+          @click="emit('update:modelValue', false)"
+        >
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_73_3796)">
+            <path d="M14 28C21.6589 28 28 21.6451 28 14C28 6.34117 21.6451 0 13.9863 0C6.34117 0 0 6.34117 0 14C0 21.6451 6.35489 28 14 28Z" fill="white"/>
+            <path opacity="0.5" d="M9.17282 20C8.51489 20 8 19.4702 8 18.8115C8 18.4964 8.11441 18.1957 8.34326 17.9808L12.3051 14L8.34326 10.0334C8.11441 9.8043 8 9.51789 8 9.20286C8 8.52982 8.51489 8.02864 9.17282 8.02864C9.50178 8.02864 9.75923 8.14319 9.98807 8.35799L13.9785 12.3389L17.9976 8.34367C18.2407 8.10024 18.4982 8 18.8128 8C19.4707 8 20 8.51551 20 9.17422C20 9.50358 19.8998 9.76133 19.6423 10.0191L15.6663 14L19.6281 17.9666C19.8713 18.1814 19.9856 18.482 19.9856 18.8115C19.9856 19.4702 19.4565 20 18.7842 20C18.4553 20 18.1549 19.8855 17.9403 19.6563L13.9785 15.6754L10.031 19.6563C9.80214 19.8855 9.50178 20 9.17282 20Z" fill="black" fill-opacity="0.8"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_73_3796">
+            <rect width="28" height="28" fill="white"/>
+            </clipPath>
+            </defs>
+          </svg>
+        </div>
+        <div class="modal-content">
+          <slot></slot>
+        </div>
+      </div>
+    </Transition>
+  </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps({
+  modelValue: Boolean
+})
+
+const emit = defineEmits(['update:modelValue'])
+</script>
+
+<style scoped>
+.overlay-container .v-enter-active,
+.overlay-container .v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.overlay-container .v-enter-from,
+.overlay-container .v-leave-to {
+  opacity: 0;
+}
+
+.modal-container .v-enter-active,
+.modal-container .v-leave-active {
+  transition: transform 0.2s ease;
+}
+
+.modal-container .v-enter-from,
+.modal-container .v-leave-to {
+  transform: translateY(100%);
+}
+
+.overlay {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100vw;
+  max-height: calc(100vh - 50px);
+  background-color: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  cursor: pointer;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+</style>

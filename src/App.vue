@@ -1,15 +1,23 @@
 <template>
-  <RouterView />
-  <TheNotifications />
+  <InitLoader v-if="appStore.init" />
+  <template v-else>
+    <RouterView />
+    <TheNotifications />
+    <Loader />
+  </template>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 import { STATUS_CODE, STATUS_TEXT } from '@/const/http'
 import TheNotifications from '@/components/TheNotifications.vue'
+import InitLoader from '@/components/InitLoader.vue'
+import Loader from '@/components/TheLoader.vue'
 
+const appStore = useAppStore()
 const authStore = useAuthStore()
 
 function loadTelegramWebAppScript() {
@@ -23,6 +31,7 @@ function loadTelegramWebAppScript() {
 }
 
 onMounted(async () => {
+  appStore.init = true
   try {
     await loadTelegramWebAppScript()
     authStore.setInitData()
@@ -34,11 +43,13 @@ onMounted(async () => {
     const { token, ...userRegData } = response.data
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
+    router.push('/feed')
   } catch (error) {
     if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {
       router.push('/enter-phone')
     }
   }
+  appStore.init = false
 })
 </script>
 
