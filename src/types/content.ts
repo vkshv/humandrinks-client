@@ -1,4 +1,5 @@
 export interface IFoodItem {
+  documentId: string
   title: string
   description: string
   price: number
@@ -15,6 +16,7 @@ export interface IFoodItem {
 }
 
 export interface IDrinkItem {
+  documentId: string
   title: string
   description: string
   price: number
@@ -26,6 +28,7 @@ export interface IDrinkItem {
 }
 
 export interface IEventItem {
+  documentId: string
   title: string
   description: string
   date: string
@@ -38,6 +41,7 @@ export interface IEventItem {
 }
 
 export interface IMerchItem {
+  documentId: string
   title: string
   description: string
   price: number

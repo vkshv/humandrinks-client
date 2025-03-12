@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "Arvo";
+  src: url("/fonts/Arvo-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Biform";
+  src: url("/fonts/omega-pixel-biform.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TTDrugs";
+  src: url("/fonts/TTDrugs-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TTDrugs";
+  src: url("/fonts/TTDrugs-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TTHoves";
+  src: url("/fonts/TTHoves-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TTHoves";
+  src: url("/fonts/TTHoves-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-header-h1: TTDrugs, 900, 32px, 28px;
+  --font-header-h2: TTDrugs, 700, 24px, 22px;
+  --font-body-b1: Arvo, 400, 18px, 18px;
+  --font-body-b1-bold: TTDrugs, 700, 18px, 18px;
+  --font-body-b2: TTHoves, 400, 16px, 16px;
+  --font-body-b2-bold: TTHoves, 500, 16px, 16px;
+  --font-body-b3: TTHoves, 400, 14px, 14px;
+  --font-body-b3-bold: TTHoves, 500, 14px, 14px;
+  --font-caption-c1-bold: TTHoves, 500, 12px, 12px;
+  --font-caption-c2: TTHoves, 400, 10px, 10px;
+
+  --color-gray-white: #FFFFFF;
+  --color-gray-gray-1: #11110F;
+  --color-gray-gray-4: #8088A0;
+  --color-gray-gray-7: #E6E8EC;
+  --color-gray-gray-8: #F4F5F6;
+  --color-accent-yellow: #F9D61C;
+  --color-accent-rust: #D45135;
+  --color-support-coral-1: #EA7D66;
+  --color-support-coral-2: #EA9A89;
+  --color-support-coral-3: #FDBDAB;
+}
+
+/* .header-h1 {
+  font-family: TTDrugs;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 28px;
+}
+
+.header-h2 {
+  font-family: TTDrugs;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 22px;
+}
+
+.body-b1 {
+  font-family: Arvo;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.body-b1-bold {
+  font-family: TTDrugs;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.body-b2 {
+  font-family: TTHoves;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.body-b2-bold {
+  font-family: TTHoves;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.body-b3 {
+  font-family: TTHoves;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.body-b3-bold {
+  font-family: TTHoves;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.caption-c1-bold {
+  font-family: TTHoves;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.caption-c2 {
+  font-family: TTHoves;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 10px;
+} */
+

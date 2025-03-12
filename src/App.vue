@@ -1,9 +1,12 @@
 <template>
   <InitLoader v-if="appStore.init" />
   <template v-else>
-    <RouterView />
+    <div class="view">
+      <RouterView />
+    </div>
     <TheNotifications />
     <Loader />
+    <TopSpacer />
   </template>
 </template>
 
@@ -16,6 +19,7 @@ import { STATUS_CODE, STATUS_TEXT } from '@/const/http'
 import TheNotifications from '@/components/TheNotifications.vue'
 import InitLoader from '@/components/InitLoader.vue'
 import Loader from '@/components/TheLoader.vue'
+import TopSpacer from '@/components/TopSpacer.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
@@ -34,6 +38,7 @@ onMounted(async () => {
   appStore.init = true
   try {
     await loadTelegramWebAppScript()
+    window.Telegram.WebApp.requestFullscreen()
     authStore.setInitData()
   } catch (error) {
     // что-то пошло не так с telegram-web-app
@@ -54,4 +59,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.view {
+  margin-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+}
 </style>

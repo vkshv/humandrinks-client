@@ -1,26 +1,29 @@
 <template>
-  <div class="">Вход</div>
-  <div class="">Введите номер телефона, на него придёт СМС-код</div>
-  <div class="">
-    <ui-text-field
-      v-mask="'+7 (###) ### ## ##'"
-      placeholder="+7 (---) --- -- --"
-      :error="phoneError"
-      @input="handlePhoneInput"
-    />
-  </div>
-  <div class="">Никакого спама: уведомления можно будет отключить в настройках</div>
-  <div class="">
-    <ui-button
-      @click="sendCode"
-    >
-      Получить код
-    </ui-button>
-  </div>
-  <div class="">
-    <ui-button>
-      Восстановить доступ
-    </ui-button>
+  <div class="page">
+    <div class="">
+      <img src="../assets/logo.svg" alt="">
+    </div>
+    <div class="">
+      <ui-text-field
+        v-mask="'+7 (###) ### ## ##'"
+        placeholder="+7 (---) --- -- --"
+        :error="phoneError"
+        @input="handlePhoneInput"
+      />
+    </div>
+    <div class="">Никакого спама: уведомления можно будет отключить в настройках</div>
+    <div class="">
+      <ui-button
+        @click="sendCode"
+      >
+        Получить код
+      </ui-button>
+    </div>
+    <div class="">
+      <ui-button>
+        Восстановить доступ
+      </ui-button>
+    </div>
   </div>
 </template>
 
@@ -73,4 +76,8 @@ async function sendCode() {
 </script>
 
 <style>
+.page {
+  min-height: 100vh;
+  background-color: #FFF;
+}
 </style>

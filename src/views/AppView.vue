@@ -8,10 +8,18 @@
       <RouterView />
     </div>
   </div>
+  <FoodModal />
+  <DrinkModal />
+  <EventModal />
+  <MerchModal />
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
+import FoodModal from '@/components/FoodModal.vue'
+import DrinkModal from '@/components/DrinkModal.vue'
+import EventModal from '@/components/EventModal.vue'
+import MerchModal from '@/components/MerchModal.vue'
 
 const authStore = useAuthStore()
 </script>

@@ -75,6 +75,7 @@ const emit = defineEmits(['update:modelValue'])
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
+  z-index: 9999;
 }
 
 .modal {
@@ -86,6 +87,7 @@ const emit = defineEmits(['update:modelValue'])
   background-color: white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  z-index: 9999;
 }
 
 .close {
