@@ -1,19 +1,26 @@
 <template>
-  <div class="">
-    <div class="">
+  <div :class="{
+    [props.className]: true,
+    [`${props.className}-error`]: !!props.error
+  }">
+    <div class="inputs">
       <input
         v-for="(_, index) in code"
         :key="index"
         v-mask="'#'"
         v-model="code[index]"
         :disabled="isDisabled(index)"
+        inputmode="numeric"
         @input="handleInput(index)"
         @keydown.backspace="handleBackspace(index)"
         @paste="handlePaste"
         ref="inputs"
       />
     </div>
-    <div class="">{{ props.error }}</div>
+    <div
+      v-if="!!props.error"
+      class="error"
+    >{{ props.error }}</div>
   </div>
 </template>
 
@@ -21,11 +28,17 @@
 import { ref, watch } from 'vue'
 
 const props = defineProps({
-  error: String,
-  modelValue: String
+  modelValue: String,
+  className: {
+    type: String,
+    default: 'otp-field--default'
+  },
+  error: String
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+defineOptions({ inheritAttrs: false })
 
 const code = ref(['', '', '', ''])
 const inputs = ref<HTMLInputElement[]>([])

@@ -1,59 +1,42 @@
 <template>
-  <div class="">
-    <div class="">Фамилия</div>
-    <div class="">
-      <ui-text-field
-        v-model="authStore.userRegData.surname"
-        :error="surnameError"
-        @input="surnameError = ''"
-      />
-    </div>
-    <div class="">Имя</div>
-    <div class="">
-      <ui-text-field
-        v-model="authStore.userRegData.name"
-        :error="nameError"
-        @input="nameError = ''"
-      />
-    </div>
-    <div class="">Отчество</div>
-    <div class="">
-      <ui-text-field
-        v-model="authStore.userRegData.patronymic"
-        :error="patronymicError"
-        @input="patronymicError = ''"
-      />
-    </div>
-    <div class="">ДР</div>
-    <div class="">
+  <div class="auth-account-other-view">
+    <div class="top-spacer-footer"></div>
+    <div class="title">как вас зовут?</div>
+    <div class="field">
       <ui-text-field
         v-mask="'##.##.####'"
-        placeholder="05.09.2000"
+        class-name="text-field--primary-extended"
+        label="Днюха"
+        placeholder="Выбрать дату"
         v-model="authStore.userRegData.birth"
         :error="birthError"
         @input="birthError = ''"
       />
     </div>
-    <div class="">Адрес</div>
-    <div class="">
+    <div class="field">
       <ui-text-field
         v-model="authStore.userRegData.address"
+        class-name="text-field--primary-extended"
+        placeholder="..."
+        label="Адрес"
         :error="addressError"
         @input="addressError = ''"
       />
     </div>
-    <div class="">Телефон</div>
-    <div class="">
-      <ui-text-field
+    <div class="field">
+      <!-- <ui-text-field
         :value="authStore.phone"
         disabled
-      />
+      /> -->
     </div>
-  </div>
-  <div class="">
-    <ui-button @click="register">
-      Регистрация
-    </ui-button>
+    <div class="register">
+      <ui-button
+        class-name="button--primary"
+        @click="register"
+      >
+        готово
+      </ui-button>
+    </div>
   </div>
 </template>
 
@@ -121,5 +104,34 @@ async function register() {
 }
 </script>
 
-<style>
+<style scoped>
+.auth-account-other-view {
+  min-height: var(--safe-viewport-height);
+  display: grid;
+  grid-template-rows: repeat(5, max-content) 1fr;
+}
+
+.top-spacer-footer {
+  height: 12px;
+  border-radius: 0 0 12px 12px;
+  background-color: var(--color-accent-rust);
+}
+
+.title {
+  margin: 24px 0 16px 0;
+  font: var(--font-header-h2);
+  color: var(--color-gray-gray-1);
+  text-align: center;
+}
+
+.field {
+  margin-top: 8px;
+  padding: 0 8px;
+}
+
+.register {
+  align-self: end;
+  padding: 0 8px;
+  margin-bottom: var(--bottom-spacer-height);
+}
 </style>

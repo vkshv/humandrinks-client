@@ -1,7 +1,7 @@
 <template>
   <InitLoader v-if="appStore.init" />
   <template v-else>
-    <div class="view">
+    <div class="app-view">
       <RouterView />
     </div>
     <TheNotifications />
@@ -55,11 +55,20 @@ onMounted(async () => {
     }
   }
   appStore.init = false
+
+  // Telegram WebView перехватывает события касания (touchstart, touchend), из-за чего blur() не вызывается при клике вне инпута
+  document.addEventListener('touchstart', function(event) {
+    if (event.target instanceof Element && !event.target.closest('input, textarea')) {
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+    }
+  })
 })
 </script>
 
 <style scoped>
-.view {
-  margin-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+.app-view {
+  margin-top: var(--top-spacer-height);
 }
 </style>

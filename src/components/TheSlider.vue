@@ -30,6 +30,10 @@ defineProps<{
 </script>
 
 <style>
+.the-slider .swiper {
+  border-radius: 16px;
+}
+
 .the-slider .swiper-pagination-bullet {
   width: 24px;
   height: 5px;

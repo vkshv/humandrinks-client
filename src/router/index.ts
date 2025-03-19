@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AuthPhone from '../views/AuthPhoneView.vue'
 import AuthVerification from '../views/AuthVerificationView.vue'
-import AuthAccount from '../views/AuthAccountView.vue'
+import AuthAccountName from '../views/AuthAccountNameView.vue'
+import AuthAccountOther from '../views/AuthAccountOtherView.vue'
 import App from '../views/AppView.vue'
 import Feed from '../views/FeedView.vue'
 import Menu from '../views/MenuView.vue'
@@ -24,9 +25,14 @@ const router = createRouter({
       component: AuthVerification
     },
     {
-      path: '/create-account',
-      name: 'auth-account',
-      component: AuthAccount
+      path: '/create-account-name',
+      name: 'auth-account-name',
+      component: AuthAccountName
+    },
+    {
+      path: '/create-account-other',
+      name: 'auth-account-other',
+      component: AuthAccountOther
     },
     {
       path: '/',
@@ -38,11 +44,11 @@ const router = createRouter({
           name: 'app-feed',
           component: Feed
         },
-        {
-          path: '/menu',
-          name: 'app-menu',
-          component: Menu
-        },
+        // {
+        //   path: '/menu',
+        //   name: 'app-menu',
+        //   component: Menu
+        // },
         {
           path: '/merch',
           name: 'app-merch',

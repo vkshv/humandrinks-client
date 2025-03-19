@@ -45,6 +45,7 @@ export interface IMerchItem {
   title: string
   description: string
   price: number
+  bonusPrice: number
   count: number
   picture: string
 }

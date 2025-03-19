@@ -1,41 +1,53 @@
 @font-face {
   font-family: "Arvo";
-  src: url("/fonts/Arvo-Regular.woff2") format("woff2");
+  src:
+    url("/fonts/Arvo-Regular.woff") format("woff"),
+    url("/fonts/Arvo-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Biform";
-  src: url("/fonts/omega-pixel-biform.woff2") format("woff2");
+  src:
+    url("/fonts/omega-pixel-biform.woff") format("woff"),
+    url("/fonts/omega-pixel-biform.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "TTDrugs";
-  src: url("/fonts/TTDrugs-Bold.woff2") format("woff2");
+  src:
+    url("/fonts/TTDrugs-Bold.woff") format("woff"),
+    url("/fonts/TTDrugs-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: "TTDrugs";
-  src: url("/fonts/TTDrugs-Black.woff2") format("woff2");
+  src:
+    url("/fonts/TTDrugs-Black.woff") format("woff"),
+    url("/fonts/TTDrugs-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: "TTHoves";
-  src: url("/fonts/TTHoves-Regular.woff2") format("woff2");
+  src:
+    url("/fonts/TTHoves-Regular.woff") format("woff"),
+    url("/fonts/TTHoves-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "TTHoves";
-  src: url("/fonts/TTHoves-Medium.woff2") format("woff2");
+  src:
+    url("/fonts/TTHoves-Medium.woff") format("woff"),
+    url("/fonts/TTHoves-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
@@ -43,99 +55,239 @@
 html, body {
   margin: 0;
   padding: 0;
+  background-color: #FFF;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
-  --font-header-h1: TTDrugs, 900, 32px, 28px;
-  --font-header-h2: TTDrugs, 700, 24px, 22px;
-  --font-body-b1: Arvo, 400, 18px, 18px;
-  --font-body-b1-bold: TTDrugs, 700, 18px, 18px;
-  --font-body-b2: TTHoves, 400, 16px, 16px;
-  --font-body-b2-bold: TTHoves, 500, 16px, 16px;
-  --font-body-b3: TTHoves, 400, 14px, 14px;
-  --font-body-b3-bold: TTHoves, 500, 14px, 14px;
-  --font-caption-c1-bold: TTHoves, 500, 12px, 12px;
-  --font-caption-c2: TTHoves, 400, 10px, 10px;
+  --safe-viewport-height: calc(100vh - var(--tg-safe-area-inset-top) - var(--tg-content-safe-area-inset-top) + 4px);
+  --top-spacer-height: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top) - 4px);
+  --bottom-spacer-height: calc(24px + var(--tg-safe-area-inset-bottom));
+
+  --font-header-h1: 900 32px/28px TTDrugs;
+  --font-header-h2: 700 24px/22px TTDrugs;
+  --font-header-h3: 400 20px/20px Arvo;
+  --font-body-b1: 400 18px/18px Arvo;
+  --font-body-b1-bold: 700 18px/18px TTDrugs;
+  --font-body-b2: 400 16px/16px TTHoves;
+  --font-body-b2-bold: 500 16px/16px TTHoves;
+  --font-body-b3: 400 14px/14px TTHoves;
+  --font-body-b3-bold: 500 14px/14px TTHoves;
+  --font-caption-c1: 400 12px/12px TTHoves;
+  --font-caption-c1-bold: 500 12px/12px TTHoves;
+  --font-caption-c2: 400 10px/10px TTHoves;
+  --font-caption-c2-bold: 500 10px/10px TTHoves;
+  --font-numbers-n1: 400 14px/14px Biform;
 
   --color-gray-white: #FFFFFF;
   --color-gray-gray-1: #11110F;
+  --color-gray-gray-3: #353945;
   --color-gray-gray-4: #8088A0;
+  --color-gray-gray-5: #B0B8D0;
+  --color-gray-gray-6: #CBD0DE;
   --color-gray-gray-7: #E6E8EC;
   --color-gray-gray-8: #F4F5F6;
   --color-accent-yellow: #F9D61C;
   --color-accent-rust: #D45135;
+  --color-accent-green: #7A9A2D;
   --color-support-coral-1: #EA7D66;
   --color-support-coral-2: #EA9A89;
   --color-support-coral-3: #FDBDAB;
 }
 
-/* .header-h1 {
-  font-family: TTDrugs;
-  font-weight: 900;
-  font-size: 32px;
-  line-height: 28px;
+/* text-field */
+
+.text-field--primary > input {
+  width: 100%;
+  height: 56px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-gray-8);
+  outline: none;
+  font: var(--font-body-b2);
 }
 
-.header-h2 {
-  font-family: TTDrugs;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 22px;
+.text-field--primary > input::placeholder {
+  color: var(--color-gray-gray-4);
 }
 
-.body-b1 {
-  font-family: Arvo;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 18px;
+.text-field--primary-error > input {
+  border: 1px solid var(--color-accent-rust);
+  color: var(--color-accent-rust);
 }
 
-.body-b1-bold {
-  font-family: TTDrugs;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 18px;
+.text-field--primary-error > .error {
+  margin-top: 8px;
+  color: var(--color-accent-rust);
+  font: var(--font-caption-c1);
+  text-align: center;
 }
 
-.body-b2 {
-  font-family: TTHoves;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
+
+
+.text-field--primary-extended {
+  position: relative;
 }
 
-.body-b2-bold {
-  font-family: TTHoves;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 16px;
+.text-field--primary-extended > input {
+  width: 100%;
+  height: 56px;
+  padding: 0 20px 0 122px;
+  border: none;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-gray-8);
+  outline: none;
+  font: var(--font-body-b2-bold);
 }
 
-.body-b3 {
-  font-family: TTHoves;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
+.text-field--primary-extended > input::placeholder {
+  color: var(--color-gray-gray-5);
 }
 
-.body-b3-bold {
-  font-family: TTHoves;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 14px;
+.text-field--primary-extended > .label {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  min-width: 86px;
+  height: 32px;
+  border-right: 1px solid var(--color-gray-gray-6);
+  color: var(--color-gray-gray-1);
+  font: var(--font-body-b2);
 }
 
-.caption-c1-bold {
-  font-family: TTHoves;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 12px;
+.text-field--primary-extended-error > input {
+  border: 1px solid var(--color-accent-rust);
+  color: var(--color-accent-rust);
 }
 
-.caption-c2 {
-  font-family: TTHoves;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 10px;
-} */
+.text-field--primary-extended-error > .label {
+  color: var(--color-accent-rust);
+}
 
+.text-field--primary-extended-error > .error {
+  display: none;
+}
+
+/* button */
+
+.button--primary {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-gray-white);
+  background-color: var(--color-accent-rust);
+  font: var(--font-body-b1);
+}
+
+.button--secondary {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-white);
+  font: var(--font-body-b1);
+}
+
+.button--secondary-3 {
+  width: 100%;
+  height: 22px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 11px;
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-white);
+  font: var(--font-caption-c1-bold);
+}
+
+.button--success {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-gray-white);
+  background-color: var(--color-accent-green);
+  font: var(--font-body-b1);
+}
+
+.button--text {
+  border: none;
+  color: var(--color-gray-gray-4);
+  background-color: transparent;
+  font: var(--font-body-b3-bold);
+}
+
+.button--hero {
+  width: 100%;
+  height: 56px;
+  border: 1px solid color-mix(in srgb, var(--color-support-coral-1), transparent 80%);
+  border-radius: 12px;
+  color: var(--color-gray-white);
+  background-color: color-mix(in srgb, var(--color-gray-gray-1), transparent 80%);
+  background-clip: padding-box;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23D45135'/%3E%3Cpath d='M10.6665 8L14.6665 12L10.6665 16' stroke='white'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: bottom 16px right 16px;
+  text-align: left;
+  padding: 0 16px;
+  font: var(--font-body-b1);
+}
+
+.button--hero-tall {
+  position: relative;
+  display: flex;
+  align-items: start;
+  padding-top: 18px;
+  height: 116px;
+}
+
+.button--hero-tall > .extra {
+  position: absolute;
+  bottom: 19px;
+  left: 16px;
+}
+
+/* otp-field */
+
+.otp-field--primary > .inputs {
+  display: grid;
+  grid-template-columns: repeat(4, 82px);
+  column-gap: 5px;
+}
+
+.otp-field--primary > .inputs > input {
+  width: 100%;
+  height: 82px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-gray-8);
+  outline: none;
+  font: var(--font-header-h1);
+  text-align: center;
+}
+
+.otp-field--primary > .inputs > input:disabled {
+  opacity: 1;
+}
+
+.otp-field--primary-error > .inputs > input {
+  border: 1px solid var(--color-accent-rust);
+  color: var(--color-accent-rust);
+}
+
+.otp-field--primary-error > .error {
+  margin-top: 8px;
+  color: var(--color-accent-rust);
+  font: var(--font-caption-c1);
+  text-align: center;
+}

@@ -1,27 +1,35 @@
 <template>
-  <div class="page">
-    <div class="">
+  <div class="auth-phone-view">
+    <div class="top-spacer-footer"></div>
+    <div class="logo">
       <img src="../assets/logo.svg" alt="">
     </div>
-    <div class="">
+    <div class="phone">
       <ui-text-field
+        :value="phone"
         v-mask="'+7 (###) ### ## ##'"
         placeholder="+7 (---) --- -- --"
+        class-name="text-field--primary"
+        inputmode="numeric"
         :error="phoneError"
         @input="handlePhoneInput"
       />
     </div>
-    <div class="">Никакого спама: уведомления можно будет отключить в настройках</div>
-    <div class="">
+    <div class="info">никакого спама: уведомления можно будет отключить в настройках</div>
+    <div class="send">
       <ui-button
+        class-name="button--primary"
         @click="sendCode"
       >
-        Получить код
+        получить код
       </ui-button>
     </div>
-    <div class="">
-      <ui-button>
-        Восстановить доступ
+    <div class="restore">
+      <ui-button
+        class-name="button--text"
+        @click="restoreAccess"
+      >
+        восстановить доступ
       </ui-button>
     </div>
   </div>
@@ -44,7 +52,7 @@ const phoneError = ref('')
 
 function validatePhone() {
   if (!/^\+7 \(\d\d\d\) \d\d\d \d\d \d\d$/.test(phone.value)) {
-    phoneError.value = 'Некорректный номер телефона'
+    phoneError.value = 'введите корректный номер телефона'
   } else {
     phoneError.value = ''
   }
@@ -73,11 +81,57 @@ async function sendCode() {
   }
   appStore.loader = false
 }
+
+function restoreAccess() {
+  
+}
 </script>
 
-<style>
-.page {
-  min-height: 100vh;
-  background-color: #FFF;
+<style scoped>
+.auth-phone-view {
+  min-height: var(--safe-viewport-height);
+  display: grid;
+  grid-template-rows: repeat(5, max-content) 1fr;
+}
+
+.top-spacer-footer {
+  height: 12px;
+  border-radius: 0 0 12px 12px;
+  background-color: var(--color-accent-rust);
+}
+
+.logo {
+  margin-top: 32px;
+  justify-self: center;
+}
+
+.logo > img {
+  width: 213px;
+  height: 130px;
+}
+
+.phone {
+  margin-top: 32px;
+  padding: 0 16px;
+}
+
+.info {
+  justify-self: center;
+  max-width: 240px;
+  margin-top: 24px;
+  font: var(--font-caption-c1);
+  color: var(--color-gray-gray-4);
+  text-align: center;
+}
+
+.send {
+  margin-top: 24px;
+  padding: 0 16px;
+}
+
+.restore {
+  align-self: end;
+  justify-self: center;
+  margin-bottom: var(--bottom-spacer-height);
 }
 </style>

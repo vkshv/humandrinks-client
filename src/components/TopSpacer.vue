@@ -8,7 +8,8 @@
   left: 0;
   top: 0;
   width: 100vw;
-  height: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+  height: var(--top-spacer-height);
   background-color: var(--color-accent-rust);
+  z-index: 1000;
 }
 </style>
