@@ -38,6 +38,11 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function checkRegPromocode(promocode: string) {
+    const response = await http.get('auth/check-reg-promocode', { params: { promocode } })
+    return response
+  }
+
   return {
     initData,
     phone,
@@ -47,6 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
     setInitData,
     sendCode,
     validateCode,
-    register
+    register,
+    checkRegPromocode
   }
 })

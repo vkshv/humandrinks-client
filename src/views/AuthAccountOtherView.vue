@@ -1,7 +1,7 @@
 <template>
   <div class="auth-account-other-view">
     <div class="top-spacer-footer"></div>
-    <div class="title">как вас зовут?</div>
+    <div class="title">почти готово</div>
     <div class="field">
       <ui-text-field
         v-mask="'##.##.####'"
@@ -24,10 +24,15 @@
       />
     </div>
     <div class="field">
-      <!-- <ui-text-field
-        :value="authStore.phone"
-        disabled
-      /> -->
+      <PromocodeField
+        v-model="promocode"
+        :error="promocode_error"
+        :success="promocode_success"
+        :processing="promocode_processing"
+        placeholder="Промокод"
+        @input="inputPromocodeHandler"
+        @apply="applyPromocodeHandler"
+      />
     </div>
     <div class="register">
       <ui-button
@@ -47,27 +52,49 @@ import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import { STATUS_CODE } from '@/const/http'
 import router from '@/router'
+import PromocodeField from '@/components/PromocodeField.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
 
-const surnameError = ref('')
-const nameError = ref('')
-const patronymicError = ref('')
 const birthError = ref('')
 const addressError = ref('')
+const promocode = ref('')
+const promocode_error = ref('')
+const promocode_success = ref('')
+const promocode_processing = ref(false)
 
 const hasError = computed(() => {
-  return surnameError.value || nameError.value || patronymicError.value || birthError.value || addressError.value
+  return birthError.value || addressError.value
 })
 
 function validate() {
-  if (!authStore.userRegData.surname) surnameError.value = 'Не заполнено'
-  if (!authStore.userRegData.name) nameError.value = 'Не заполнено'
-  if (!authStore.userRegData.patronymic) patronymicError.value = 'Не заполнено'
   if (!authStore.userRegData.birth) birthError.value = 'Не заполнено'
   if (!authStore.userRegData.address) addressError.value = 'Не заполнено'
+}
+
+function inputPromocodeHandler() {
+  promocode_error.value = ''
+  promocode_success.value = ''
+}
+
+async function applyPromocodeHandler() {
+  promocode_processing.value = true
+  appStore.loader = true
+  try {
+    const response = await authStore.checkRegPromocode(promocode.value)
+    promocode_error.value = ''
+    promocode_success.value = ''
+    if (response.data.bonus) {
+      promocode_success.value = `промокод применён: +${response.data.bonus} бонусов`
+    }
+  } catch (error) {
+    promocode_error.value = 'промокод недействителен или истёк'
+    promocode_success.value = ''
+  }
+  promocode_processing.value = false
+  appStore.loader = false
 }
 
 async function register() {
@@ -81,7 +108,8 @@ async function register() {
       patronymic: authStore.userRegData.patronymic,
       address: authStore.userRegData.address,
       phone: authStore.phone,
-      birth: authStore.userRegData.birth
+      birth: authStore.userRegData.birth,
+      promocode: promocode.value
     })
   } catch (error: any) {
     if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {

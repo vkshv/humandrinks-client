@@ -12,16 +12,17 @@
       @click="clickHandler"
       v-bind="$attrs"
     >
-    <div style="position: relative;"></div>
-    <input
-      style="position: absolute; bottom: 0; left: 0; opacity: 0;"
-      v-if="fakeInput"
-      ref="date_input_ref"
-      :value="props.modelValue"
-      :type="props.type"
-      @input="$emit('update:modelValue', $event.target.value)"
-      v-bind="$attrs"
-    >
+    <div style="position: relative;">
+      <input
+        style="position: absolute; bottom: 0; left: 0; opacity: 0;"
+        v-if="fakeInput"
+        ref="date_input_ref"
+        :value="props.modelValue"
+        :type="props.type"
+        @input="$emit('update:modelValue', $event.target.value)"
+        v-bind="$attrs"
+      >
+    </div>
     <div
       v-if="!!props.error"
       class="error"
