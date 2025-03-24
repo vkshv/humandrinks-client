@@ -83,10 +83,6 @@ const emit = defineEmits(['update:modelValue'])
   left: 0px;
   bottom: 0px;
   width: 100vw;
-  max-height: calc(100vh - 50px);
-  background-color: white;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   z-index: 9999;
 }
 
@@ -95,11 +91,11 @@ const emit = defineEmits(['update:modelValue'])
   right: 8px;
   top: 8px;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .modal-content {
-  width: 100%;
-  height: 100%;
+  max-height: calc(100vh - var(--top-spacer-height));
   overflow-y: auto;
 }
 </style>

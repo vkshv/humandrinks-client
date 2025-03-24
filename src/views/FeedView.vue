@@ -1,6 +1,6 @@
 <template>
   <div class="feed-view">
-    <div class="hero">
+    <div class="hero" ref="hero_ref">
       <div class="event-slider">
         <Slider :slot-names="sliderItems.map((e) => e.documentId)">
           <template
@@ -52,7 +52,7 @@
         <ui-button
           class="actions__reserve"
           class-name="button--secondary"
-          @click=""
+          @click="router.push('/reserve')"
         >
           забронировать стол
         </ui-button>
@@ -137,8 +137,12 @@
               <div
                 class="menu-category__item-img"
                 :style="{ backgroundImage: `url(${config.STRAPI_URL + item.picture})` }"
-              ></div>
-              <div class="menu-category__item-price">{{ item.price }} P</div>
+              >
+                <div class="menu-category__item-tags">
+                  <div v-if="item.new" class="menu-category__item-tag">new</div>
+                </div>
+              </div>
+              <div class="menu-category__item-price">{{ item.price }} ₽</div>
               <div class="menu-category__item-title">{{ item.title }}</div>
             </div>
           </div>
@@ -170,9 +174,10 @@
   <MenuTopNav
     :food-categories="contentStore.foodCategories"
     :drink-categories="contentStore.drinkCategories"
-    :show="visibleCategoryKeys.length > 0"
+    :show="visibleCategoryKeys.length > 0 && isHeroOverViewport"
     :current-menu-type="visibleCategoryKeys[0]?.split('___')[0] as 'food' | 'drink' | undefined"
     :current-category="visibleCategoryKeys[0]?.split('___')[1]"
+    @scroll-to="scrollTo"
   />
 </template>
 
@@ -196,6 +201,7 @@ const itemModalStore = useItemModalStore()
 const authStore = useAuthStore()
 
 const menu_ref = ref<HTMLElement | null>(null)
+const hero_ref = ref<HTMLElement | null>(null)
 const refs = shallowRef<{[key: string]: any}>({})
 const category_refs = shallowRef<{[key: string]: any}>({})
 const setRef = (el: any, key: string) => { if (el) refs.value[key] = el }
@@ -204,6 +210,7 @@ const visibleCategoryKeys = ref<string[]>([])
 
 const isFoodUnderViewport = ref(false)
 const isDrinkUnderViewport = ref(false)
+const isHeroOverViewport = ref(false)
 
 const sliderItems = computed(() => {
   return contentStore.eventItems.slice(0, 3)
@@ -258,21 +265,23 @@ function openMenuModal(menuType: string, item: IFoodItem | IDrinkItem) {
 function checkContentVisibility() {
   const rectFood = refs.value.menu_food.getBoundingClientRect()
   const rectDrink = refs.value.menu_drink.getBoundingClientRect()
+  const rectHero = hero_ref.value?.getBoundingClientRect()
   isFoodUnderViewport.value = (rectFood?.top ?? 0) > window.innerHeight
   isDrinkUnderViewport.value = (rectDrink?.top ?? 0) > window.innerHeight
+  isHeroOverViewport.value = (rectHero?.bottom ?? 0) < 0
 
   visibleCategoryKeys.value = Object.entries(category_refs.value)
     .filter(([_key, el]) => {
       if (!el) return false
       const rect = el.getBoundingClientRect()
-      return rect.top >= 0 && rect.top < window.innerHeight
+      return rect.bottom > 0 && rect.top < window.innerHeight
     })
     .sort(([_keyA, a], [_keyB, b]) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
     .map(([key, _el]) => key)
 }
 
 function scrollTo(menuType: 'food' | 'drink', category?: string) {
-  const el = category ? refs.value[`menu_${menuType}_${category}`] : refs.value[`menu_${menuType}`]
+  const el = category ? category_refs.value[`${menuType}___${category}`] : refs.value[`menu_${menuType}`]
   el?.scrollIntoView({ behavior: 'smooth' })
 }
 
@@ -282,7 +291,9 @@ function scrollToMenu() {
 </script>
 
 <style scoped>
-/* .feed-view {} */
+.feed-view {
+  padding-bottom: var(--bottom-spacer-height);
+}
 
 .hero {
   padding: 4px 8px 8px 8px;
@@ -493,7 +504,7 @@ function scrollToMenu() {
   border-radius: 24px;
   background-color: var(--color-gray-white);
   color: var(--color-gray-gray-1);
-  font: 400 14px/14px Biform;
+  font: var(--font-numbers-n1);
 }
 
 .merch__item-bonus-price > span {
@@ -511,7 +522,7 @@ function scrollToMenu() {
 }
 
 .menu__category {
-  margin-top: 24px;
+  padding-top: 24px;
 }
 
 .menu-category__title {
@@ -533,8 +544,28 @@ function scrollToMenu() {
 }
 
 .menu-category__item-img {
+  position: relative;
   border-radius: 12px;
   aspect-ratio: 1 / 1;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.menu-category__item-tags {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.menu-category__item-tag {
+  display: flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 8px;
+  border-radius: 18px;
+  font: var(--font-caption-c2-bold);
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-white);
 }
 
 .menu-category__item-price {

@@ -1,4 +1,6 @@
-export const formatDate = function(dateString: string) {
+export const formatDate = function(dateString: string | undefined) {
+  if (!dateString) return ''
+
   const months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
   const weekdays = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"]
 

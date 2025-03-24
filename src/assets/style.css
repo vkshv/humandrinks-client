@@ -77,7 +77,8 @@ html, body {
   --font-caption-c1-bold: 500 12px/12px TTHoves;
   --font-caption-c2: 400 10px/10px TTHoves;
   --font-caption-c2-bold: 500 10px/10px TTHoves;
-  --font-numbers-n1: 400 14px/14px Biform;
+  --font-numbers-n1: 400 16px/16px Biform;
+  --font-numbers-n2: 400 14px/14px Biform;
 
   --color-gray-white: #FFFFFF;
   --color-gray-gray-1: #11110F;
@@ -93,11 +94,13 @@ html, body {
   --color-support-coral-1: #EA7D66;
   --color-support-coral-2: #EA9A89;
   --color-support-coral-3: #FDBDAB;
+
+  --shadow-small-shadow: 0px 61px 24px rgba(0, 0, 0, 0.02), 0px 34px 21px rgba(0, 0, 0, 0.06), 0px 15px 15px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.12);
 }
 
 /* text-field */
 
-.text-field--primary > input {
+.text-field--primary > .input {
   width: 100%;
   height: 56px;
   padding: 0 20px;
@@ -110,11 +113,11 @@ html, body {
   font: var(--font-body-b2);
 }
 
-.text-field--primary > input::placeholder {
+.text-field--primary > .input::placeholder {
   color: var(--color-gray-gray-4);
 }
 
-.text-field--primary-error > input {
+.text-field--primary-error > .input {
   border: 1px solid var(--color-accent-rust);
   color: var(--color-accent-rust);
 }
@@ -132,7 +135,7 @@ html, body {
   position: relative;
 }
 
-.text-field--primary-extended > input {
+.text-field--primary-extended > .input {
   width: 100%;
   height: 56px;
   padding: 0 20px 0 122px;
@@ -145,7 +148,7 @@ html, body {
   font: var(--font-body-b2-bold);
 }
 
-.text-field--primary-extended > input::placeholder {
+.text-field--primary-extended > .input::placeholder {
   color: var(--color-gray-gray-5);
 }
 
@@ -162,7 +165,7 @@ html, body {
   font: var(--font-body-b2);
 }
 
-.text-field--primary-extended-error > input {
+.text-field--primary-extended-error > .input {
   border: 1px solid var(--color-accent-rust);
   color: var(--color-accent-rust);
 }
@@ -206,6 +209,16 @@ html, body {
   color: var(--color-gray-gray-1);
   background-color: var(--color-gray-white);
   font: var(--font-caption-c1-bold);
+}
+
+.button--tertiary {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-gray-gray-3);
+  background-color: var(--color-gray-gray-7);
+  font: var(--font-body-b1);
 }
 
 .button--success {
@@ -289,5 +302,43 @@ html, body {
   margin-top: 8px;
   color: var(--color-accent-rust);
   font: var(--font-caption-c1);
+  text-align: center;
+}
+
+/* counter-field */
+
+.counter-field--default {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, max-content);
+  align-items: center;
+  height: 56px;
+  border-radius: 12px;
+  padding: 0 8px 0 20px;
+  background-color: var(--color-gray-gray-8);
+}
+
+.counter-field--default > .label {
+  font: var(--font-body-b2);
+  color: var(--color-gray-gray-1);
+}
+
+.counter-field--default > button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  font: var(--font-body-b1);
+  color: var(--color-gray-gray-1);
+  background-color: var(--color-gray-white);
+}
+
+.counter-field--default > button:disabled {
+  opacity: 0.5;
+}
+
+.counter-field--default > .value {
+  min-width: 56px;
+  font: var(--font-body-b2-bold);
+  color: var(--color-gray-gray-1);
   text-align: center;
 }

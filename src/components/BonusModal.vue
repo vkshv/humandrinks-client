@@ -1,6 +1,6 @@
 <template>
   <ItemModal v-model="store.isShowBonus">
-    <div class="bonus-modal">
+    <div class="modal">
       <div class="title">бонусы</div>
       <div class="card">
         <div class="card__count">
@@ -49,8 +49,10 @@ function add() {}
 </script>
 
 <style scoped>
-.bonus-modal {
+.modal {
   padding: 24px 16px var(--bottom-spacer-height) 16px;
+  border-radius: 16px 16px 0 0;
+  background-color: var(--color-gray-white);
 }
 
 .title {

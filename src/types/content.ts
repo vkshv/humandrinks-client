@@ -34,6 +34,7 @@ export interface IEventItem {
   date: string
   time: string
   price: number
+  bonusPrice: number
   almostFull: boolean
   picture: string
   category: string
