@@ -1,6 +1,6 @@
 <template>
   <div class="events-view">
-    <div class="hero">
+    <div class="hero" ref="hero_ref">
       <div class="title">мерч</div>
       <div class="actions">
         <ui-button
@@ -82,22 +82,40 @@
       </div>
     </div>
   </div>
+  <BonusHanging
+    :show="isHeroOverViewport"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useContentStore } from '@/stores/content'
 import { useItemModalStore } from '@/stores/itemModal'
 import { useAuthStore } from '@/stores/auth'
 import config from '@/config'
 import { formatDate } from '@/helpers'
+import BonusHanging from '@/components/BonusHanging.vue'
 
 const contentStore = useContentStore()
 const itemModalStore = useItemModalStore()
 const authStore = useAuthStore()
 
+const hero_ref = ref<HTMLElement | null>(null)
+const isHeroOverViewport = ref(false)
+
 const soonEventItems = computed(() => {
   return contentStore.eventItems.filter((_e, i) => i < 5)
+})
+
+onMounted(async () => {
+  checkContentVisibility()
+  window.addEventListener('scroll', checkContentVisibility)
+  window.addEventListener('resize', checkContentVisibility)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkContentVisibility)
+  window.removeEventListener('resize', checkContentVisibility)
 })
 
 function showBonus() {
@@ -106,6 +124,11 @@ function showBonus() {
 
 function showHowItWorks() {
   itemModalStore.openEventHowItWorks()
+}
+
+function checkContentVisibility() {
+  const rectHero = hero_ref.value?.getBoundingClientRect()
+  isHeroOverViewport.value = (rectHero?.bottom ?? 0) < 0
 }
 </script>
 
