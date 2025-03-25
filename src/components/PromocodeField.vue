@@ -57,6 +57,7 @@ defineEmits(['update:modelValue', 'apply'])
 .field > input {
   align-self: center;
   height: 54px;
+  padding: 0;
   border: none;
   background-color: transparent;
   font: var(--font-body-b2);

@@ -43,6 +43,11 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function redeemPromocode(promocode: string) {
+    const response = await http.post('auth/redeem-promocode', { promocode })
+    return response
+  }
+
   return {
     initData,
     phone,
@@ -53,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
     sendCode,
     validateCode,
     register,
-    checkRegPromocode
+    checkRegPromocode,
+    redeemPromocode
   }
 })

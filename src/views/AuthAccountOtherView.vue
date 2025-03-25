@@ -69,8 +69,25 @@ const hasError = computed(() => {
   return birthError.value || addressError.value
 })
 
+function parse_date(dateString: string) {
+  if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateString)) return
+
+  const [day, month, year] = dateString.split('.').map(Number)
+  const date = new Date(year, month - 1, day)
+  if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) return date
+}
+
+function isEighteen(birth: string) {
+  const birthday = parse_date(birth) ?? new Date()
+  const eighteenYearsAgo = new Date()
+  eighteenYearsAgo.setFullYear(new Date().getFullYear() - 18)
+  return birthday < eighteenYearsAgo
+}
+
 function validate() {
   if (!authStore.userRegData.birth) birthError.value = 'Не заполнено'
+  else if (!parse_date(authStore.userRegData.birth)) birthError.value = 'Некорректная дата'
+  else if (!isEighteen(authStore.userRegData.birth as string)) birthError.value = 'Регистрация доступна только совершеннолетним'
   if (!authStore.userRegData.address) addressError.value = 'Не заполнено'
 }
 

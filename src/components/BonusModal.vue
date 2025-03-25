@@ -18,7 +18,17 @@
             добавить в кошелёк
           </ui-button>
         </div>
-        <div class="card__promo"></div>
+        <div class="card__promo">
+          <PromocodeField
+            v-model="promocode"
+            :error="promocode_error"
+            :success="promocode_success"
+            :processing="promocode_processing"
+            placeholder="Промокод"
+            @input="inputPromocodeHandler"
+            @apply="applyPromocodeHandler"
+          />
+        </div>
       </div>
       <div class="referral">
         <div class="referral__title">подарок за друга</div>
@@ -37,15 +47,45 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useItemModalStore } from '@/stores/itemModal'
 import { useAuthStore } from '@/stores/auth'
+import { useAppStore } from '@/stores/app'
+import PromocodeField from '@/components/PromocodeField.vue'
 
 const store = useItemModalStore()
 const authStore = useAuthStore()
+const appStore = useAppStore()
+
+const promocode = ref('')
+const promocode_error = ref('')
+const promocode_success = ref('')
+const promocode_processing = ref(false)
 
 function copy() {}
 
 function add() {}
+
+function inputPromocodeHandler() {}
+
+async function applyPromocodeHandler() {
+  promocode_processing.value = true
+  appStore.loader = true
+  try {
+    const response = await authStore.redeemPromocode(promocode.value)
+    promocode.value = ''
+    promocode_error.value = ''
+    promocode_success.value = ''
+    if (response.data.bonus) {
+      promocode_success.value = `промокод применён: +${response.data.bonus} бонусов`
+    }
+  } catch (error) {
+    promocode_error.value = 'промокод недействителен или истёк'
+    promocode_success.value = ''
+  }
+  promocode_processing.value = false
+  appStore.loader = false
+}
 </script>
 
 <style scoped>
@@ -87,7 +127,9 @@ function add() {}
   margin: 12px 0 0 16px;
 }
 
-.card__promo {}
+.card__promo {
+  margin-top: 36px;
+}
 
 .referral {
   margin-top: 64px;
