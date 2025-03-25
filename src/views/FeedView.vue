@@ -534,7 +534,7 @@ function scrollToMenu() {
 .menu-category__items {
   margin-top: 16px;
   display: grid;
-  column-gap: 8px;
+  gap: 8px;
   grid-template-columns: repeat(2, 1fr);
 }
 

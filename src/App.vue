@@ -39,6 +39,10 @@ onMounted(async () => {
   try {
     await loadTelegramWebAppScript()
     window.Telegram.WebApp.requestFullscreen()
+    window.Telegram.WebApp.BackButton.show()
+    window.Telegram.WebApp.onEvent('backButtonClicked', function() {
+      window.history.back()
+    })
     authStore.setInitData()
   } catch (error) {
     // что-то пошло не так с telegram-web-app
@@ -49,7 +53,7 @@ onMounted(async () => {
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
     router.push('/feed')
-  } catch (error) {
+  } catch (error: any) {
     if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {
       router.push('/enter-phone')
     }

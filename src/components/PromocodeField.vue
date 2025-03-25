@@ -11,7 +11,7 @@
         :value="props.modelValue"
         :disabled="props.processing"
         :placeholder="props.placeholder"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       >
       <button
         :disabled="props.processing"

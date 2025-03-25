@@ -80,6 +80,8 @@ function next() {
 }
 
 .top-spacer-footer {
+  position: sticky;
+  top: var(--top-spacer-height);
   height: 12px;
   border-radius: 0 0 12px 12px;
   background-color: var(--color-accent-rust);

@@ -8,7 +8,7 @@
       :value="computedValue"
       :type="computedType"
       :readonly="fakeInput"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       @click="clickHandler"
       v-bind="$attrs"
     >
@@ -19,7 +19,7 @@
         ref="date_input_ref"
         :value="props.modelValue"
         :type="props.type"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         v-bind="$attrs"
       >
     </div>

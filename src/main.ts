@@ -2,6 +2,7 @@ import './assets/style.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+// @ts-ignore
 import VueTheMask from 'vue-the-mask'
 import App from './App.vue'
 

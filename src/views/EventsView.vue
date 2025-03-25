@@ -1,7 +1,7 @@
 <template>
   <div class="events-view">
     <div class="hero" ref="hero_ref">
-      <div class="title">мерч</div>
+      <div class="title">ивенты</div>
       <div class="actions">
         <ui-button
           class-name="button--hero button--hero-tall"
