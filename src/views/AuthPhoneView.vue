@@ -73,10 +73,12 @@ async function sendCode() {
     await authStore.sendCode(phone.value)
     router.push('/enter-code')
   } catch (error: any) {
-    if (error.response?.status === STATUS_CODE.BAD_REQUEST) {
-      phoneError.value = error.response.data?.message ?? ''
+    if (error.response?.status === STATUS_CODE.TOO_MANY_REQUESTS) {
+      phoneError.value = 'попробуйте снова через минуту'
+    } else if (error.response?.status === STATUS_CODE.FORBIDDEN) {
+      phoneError.value = 'ваш оператор не поддерживается'
     } else {
-      notificationsStore.error('Что-то пошло не так. Повторите попытку позже')
+      phoneError.value = 'что-то пошло не так, повторите попытку позже'
     }
   }
   appStore.loader = false

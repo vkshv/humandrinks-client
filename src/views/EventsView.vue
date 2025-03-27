@@ -162,6 +162,7 @@ function checkContentVisibility() {
   display: flex;
   column-gap: 4px;
   font: 400 18px/18px Biform;
+  letter-spacing: -1.5px;
 }
 
 .top-spacer-footer {
@@ -295,6 +296,7 @@ function checkContentVisibility() {
   padding: 0 12px;
   font: var(--font-numbers-n1);
   color: var(--color-accent-rust);
+  letter-spacing: -1.5px;
 }
 
 .item__title {

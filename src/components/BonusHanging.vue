@@ -54,5 +54,6 @@ defineProps<{
 
 .bonus-hanging > span {
   font: 400 18px/18px Biform;
+  letter-spacing: -1.5px;
 }
 </style>

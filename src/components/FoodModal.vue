@@ -111,6 +111,7 @@ const store = useItemModalStore()
   padding: 0 16px;
   font: var(--font-numbers-n2);
   color: var(--color-gray-gray-4);
+  letter-spacing: -1.5px;
 }
 
 .modal__energy div::after {

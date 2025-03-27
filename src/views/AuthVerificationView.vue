@@ -53,9 +53,9 @@ async function handleCodeUpdate(value: string) {
     authStore.userRegData = userRegData
     router.push('/create-account-name')
   } catch (error: any) {
+    code.value = ''
     if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {
       codeError.value = error.response.data?.message ?? ''
-      code.value = ''
     } else {
       notificationsStore.error('Что-то пошло не так. Повторите попытку позже')
     }

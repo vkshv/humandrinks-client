@@ -350,6 +350,7 @@ function scrollToMenu() {
   display: flex;
   column-gap: 4px;
   font: 400 18px/18px Biform;
+  letter-spacing: -1.5px;
 }
 
 .events {
@@ -505,6 +506,7 @@ function scrollToMenu() {
   background-color: var(--color-gray-white);
   color: var(--color-gray-gray-1);
   font: var(--font-numbers-n1);
+  letter-spacing: -1.5px;
 }
 
 .merch__item-bonus-price > span {
@@ -572,6 +574,7 @@ function scrollToMenu() {
   margin-top: 12px;
   padding: 0 12px;
   font: var(--font-numbers-n1);
+  letter-spacing: -1.5px;
 }
 
 .menu-category__item-title {

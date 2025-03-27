@@ -10,8 +10,8 @@
 @font-face {
   font-family: "Biform";
   src:
-    url("/fonts/omega-pixel-biform.woff") format("woff"),
-    url("/fonts/omega-pixel-biform.woff2") format("woff2");
+    url("/fonts/biform_pixel.woff") format("woff"),
+    url("/fonts/biform_pixel.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -55,8 +55,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #FFF;
+  background-color: var(--color-gray-white);
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
 }
 
 :root {
