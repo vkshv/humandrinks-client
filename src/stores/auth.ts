@@ -48,6 +48,11 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function suggestAddress(query: string) {
+    const response = await http.post('auth/suggest-address', { query })
+    return response
+  }
+
   return {
     initData,
     phone,
@@ -59,6 +64,7 @@ export const useAuthStore = defineStore('auth', () => {
     validateCode,
     register,
     checkRegPromocode,
-    redeemPromocode
+    redeemPromocode,
+    suggestAddress
   }
 })

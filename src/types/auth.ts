@@ -8,3 +8,8 @@ export interface IUserRegData {
   birth?: string
   bonus?: string
 }
+
+export type AddressSuggestion = {
+  value: string
+  level: number
+}

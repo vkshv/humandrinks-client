@@ -11,16 +11,14 @@
         v-model="authStore.userRegData.birth"
         :error="birthError"
         @input="birthError = ''"
+        @blur="validate_birth"
       />
     </div>
     <div class="field">
-      <ui-text-field
-        v-model="authStore.userRegData.address"
-        class-name="text-field--primary-extended"
-        placeholder="..."
+      <AddressSuggestionField
         label="Адрес"
-        :error="addressError"
-        @input="addressError = ''"
+        @change="addressChanged"
+        @click-outside="addressClickedOutside"
       />
     </div>
     <div class="field">
@@ -51,8 +49,10 @@ import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import { STATUS_CODE } from '@/const/http'
+import type { AddressSuggestion } from '@/types/auth'
 import router from '@/router'
 import PromocodeField from '@/components/PromocodeField.vue'
+import AddressSuggestionField from '@/components/AddressSuggestionField.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
@@ -66,7 +66,10 @@ const promocode_success = ref('')
 const promocode_processing = ref(false)
 
 const hasError = computed(() => {
-  return birthError.value || addressError.value
+  return !authStore.userRegData.birth
+    || !authStore.userRegData.address
+    || birthError.value
+    || addressError.value
 })
 
 function parse_date(dateString: string) {
@@ -84,11 +87,11 @@ function isEighteen(birth: string) {
   return birthday < eighteenYearsAgo
 }
 
-function validate() {
+function validate_birth() {
+  birthError.value = ''
   if (!authStore.userRegData.birth) birthError.value = 'Не заполнено'
   else if (!parse_date(authStore.userRegData.birth)) birthError.value = 'Некорректная дата'
   else if (!isEighteen(authStore.userRegData.birth as string)) birthError.value = 'Регистрация доступна только совершеннолетним'
-  if (!authStore.userRegData.address) addressError.value = 'Не заполнено'
 }
 
 function inputPromocodeHandler() {
@@ -115,7 +118,6 @@ async function applyPromocodeHandler() {
 }
 
 async function register() {
-  validate()
   if (hasError.value) return
   appStore.loader = true
   try {
@@ -147,6 +149,17 @@ async function register() {
   }
   appStore.loader = false
 }
+
+function addressChanged(addressSuggestion: AddressSuggestion) {
+  if (addressSuggestion.level < 8) {
+    addressError.value = 'Укажите полный адрес'
+  } else {
+    addressError.value = ''
+    authStore.userRegData.address = addressSuggestion.value
+  }
+}
+
+function addressClickedOutside() {}
 </script>
 
 <style scoped>
