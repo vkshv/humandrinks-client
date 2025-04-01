@@ -6,6 +6,7 @@
       <ui-text-field
         v-mask="'##.##.####'"
         class-name="text-field--primary-extended"
+        inputmode="numeric"
         label="Днюха"
         placeholder="Выбрать дату"
         v-model="authStore.userRegData.birth"
