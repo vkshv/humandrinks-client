@@ -40,11 +40,21 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue'
+
 const props = defineProps({
   modelValue: Boolean
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+watch(() => props.modelValue, (newVal) => {
+  if (newVal) {
+    document.body.classList.add('modal')
+  } else {
+    document.body.classList.remove('modal')
+  }
+})
 </script>
 
 <style scoped>

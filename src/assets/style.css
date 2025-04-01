@@ -60,6 +60,10 @@ html, body {
   overscroll-behavior: none;
 }
 
+body.modal {
+  overflow: hidden;
+}
+
 :root {
   --safe-viewport-height: calc(100vh - var(--tg-safe-area-inset-top) - var(--tg-content-safe-area-inset-top) + 4px);
   --top-spacer-height: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top) - 4px);
