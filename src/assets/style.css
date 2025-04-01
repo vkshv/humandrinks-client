@@ -118,6 +118,10 @@ body.modal {
   font: var(--font-body-b2);
 }
 
+.text-field--primary > .input:focus {
+  background-color: var(--color-gray-gray-7);
+}
+
 .text-field--primary > .input::placeholder {
   color: var(--color-gray-gray-4);
 }
@@ -151,6 +155,10 @@ body.modal {
   background-color: var(--color-gray-gray-8);
   outline: none;
   font: var(--font-body-b2-bold);
+}
+
+.text-field--primary-extended > .input:focus {
+  background-color: var(--color-gray-gray-7);
 }
 
 .text-field--primary-extended > .input::placeholder {
@@ -296,6 +304,10 @@ body.modal {
 
 .otp-field--primary > .inputs > input:disabled {
   opacity: 1;
+}
+
+.otp-field--primary > .inputs > input:focus {
+  background-color: var(--color-gray-gray-7);
 }
 
 .otp-field--primary-error > .inputs > input {
