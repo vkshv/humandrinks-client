@@ -81,6 +81,14 @@ const store = useItemModalStore()
 }
 
 .okay {
+  height: 56px;
   margin-top: 40px;
+}
+
+.okay > button {
+  position: fixed;
+  bottom: var(--bottom-spacer-height);
+  left: 16px;
+  width: calc(100% - 32px);
 }
 </style>

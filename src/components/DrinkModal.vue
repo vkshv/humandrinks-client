@@ -92,7 +92,15 @@ const store = useItemModalStore()
 }
 
 .modal__close {
+  height: 56px;
   margin-top: 40px;
   padding: 0 16px;
+}
+
+.modal__close > button {
+  position: fixed;
+  bottom: var(--bottom-spacer-height);
+  left: 16px;
+  width: calc(100% - 32px);
 }
 </style>
