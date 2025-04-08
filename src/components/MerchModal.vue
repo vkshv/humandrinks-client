@@ -49,7 +49,7 @@ function howToGet() {
 
 .modal__picture {
   position: relative;
-  border-radius: 16px;
+  border-radius: 0 0 16px 16px;
   aspect-ratio: 1 / 1;
   background-position: 50% 50%;
   background-size: cover;
