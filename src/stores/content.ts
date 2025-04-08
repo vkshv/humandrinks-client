@@ -1,16 +1,17 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { IFoodItem, IDrinkItem, IEventItem, IMerchItem } from '@/types/content'
+import type { IFoodItem, IDrinkItem, IEventItem, IMerchItem, IFoodCategoriesItem, IDrinkCategoriesItem, IWhatsnewItem } from '@/types/content'
 import http from '@/services/http'
 
 export const useContentStore = defineStore('content', () => {
   const foodItems = ref<IFoodItem[]>([])
-  const foodCategories = ref<string[]>([])
+  const foodCategories = ref<IFoodCategoriesItem[]>([])
   const drinkItems = ref<IDrinkItem[]>([])
-  const drinkCategories = ref<string[]>([])
+  const drinkCategories = ref<IDrinkCategoriesItem[]>([])
   const eventItems = ref<IEventItem[]>([])
   const eventCategories = ref<string[]>([])
   const merchItems = ref<IMerchItem[]>([])
+  const whatsnewItems = ref<IWhatsnewItem[]>([])
 
   async function loadFoodItems() {
     const response = await http.get('content/food-items')
@@ -47,6 +48,11 @@ export const useContentStore = defineStore('content', () => {
     merchItems.value = response.data
   }
 
+  async function loadWhatsnewItems() {
+    const response = await http.get('content/whats-new-items')
+    whatsnewItems.value = response.data
+  }
+
   return {
     foodItems,
     foodCategories,
@@ -55,12 +61,14 @@ export const useContentStore = defineStore('content', () => {
     eventItems,
     eventCategories,
     merchItems,
+    whatsnewItems,
     loadFoodItems,
     loadFoodCategories,
     loadDrinkItems,
     loadDrinkCategories,
     loadEventItems,
     loadEventCategories,
-    loadMerchItems
+    loadMerchItems,
+    loadWhatsnewItems
   }
 })

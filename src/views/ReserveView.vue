@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useContentStore } from '@/stores/content'
 import { useAuthStore } from '@/stores/auth'
 import { useRoute } from 'vue-router'
@@ -129,6 +129,15 @@ onMounted(() => {
     date.value = currentEvent.value.date
     time.value = currentEvent.value.time
   }
+  try {
+    window.Telegram.WebApp.BackButton.show()
+  } catch (error) {}
+})
+
+onUnmounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.hide()
+  } catch (error) {}
 })
 
 function reserve() {

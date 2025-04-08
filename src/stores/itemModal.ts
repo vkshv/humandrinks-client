@@ -4,7 +4,8 @@ import type {
   IFoodItem,
   IDrinkItem,
   IEventItem,
-  IMerchItem
+  IMerchItem,
+  IWhatsnewItem
 } from '@/types/content'
 
 export const useItemModalStore = defineStore('itemModal', () => {
@@ -15,10 +16,12 @@ export const useItemModalStore = defineStore('itemModal', () => {
   const isShowMerch = ref(false)
   const isShowMerchHowItWorks = ref(false)
   const isShowBonus = ref(false)
+  const isShowWhatsnew = ref(false)
   const contentFood = ref<IFoodItem | null>(null)
   const contentDrink = ref<IDrinkItem | null>(null)
   const contentEvent = ref<IEventItem | null>(null)
   const contentMerch = ref<IMerchItem | null>(null)
+  const contentWhatsnew = ref<IWhatsnewItem | null>(null)
 
   function openFood(data: IFoodItem) {
     isShowFood.value = true
@@ -52,6 +55,11 @@ export const useItemModalStore = defineStore('itemModal', () => {
     isShowBonus.value = true
   }
 
+  function openWhatsnew(data: IWhatsnewItem) {
+    isShowWhatsnew.value = true
+    contentWhatsnew.value = data
+  }
+
   return {
     isShowFood,
     isShowDrink,
@@ -60,16 +68,19 @@ export const useItemModalStore = defineStore('itemModal', () => {
     isShowMerch,
     isShowMerchHowItWorks,
     isShowBonus,
+    isShowWhatsnew,
     contentFood,
     contentDrink,
     contentEvent,
     contentMerch,
+    contentWhatsnew,
     openFood,
     openDrink,
     openEvent,
     openEventHowItWorks,
     openMerch,
     openMerchHowItWorks,
-    openBonus
+    openBonus,
+    openWhatsnew
   }
 })

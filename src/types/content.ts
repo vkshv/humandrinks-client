@@ -13,6 +13,12 @@ export interface IFoodItem {
   ingredients: string
   picture: string
   category: string
+  subcategory: string | null
+}
+
+export interface IFoodCategoriesItem {
+  name: string
+  subcategories: string[]
 }
 
 export interface IDrinkItem {
@@ -23,8 +29,14 @@ export interface IDrinkItem {
   new: boolean
   picture: string
   category: string
+  subcategory: string | null
   priceBottle: number
   country: string
+}
+
+export interface IDrinkCategoriesItem {
+  name: string
+  subcategories: string[]
 }
 
 export interface IEventItem {
@@ -49,4 +61,11 @@ export interface IMerchItem {
   bonusPrice: number
   count: number
   picture: string
+}
+
+export interface IWhatsnewItem {
+  documentId: string
+  title: string
+  text: string
+  date: string
 }

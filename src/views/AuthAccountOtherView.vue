@@ -1,7 +1,7 @@
 <template>
   <div class="auth-account-other-view">
     <div class="top-spacer-footer"></div>
-    <div class="title">почти готово</div>
+    <div class="title">Почти готово</div>
     <div class="field">
       <ui-text-field
         v-mask="'##.##.####'"
@@ -11,19 +11,21 @@
         placeholder="Выбрать дату"
         v-model="authStore.userRegData.birth"
         :error="birthError"
-        @input="birthError = ''"
-        @blur="validate_birth"
+        @input="birthInputHandler"
+        @blur="validateBirth"
       />
     </div>
     <div class="field">
       <AddressSuggestionField
         label="Адрес"
-        @change="addressChanged"
-        @click-outside="addressClickedOutside"
+        :error="addressError"
+        @change="addressChangeHandler"
+        @click-outside="addressClickOutsideHandler"
+        @input:query="queryInputHandler"
       />
     </div>
     <div class="field">
-      <PromocodeField
+      <!-- <PromocodeField
         v-model="promocode"
         :error="promocode_error"
         :success="promocode_success"
@@ -31,10 +33,11 @@
         placeholder="Промокод"
         @input="inputPromocodeHandler"
         @apply="applyPromocodeHandler"
-      />
+      /> -->
     </div>
     <div class="register">
       <ui-button
+        v-show="isShowAction"
         class-name="button--primary"
         @click="register"
       >
@@ -45,14 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import { STATUS_CODE } from '@/const/http'
 import type { AddressSuggestion } from '@/types/auth'
 import router from '@/router'
-import PromocodeField from '@/components/PromocodeField.vue'
+// import PromocodeField from '@/components/PromocodeField.vue'
 import AddressSuggestionField from '@/components/AddressSuggestionField.vue'
 
 const appStore = useAppStore()
@@ -62,18 +65,31 @@ const notificationsStore = useNotificationsStore()
 const birthError = ref('')
 const addressError = ref('')
 const promocode = ref('')
-const promocode_error = ref('')
-const promocode_success = ref('')
-const promocode_processing = ref(false)
+// const promocode_error = ref('')
+// const promocode_success = ref('')
+// const promocode_processing = ref(false)
 
 const hasError = computed(() => {
-  return !authStore.userRegData.birth
-    || !authStore.userRegData.address
-    || birthError.value
-    || addressError.value
+  return birthError.value || addressError.value
 })
 
-function parse_date(dateString: string) {
+const isShowAction = computed(() => {
+  return authStore.userRegData.birth && authStore.userRegData.address && !hasError.value
+})
+
+onMounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.show()
+  } catch (error) {}
+})
+
+onUnmounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.hide()
+  } catch (error) {}
+})
+
+function parseDate(dateString: string) {
   if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateString)) return
 
   const [day, month, year] = dateString.split('.').map(Number)
@@ -82,41 +98,80 @@ function parse_date(dateString: string) {
 }
 
 function isEighteen(birth: string) {
-  const birthday = parse_date(birth) ?? new Date()
+  const birthday = parseDate(birth) ?? new Date()
   const eighteenYearsAgo = new Date()
   eighteenYearsAgo.setFullYear(new Date().getFullYear() - 18)
   return birthday < eighteenYearsAgo
 }
 
-function validate_birth() {
+function validateBirth() {
   birthError.value = ''
-  if (!authStore.userRegData.birth) birthError.value = 'Не заполнено'
-  else if (!parse_date(authStore.userRegData.birth)) birthError.value = 'Некорректная дата'
-  else if (!isEighteen(authStore.userRegData.birth as string)) birthError.value = 'Регистрация доступна только совершеннолетним'
+  if (!authStore.userRegData.birth) return
+  else if (!parseDate(authStore.userRegData.birth)) birthError.value = 'Некорректная дата'
+  else if (!isEighteen(authStore.userRegData.birth as string)) birthError.value = 'Регистрация возможна только с 18-и лет'
 }
 
-function inputPromocodeHandler() {
-  promocode_error.value = ''
-  promocode_success.value = ''
-}
+async function birthInputHandler() {
+  birthError.value = ''
+  if (!authStore.userRegData.birth) return
 
-async function applyPromocodeHandler() {
-  promocode_processing.value = true
-  appStore.loader = true
-  try {
-    const response = await authStore.checkRegPromocode(promocode.value)
-    promocode_error.value = ''
-    promocode_success.value = ''
-    if (response.data.bonus) {
-      promocode_success.value = `промокод применён: +${response.data.bonus} бонусов`
-    }
-  } catch (error) {
-    promocode_error.value = 'промокод недействителен или истёк'
-    promocode_success.value = ''
+  if (/^\d{2}\.\d{2}\.\d{4}$/.test(authStore.userRegData.birth)) {
+    validateBirth()
+    return
   }
-  promocode_processing.value = false
-  appStore.loader = false
+
+  if (/^\d{2}\.\d{2}\.\d{2}$/.test(authStore.userRegData.birth)) {
+    const arr = authStore.userRegData.birth.split('.')
+    if (!['19', '20'].includes(arr[2])) {
+      await nextTick()
+      arr[2] = +arr[2] < 25 ? '20' + arr[2] : '19' + arr[2]
+      authStore.userRegData.birth = arr.join('.')
+      validateBirth()
+    }
+  }
 }
+
+function addressChangeHandler(addressSuggestion: AddressSuggestion) {
+  if (addressSuggestion.level < 8) {
+    addressError.value = 'Укажите полный адрес'
+  } else {
+    addressError.value = ''
+    authStore.userRegData.address = addressSuggestion.value
+  }
+}
+
+function addressClickOutsideHandler(event: any) {
+  if (!authStore.userRegData.address && event.query) {
+    addressError.value = 'Пожалуйса, выберите адрес из списка'
+  }
+}
+
+function queryInputHandler(event: InputEvent) {
+  authStore.userRegData.address = ''
+}
+
+// function inputPromocodeHandler() {
+//   promocode_error.value = ''
+//   promocode_success.value = ''
+// }
+
+// async function applyPromocodeHandler() {
+//   promocode_processing.value = true
+//   appStore.loader = true
+//   try {
+//     const response = await authStore.checkRegPromocode(promocode.value)
+//     promocode_error.value = ''
+//     promocode_success.value = ''
+//     if (response.data.bonus) {
+//       promocode_success.value = `промокод применён: +${response.data.bonus} бонусов`
+//     }
+//   } catch (error) {
+//     promocode_error.value = 'промокод недействителен или истёк'
+//     promocode_success.value = ''
+//   }
+//   promocode_processing.value = false
+//   appStore.loader = false
+// }
 
 async function register() {
   if (hasError.value) return
@@ -150,17 +205,6 @@ async function register() {
   }
   appStore.loader = false
 }
-
-function addressChanged(addressSuggestion: AddressSuggestion) {
-  if (addressSuggestion.level < 8) {
-    addressError.value = 'Укажите полный адрес'
-  } else {
-    addressError.value = ''
-    authStore.userRegData.address = addressSuggestion.value
-  }
-}
-
-function addressClickedOutside() {}
 </script>
 
 <style scoped>

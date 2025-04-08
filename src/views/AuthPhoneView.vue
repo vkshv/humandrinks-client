@@ -11,17 +11,20 @@
         placeholder="+7 (---) --- -- --"
         class-name="text-field--primary"
         inputmode="numeric"
+        :disabled="sendCodeLoader"
         :error="phoneError"
         @input="handlePhoneInput"
       />
     </div>
-    <div class="info">никакого спама: уведомления можно будет отключить в настройках</div>
+    <div class="info">Никакого спама: уведомления можно будет отключить в настройках</div>
     <div class="send">
       <ui-button
+        v-show="phone"
         class-name="button--primary"
+        :loading="sendCodeLoader"
         @click="sendCode"
       >
-        получить код
+        Получить код
       </ui-button>
     </div>
     <div class="restore">
@@ -29,7 +32,7 @@
         class-name="button--text"
         @click="restoreAccess"
       >
-        восстановить доступ
+        Восстановить доступ
       </ui-button>
     </div>
   </div>
@@ -49,10 +52,11 @@ const notificationsStore = useNotificationsStore()
 
 const phone = ref('')
 const phoneError = ref('')
+const sendCodeLoader = ref(false)
 
 function validatePhone() {
   if (!/^\+7 \(\d\d\d\) \d\d\d \d\d \d\d$/.test(phone.value)) {
-    phoneError.value = 'введите корректный номер телефона'
+    phoneError.value = 'Введите корректный номер телефона'
   } else {
     phoneError.value = ''
   }
@@ -68,20 +72,22 @@ async function sendCode() {
   validatePhone()
   if (phoneError.value) return
 
-  appStore.loader = true
+  // appStore.loader = true
+  sendCodeLoader.value = true
   try {
     await authStore.sendCode(phone.value)
     router.push('/enter-code')
   } catch (error: any) {
     if (error.response?.status === STATUS_CODE.TOO_MANY_REQUESTS) {
-      phoneError.value = 'попробуйте снова через минуту'
+      phoneError.value = 'Попробуйте снова через минуту'
     } else if (error.response?.status === STATUS_CODE.FORBIDDEN) {
-      phoneError.value = 'ваш оператор не поддерживается'
+      phoneError.value = 'Ваш оператор не поддерживается'
     } else {
-      phoneError.value = 'что-то пошло не так, повторите попытку позже'
+      phoneError.value = 'Что-то пошло не так, повторите попытку позже'
     }
   }
-  appStore.loader = false
+  // appStore.loader = false
+  sendCodeLoader.value = false
 }
 
 function restoreAccess() {
@@ -105,17 +111,12 @@ function restoreAccess() {
 }
 
 .logo {
-  margin-top: 32px;
+  margin-top: 48px;
   justify-self: center;
 }
 
-.logo > img {
-  width: 213px;
-  height: 130px;
-}
-
 .phone {
-  margin-top: 32px;
+  margin-top: 48px;
   padding: 0 16px;
 }
 

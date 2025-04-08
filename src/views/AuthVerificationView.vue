@@ -1,8 +1,8 @@
 <template>
   <div class="auth-verification-view">
     <div class="top-spacer-footer"></div>
-    <div class="title">введите код</div>
-    <div class="info">на номер {{ authStore.phone }} придёт смс-код</div>
+    <div class="title">Введите код</div>
+    <div class="info">На номер {{ authStore.phone }} придёт смс-код</div>
     <div class="otp-field">
       <ui-otp-field
         :modelValue="code"
@@ -11,20 +11,34 @@
         @update:modelValue="handleCodeUpdate"
       />
     </div>
-    <div class="resend"></div>
+    <div class="resend">
+      <div
+        v-if="time"
+        class="resend__timer"
+      >
+        Отправить код ещё раз ({{ time }} сек)
+      </div>
+      <div
+        v-else
+        class="resend__action"
+        @click="resendCode"
+      >
+        Отправить код ещё раз
+      </div>
+    </div>
     <div class="restore">
       <ui-button
         class-name="button--text"
         @click="restoreAccess"
       >
-        восстановить доступ
+        Восстановить доступ
       </ui-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
@@ -37,6 +51,22 @@ const notificationsStore = useNotificationsStore()
 
 const code = ref('')
 const codeError = ref('')
+
+let timer: number | null | undefined = null
+const time = ref(60)
+
+onMounted(() => {
+  startTimer()
+  try {
+    window.Telegram.WebApp.BackButton.show()
+  } catch (error) {}
+})
+
+onUnmounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.hide()
+  } catch (error) {}
+})
 
 async function handleCodeUpdate(value: string) {
   if (code.value === value) return
@@ -63,8 +93,29 @@ async function handleCodeUpdate(value: string) {
   appStore.loader = false
 }
 
+async function resendCode() {
+  appStore.loader = true
+  try {
+    await authStore.sendCode(authStore.phone)
+    startTimer()
+  } catch (error) {
+    notificationsStore.error('Что-то пошло не так. Повторите попытку позже')
+  }
+  appStore.loader = false  
+}
+
 function restoreAccess() {
   
+}
+
+function startTimer() {
+  time.value = 60
+  timer = setInterval(() => {
+    time.value--
+    if (time.value === 0) {
+      timer && clearInterval(timer)
+    }
+  }, 1000)
 }
 </script>
 
@@ -105,7 +156,19 @@ function restoreAccess() {
 }
 
 .resend {
+  display: flex;
+  justify-content: center;
   margin-top: 24px;
+}
+
+.resend__timer {
+  font: var(--font-body-b3);
+  color: var(--color-gray-gray-4);
+}
+
+.resend__action {
+  font: var(--font-body-b3-bold);
+  color: var(--color-accent-rust);
 }
 
 .restore {

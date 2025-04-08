@@ -49,21 +49,21 @@ const router = createRouter({
         //   name: 'app-menu',
         //   component: Menu
         // },
-        {
-          path: '/merch',
-          name: 'app-merch',
-          component: Merch
-        },
-        {
-          path: '/events',
-          name: 'app-events',
-          component: Events
-        },
-        {
-          path: '/profile',
-          name: 'app-profile',
-          component: Profile
-        },
+        // {
+        //   path: '/merch',
+        //   name: 'app-merch',
+        //   component: Merch
+        // },
+        // {
+        //   path: '/events',
+        //   name: 'app-events',
+        //   component: Events
+        // },
+        // {
+        //   path: '/profile',
+        //   name: 'app-profile',
+        //   component: Profile
+        // },
         {
           path: '/reserve',
           name: 'app-reserve',

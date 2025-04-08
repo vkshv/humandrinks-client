@@ -1,16 +1,16 @@
 <template>
   <div class="auth-account-name-view">
     <div class="top-spacer-footer"></div>
-    <div class="title">как вас зовут?</div>
+    <div class="title">Как вас зовут?</div>
     <div class="field">
       <ui-text-field
         v-model="authStore.userRegData.surname"
         class-name="text-field--primary-extended"
         placeholder="..."
         label="Фамилия"
-        :error="surnameError"
-        @input="surnameError = ''"
       />
+        <!-- :error="surnameError"
+        @input="surnameError = ''" -->
     </div>
     <div class="field">
       <ui-text-field
@@ -18,9 +18,9 @@
         class-name="text-field--primary-extended"
         placeholder="..."
         label="Имя"
-        :error="nameError"
-        @input="nameError = ''"
       />
+        <!-- :error="nameError"
+        @input="nameError = ''" -->
     </div>
     <div class="field">
       <ui-text-field
@@ -28,45 +28,62 @@
         class-name="text-field--primary-extended"
         placeholder="..."
         label="Отчество"
-        :error="patronymicError"
-        @input="patronymicError = ''"
       />
+        <!-- :error="patronymicError"
+        @input="patronymicError = ''" -->
     </div>
     <div class="next">
       <ui-button
+        v-show="isShowAction"
         class-name="button--primary"
         @click="next"
       >
-        продолжить
+        Продолжить
       </ui-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 
 const authStore = useAuthStore()
 
-const surnameError = ref('')
-const nameError = ref('')
-const patronymicError = ref('')
+// const surnameError = ref('')
+// const nameError = ref('')
+// const patronymicError = ref('')
 
-const hasError = computed(() => {
-  return surnameError.value || nameError.value || patronymicError.value
+// const hasError = computed(() => {
+//   return surnameError.value || nameError.value || patronymicError.value
+// })
+
+const isShowAction = computed(() => {
+  return authStore.userRegData.surname && authStore.userRegData.name && authStore.userRegData.patronymic // && !hasError.value
 })
 
-function validate() {
-  if (!authStore.userRegData.surname) surnameError.value = 'Не заполнено'
-  if (!authStore.userRegData.name) nameError.value = 'Не заполнено'
-  if (!authStore.userRegData.patronymic) patronymicError.value = 'Не заполнено'
-}
+onMounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.show()
+  } catch (error) {}
+})
+
+onUnmounted(() => {
+  try {
+    window.Telegram.WebApp.BackButton.hide()
+  } catch (error) {}
+})
+
+// function validate() {
+//   if (!authStore.userRegData.surname) surnameError.value = 'Не заполнено'
+//   if (!authStore.userRegData.name) nameError.value = 'Не заполнено'
+//   if (!authStore.userRegData.patronymic) patronymicError.value = 'Не заполнено'
+// }
 
 function next() {
-  validate()
-  if (hasError.value) return
+  // validate()
+  // if (hasError.value) return
 
   router.push('/create-account-other')
 }

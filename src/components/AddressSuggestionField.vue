@@ -1,5 +1,11 @@
 <template>
-  <div class="address-suggestion-field-component" v-click-outside="clickOutsideHandler">
+  <div
+    class="address-suggestion-field-component"
+    :class="{
+      'address-suggestion-field-component-error': props.error
+    }"
+    v-click-outside="clickOutsideHandler"
+  >
     <div v-if="props.label" class="label-container">
       <div class="label">
         {{ props.label }}
@@ -21,6 +27,10 @@
       >{{ item.value }}</li>
     </ul>
   </div>
+  <div
+    v-if="props.error"
+    class="error"
+  >{{ props.error }}</div>
 </template>
 
 <script setup lang="ts">
@@ -30,7 +40,7 @@ import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
-const emit = defineEmits(['change', 'clickOutside'])
+const emit = defineEmits(['change', 'clickOutside', 'input:query'])
 
 const textarea_ref = ref(null)
 
@@ -40,13 +50,15 @@ const isShowDropdown = ref(false)
 
 const props = defineProps({
   label: String,
+  error: String
 })
 
 watch(query, () => {
   resizeTextarea()
 })
 
-async function inputHandler() {
+async function inputHandler(event) {
+  emit('input:query', event)
   try {
     const response = await authStore.suggestAddress(query.value)
     addresses.value = response.data
@@ -60,8 +72,10 @@ function clickHandler(item: AddressSuggestion) {
 }
 
 function clickOutsideHandler() {
+  if (!isShowDropdown.value) return
+
   isShowDropdown.value = false
-  emit('clickOutside')
+  emit('clickOutside', { query: query.value })
 }
 
 async function resizeTextarea() {
@@ -79,6 +93,10 @@ async function resizeTextarea() {
   border-radius: 12px;
   background-color: var(--color-gray-gray-8);
   box-sizing: border-box;
+}
+
+.address-suggestion-field-component-error {
+  border: 1px solid var(--color-accent-rust);
 }
 
 .label-container {
@@ -113,6 +131,13 @@ async function resizeTextarea() {
   font: var(--font-body-b2-bold);
   box-sizing: border-box;
   resize: none;
+}
+
+.error {
+  margin-top: 8px;
+  color: var(--color-accent-rust);
+  font: var(--font-caption-c1);
+  text-align: center;
 }
 
 .dropdown {

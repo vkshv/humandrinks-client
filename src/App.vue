@@ -5,8 +5,8 @@
       <RouterView />
     </div>
     <TheNotifications />
-    <Loader />
     <TopSpacer />
+    <Loader v-if="appStore.loader" />
   </template>
 </template>
 
@@ -39,7 +39,6 @@ onMounted(async () => {
   try {
     await loadTelegramWebAppScript()
     window.Telegram.WebApp.requestFullscreen()
-    window.Telegram.WebApp.BackButton.show()
     window.Telegram.WebApp.onEvent('backButtonClicked', function() {
       window.history.back()
     })
