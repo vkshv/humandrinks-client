@@ -107,5 +107,6 @@ watch(() => props.modelValue, (newVal) => {
 .modal-content {
   max-height: calc(100vh - var(--top-spacer-height));
   overflow-y: auto;
+  border-radius: 16px 16px 0 0;
 }
 </style>

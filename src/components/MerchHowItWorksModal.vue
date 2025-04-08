@@ -39,7 +39,6 @@ const store = useItemModalStore()
 <style scoped>
 .modal {
   padding: 24px 16px var(--bottom-spacer-height) 16px;
-  border-radius: 16px 16px 0 0;
   background-color: var(--color-gray-white);
 }
 

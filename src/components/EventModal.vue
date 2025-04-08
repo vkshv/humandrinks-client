@@ -80,7 +80,6 @@ function reserve() {
 <style scoped>
 .modal {
   padding-bottom: var(--bottom-spacer-height);
-  border-radius: 16px 16px 0 0;
   background-color: var(--color-gray-white);
 }
 

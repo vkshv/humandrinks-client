@@ -344,11 +344,21 @@ function checkContentVisibility() {
 
 function scrollTo(menuType: 'food' | 'drink', category?: string) {
   const el = category ? category_refs.value[`${menuType}___${category}`] : refs.value[`menu_${menuType}`]
-  el?.scrollIntoView({ behavior: 'smooth' })
+  let offset = 40
+  try {
+    offset + window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top
+  } catch (error) {}
+  const y = el.getBoundingClientRect().top + window.scrollY - offset
+  window.scrollTo({ top: y, behavior: 'smooth' })
 }
 
 function scrollToMenu() {
-  menu_ref.value?.scrollIntoView({ behavior: 'smooth' })
+  let offset = 40
+  try {
+    offset + window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top
+  } catch (error) {}
+  const y = (menu_ref.value?.getBoundingClientRect().top ?? 0) + window.scrollY - offset
+  window.scrollTo({ top: y, behavior: 'smooth' })
 }
 </script>
 
