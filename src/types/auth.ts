@@ -7,6 +7,7 @@ export interface IUserRegData {
   phone?: string
   birth?: string
   bonus?: string
+  cardNumber?: string | null
 }
 
 export type AddressSuggestion = {

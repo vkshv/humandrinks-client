@@ -8,8 +8,15 @@
         <div class="bonus__title">Бонусная<br/> карта</div>
         <div class="bonus__read-more" @click="showBonus">Подробнее</div>
         <div class="bonus__card">
-          <div class="bonus__value"></div>
-          <div class="bonus__card-number"></div>
+          <div class="bonus__value">
+            {{ authStore.userRegData.bonus }}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.3071 0.0813043C11.4363 0.151156 11.5377 0.261025 11.5951 0.393383C11.6525 0.525741 11.6627 0.672963 11.6239 0.811565L9.86625 7.07107H16.2792C16.4082 7.07108 16.5343 7.10769 16.6422 7.17641C16.75 7.24512 16.8348 7.34295 16.8862 7.45786C16.9376 7.57277 16.9532 7.69976 16.9313 7.82321C16.9094 7.94666 16.8508 8.0612 16.7628 8.15275L7.498 17.7953C7.39709 17.9005 7.26276 17.9699 7.11649 17.9922C6.97022 18.0145 6.82047 17.9886 6.69118 17.9185C6.5619 17.8484 6.46055 17.7382 6.40334 17.6055C6.34614 17.4729 6.33638 17.3254 6.37564 17.1867L8.1333 10.9281H1.72032C1.59135 10.9281 1.4652 10.8915 1.35737 10.8227C1.24953 10.754 1.16472 10.6562 1.11335 10.5413C1.06198 10.4264 1.0463 10.2994 1.06823 10.1759C1.09016 10.0525 1.14875 9.93795 1.23679 9.8464L10.5015 0.203872C10.6025 0.0990004 10.7366 0.0299568 10.8826 0.00774378C11.0286 -0.0144693 11.178 0.0114265 11.3071 0.0813043Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="bonus__card-number">
+            <span v-if="authStore.userRegData.cardNumber">№ {{ authStore.userRegData.cardNumber }}</span>
+          </div>
         </div>
       </div>
       <div class="reserve">
@@ -410,13 +417,26 @@ function scrollToMenu() {
 .bonus__card {
   grid-column: 2 / 3;
   grid-row: 1 / 3;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  margin: 8px;
   width: 168px;
   height: 108px;
 }
 
-.bonus__value {}
+.bonus__value {
+  padding: 12px;
+  font: italic 900 25px/18px TTDrugs;
+  color: var(--color-gray-white);
+}
 
-.bonus__card-number {}
+.bonus__card-number {
+  align-self: end;
+  justify-self: end;
+  padding: 8px;
+  font: var(--font-body-b2-bold);
+  color: var(--color-gray-white);
+}
 
 .reserve {
   margin-top: 8px;

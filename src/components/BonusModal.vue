@@ -1,21 +1,23 @@
 <template>
   <ItemModal v-model="store.isShowBonus">
     <div class="modal">
-      <div class="title">бонусы</div>
+      <div class="title">Бонусы</div>
       <div class="card">
         <div class="card__count">
           <span>{{ authStore.userRegData.bonus }}</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.7433 1.06324C9.84092 1.11757 9.91752 1.20303 9.9609 1.30597C10.0043 1.40892 10.0119 1.52343 9.98264 1.63124L8.65464 6.49991H13.5C13.5974 6.49991 13.6927 6.52839 13.7742 6.58184C13.8557 6.63529 13.9198 6.71138 13.9586 6.80075C13.9974 6.89013 14.0092 6.9889 13.9927 7.08493C13.9761 7.18095 13.9318 7.27004 13.8653 7.34124L6.8653 14.8412C6.78906 14.9231 6.68757 14.977 6.57705 14.9944C6.46654 15.0118 6.35339 14.9916 6.25571 14.9371C6.15803 14.8825 6.08145 14.7968 6.03823 14.6936C5.99501 14.5905 5.98764 14.4758 6.0173 14.3679L7.3453 9.4999H2.49997C2.40253 9.4999 2.30721 9.47142 2.22574 9.41797C2.14426 9.36452 2.08018 9.28843 2.04137 9.19906C2.00256 9.10968 1.99071 9.01091 2.00728 8.91488C2.02385 8.81886 2.06812 8.72977 2.13464 8.65857L9.13464 1.15857C9.21088 1.077 9.31223 1.0233 9.42254 1.00602C9.53285 0.988746 9.64577 1.00889 9.7433 1.06324Z" fill="#F9D61C"/>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.59486C14.7614 1.67635 14.8763 1.80454 14.9413 1.95896C15.0064 2.11338 15.0179 2.28515 14.974 2.44686L12.982 9.74986H20.25C20.3961 9.74987 20.5391 9.79258 20.6613 9.87276C20.7835 9.95293 20.8796 10.0671 20.9378 10.2011C20.9961 10.3352 21.0138 10.4834 20.989 10.6274C20.9641 10.7714 20.8977 10.9051 20.798 11.0119L10.298 22.2619C10.1836 22.3847 10.0313 22.4655 9.86558 22.4916C9.69981 22.5177 9.53009 22.4874 9.38357 22.4056C9.23705 22.3238 9.12218 22.1952 9.05735 22.0405C8.99252 21.8857 8.98146 21.7137 9.02595 21.5519L11.018 14.2499H3.74995C3.60379 14.2498 3.46082 14.2071 3.33861 14.127C3.2164 14.0468 3.12028 13.9326 3.06206 13.7986C3.00384 13.6645 2.98607 13.5164 3.01092 13.3723C3.03578 13.2283 3.10217 13.0947 3.20195 12.9879L13.702 1.73786C13.8163 1.6155 13.9683 1.53495 14.1338 1.50903C14.2993 1.48312 14.4687 1.51333 14.615 1.59486Z" fill="white"/>
           </svg>
         </div>
-        <div class="card__count-title">бонусов</div>
+        <div class="card__number">
+          <span v-if="authStore.userRegData.cardNumber">№ {{ authStore.userRegData.cardNumber }}</span>
+        </div>
         <div class="card__add-card">
           <ui-button
             class-name="button--secondary-3"
             @click="add"
           >
-            добавить в кошелёк
+            Добавить карту в кошелёк
           </ui-button>
         </div>
         <div class="card__promo">
@@ -30,17 +32,19 @@
           />
         </div>
       </div>
-      <div class="referral">
-        <div class="referral__title">подарок за друга</div>
-        <div class="referral__info">скопируйте ссылку и отправьте тому, кому хочется посоветовать роботы</div>
-        <div class="referral__copy">
-          <ui-button
-            class-name="button--success"
-            @click="copy"
-          >
-            скопировать ссылку
-          </ui-button>
-        </div>
+      <div v-if="promocode_error" class="promo-error">{{ promocode_error }}</div>
+      <div v-if="promocode_success" class="promo-success">{{ promocode_success }}</div>
+      <div
+        class="how-it-works"
+        @click="showHowItWorks"
+      >Как работают бонусы?</div>
+      <div class="close">
+        <ui-button
+          class-name="button--tertiary"
+          @click="store.isShowBonus = false"
+        >
+          Закрыть
+        </ui-button>
       </div>
     </div>
   </ItemModal>
@@ -77,14 +81,18 @@ async function applyPromocodeHandler() {
     promocode_error.value = ''
     promocode_success.value = ''
     if (response.data.bonus) {
-      promocode_success.value = `промокод применён: +${response.data.bonus} бонусов`
+      promocode_success.value = `Промокод применён: +${response.data.bonus} бонусов`
     }
   } catch (error) {
-    promocode_error.value = 'промокод недействителен или истёк'
+    promocode_error.value = 'Промокод недействителен или истек'
     promocode_success.value = ''
   }
   promocode_processing.value = false
   appStore.loader = false
+}
+
+function showHowItWorks() {
+  store.openBonusHowItWorks()
 }
 </script>
 
@@ -101,8 +109,12 @@ async function applyPromocodeHandler() {
 }
 
 .card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: max-content 1fr max-content;
+  height: 221px;
   margin-top: 16px;
-  padding: 8px;
+  padding: 4px;
   border-radius: 16px;
   background-color: var(--color-accent-rust);
 }
@@ -110,44 +122,61 @@ async function applyPromocodeHandler() {
 .card__count {
   display: flex;
   column-gap: 6px;
-  margin: 16px 0 0 16px;
-  font: 700 48px/48px TTDrugs;
-  color: var(--color-accent-yellow);
+  margin: 12px 0 0 12px;
+  font: italic 700 64px/56px TTDrugs;
+  color: var(--color-gray-white);
 }
 
-.card__count-title {
-  margin: 0 0 0 16px;
-  font: var(--font-body-b1);
+.card__number {
+  align-self: start;
+  justify-self: end;
+  margin: 12px 12px 0 0;
+  font: var(--font-body-b2-bold);
   color: var(--color-gray-white);
 }
 
 .card__add-card {
+  grid-column: 1 / 3;
+  align-self: end;
+  justify-self: center;
   width: fit-content;
-  margin: 12px 0 0 16px;
 }
 
 .card__promo {
+  grid-column: 1 / 3;
   margin-top: 36px;
 }
 
-.referral {
-  margin-top: 64px;
-}
-
-.referral__title {
-  font: var(--font-header-h2);
-  color: var(--color-gray-gray-1);
-  text-align: center;
-}
-
-.referral__info {
+.promo-error {
   margin-top: 16px;
-  font: var(--font-body-b2);
-  color: var(--color-gray-gray-1);
+  font: var(--font-caption-c1);
+  color: var(--color-accent-rust);
   text-align: center;
 }
 
-.referral__copy {
-  margin-top: 32px;
+.promo-success {
+  margin-top: 16px;
+  font: var(--font-caption-c1);
+  color: var(--color-accent-green);
+  text-align: center;
+}
+
+.how-it-works {
+  margin-top: 72px;
+  font: var(--font-body-b2-bold);
+  color: var(--color-gray-gray-4);
+  text-align: center;
+}
+
+.close {
+  height: 56px;
+  margin-top: 24px;
+}
+
+.close > button {
+  position: fixed;
+  bottom: var(--bottom-spacer-height);
+  left: 16px;
+  width: calc(100% - 32px);
 }
 </style>
