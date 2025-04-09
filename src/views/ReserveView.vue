@@ -109,7 +109,7 @@ const dateError = ref('')
 const timeError = ref('')
 
 const hasError = computed(() => {
-  return dateError.value || time.value
+  return dateError.value || timeError.value
 })
 
 function validate() {
@@ -143,10 +143,11 @@ function reserve() {
   if (hasError.value) return
 
   try {
+    const initData = window.Telegram.WebApp.initData
     const message = currentEvent.value
-    ? `action_send_message:Здравствуйте! Хочу забронировать место на ${currentEvent.value.title} ${formatDate(date.value)} на ${counter.value} чел.`
-    : `action_send_message:Здравствуйте! Хочу забронировать стол ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
-    window.Telegram.WebApp.openTelegramLink('https://t.me/human_drinks_bot?startapp=' + encodeURIComponent(message))
+      ? `Бронирование места на ивент «${currentEvent.value.title}» ${formatDate(date.value)} на ${counter.value} чел.`
+      : `Бронирование стола ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
+    contentStore.sendBotMessage({ initData, message })
   } catch (error) {
     console.error(error)
   }

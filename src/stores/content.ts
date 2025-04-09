@@ -53,6 +53,11 @@ export const useContentStore = defineStore('content', () => {
     whatsnewItems.value = response.data
   }
 
+  async function sendBotMessage(data: any) {
+    const response = await http.post('content/send', data)
+    return response
+  }
+
   return {
     foodItems,
     foodCategories,
@@ -69,6 +74,7 @@ export const useContentStore = defineStore('content', () => {
     loadEventItems,
     loadEventCategories,
     loadMerchItems,
-    loadWhatsnewItems
+    loadWhatsnewItems,
+    sendBotMessage
   }
 })
