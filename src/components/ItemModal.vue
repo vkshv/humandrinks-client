@@ -31,7 +31,10 @@
             </defs>
           </svg>
         </div>
-        <div class="modal-content">
+        <div :class="{
+          'modal-content': true,
+          'modal-content_full-height': props.fullHeight
+        }">
           <slot></slot>
         </div>
       </div>
@@ -43,7 +46,8 @@
 import { watch } from 'vue'
 
 const props = defineProps({
-  modelValue: Boolean
+  modelValue: Boolean,
+  fullHeight: Boolean
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -105,8 +109,12 @@ watch(() => props.modelValue, (newVal) => {
 }
 
 .modal-content {
-  max-height: calc(100vh - var(--top-spacer-height));
+  max-height: calc(100vh - var(--top-spacer-height) - 10px);
   overflow-y: auto;
   border-radius: 16px 16px 0 0;
+}
+
+.modal-content_full-height {
+  height: calc(100vh - var(--top-spacer-height) - 10px);
 }
 </style>

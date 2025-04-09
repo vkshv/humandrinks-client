@@ -7,7 +7,8 @@
   <EventModal />
   <MerchModal />
   <BonusModal />
-  <MerchHowItWorksModal />
+  <BonusHowItWorksModal />
+  <WhatsnewModal />
   <!-- <EventHowItWorksModal /> -->
 </template>
 
@@ -16,7 +17,8 @@ import FoodModal from '@/components/FoodModal.vue'
 import DrinkModal from '@/components/DrinkModal.vue'
 import EventModal from '@/components/EventModal.vue'
 import MerchModal from '@/components/MerchModal.vue'
-import MerchHowItWorksModal from '@/components/MerchHowItWorksModal.vue'
+import BonusHowItWorksModal from '@/components/BonusHowItWorksModal.vue'
 // import EventHowItWorksModal from '@/components/EventHowItWorksModal.vue'
 import BonusModal from '@/components/BonusModal.vue'
+import WhatsnewModal from '@/components/WhatsnewModal.vue'
 </script>

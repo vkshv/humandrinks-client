@@ -1,29 +1,29 @@
 <template>
-  <ItemModal v-model="store.isShowMerchHowItWorks">
+  <ItemModal v-model="store.isShowBonusHowItWorks">
     <div class="modal">
+      <div class="title">Бонусы</div>
       <div class="steps">
         <div class="step">
-          <div class="step__number">1</div>
-          <div class="step__title">копи</div>
-          <div class="step__text">копите бонусы: за каждую покупку в роботах вы получаете 5%</div>
+          <div class="step__number">
+            <span>1</span>
+          </div>
+          <div class="step__title">Копи</div>
+          <div class="step__text">За каждый оплаченный счёт в Роботах <br/> вы получаете 5% бонусов</div>
         </div>
         <div class="step">
-          <div class="step__number">2</div>
-          <div class="step__title">успевай</div>
-          <div class="step__text">включите уведомления о новых дропах</div>
-        </div>
-        <div class="step">
-          <div class="step__number">3</div>
-          <div class="step__title">обменивай</div>
-          <div class="step__text">выбирайте и обменивайте бонусы на мерч в Роботах</div>
+          <div class="step__number">
+            <span>2</span>
+          </div>
+          <div class="step__title">Обменивай</div>
+          <div class="step__text">Обменивай бонусы на мерч, билеты, <br/> еду или напитки в Роботах</div>
         </div>
       </div>
       <div class="okay">
         <ui-button
           class-name="button--tertiary"
-          @click="store.isShowMerchHowItWorks = false"
+          @click="store.isShowBonusHowItWorks = false"
         >
-          ясно!
+          Ясно!
         </ui-button>
       </div>
     </div>
@@ -42,9 +42,16 @@ const store = useItemModalStore()
   background-color: var(--color-gray-white);
 }
 
+.title {
+  font: var(--font-header-h2);
+  color: var(--color-gray-gray-1);
+  text-align: center;
+}
+
 .steps {
+  margin-top: 64px;
   display: grid;
-  row-gap: 48px;
+  row-gap: 40px;
 }
 
 .step {
@@ -59,22 +66,25 @@ const store = useItemModalStore()
   width: 32px;
   height: 32px;
   border-radius: 32px;
-  font: 900 18px/18px TTDrugs;
+  font: 900 24px/24px TTDrugs;
   color: var(--color-gray-gray-1);
   background-color: var(--color-gray-gray-7);
 }
 
+.step__number > span {
+  transform: translateY(2px);
+}
+
 .step__title {
   margin-top: 16px;
-  font: var(--font-header-h2);
+  font: 500 20px/20px TTHoves;
   color: var(--color-gray-gray-1);
   text-align: center;
 }
 
 .step__text {
   justify-self: center;
-  max-width: 264px;
-  margin-top: 8px;
+  margin-top: 10px;
   font: var(--font-body-b2);
   color: var(--color-gray-gray-1);
   text-align: center;
@@ -82,7 +92,7 @@ const store = useItemModalStore()
 
 .okay {
   height: 56px;
-  margin-top: 40px;
+  margin-top: 64px;
 }
 
 .okay > button {

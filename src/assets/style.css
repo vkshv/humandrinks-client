@@ -72,6 +72,7 @@ body.modal {
   --font-header-h1: 900 32px/28px TTDrugs;
   --font-header-h2: 700 24px/22px TTDrugs;
   --font-header-h3: 700 20px/20px TTDrugs;
+  --font-header-h4: 500 18px/24px TTHoves;
   --font-body-b1: 400 18px/18px Arvo;
   --font-body-b1-bold: 700 18px/18px TTDrugs;
   --font-body-b2: 400 16px/16px TTHoves;
@@ -269,7 +270,7 @@ body.modal {
   border-radius: 12px;
   color: var(--color-gray-gray-3);
   background-color: var(--color-gray-gray-7);
-  font: var(--font-body-b1);
+  font: var(--font-body-b1-bold);
 }
 
 .button--success {
@@ -279,7 +280,7 @@ body.modal {
   border-radius: 12px;
   color: var(--color-gray-white);
   background-color: var(--color-accent-green);
-  font: var(--font-body-b1);
+  font: var(--font-body-b1-bold);
 }
 
 .button--text {

@@ -88,7 +88,7 @@ function showBonus() {
 }
 
 function showHowItWorks() {
-  itemModalStore.openMerchHowItWorks()
+  itemModalStore.openBonusHowItWorks()
 }
 
 function checkContentVisibility() {

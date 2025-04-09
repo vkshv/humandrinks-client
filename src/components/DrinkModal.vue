@@ -1,5 +1,5 @@
 <template>
-  <ItemModal v-model="store.isShowDrink">
+  <ItemModal v-model="store.isShowDrink" full-height>
     <div class="modal">
       <div
         class="modal__picture"
@@ -18,12 +18,15 @@
       <div class="modal__description">
         {{ store.contentDrink?.description }}
       </div>
+      <div class="modal__volume">
+        <div class="">Объём {{ store.contentDrink?.volume }} мл</div>
+      </div>
       <div class="modal__close">
         <ui-button
           class-name="button--tertiary"
           @click="store.isShowDrink = false"
         >
-          закрыть
+          Закрыть
         </ui-button>
       </div>
     </div>
@@ -76,19 +79,24 @@ const store = useItemModalStore()
 }
 
 .modal__title {
-  margin-top: 2px;
+  margin-top: 4px;
   padding: 0 16px;
-  font: var(--font-header-h3);
+  font: var(--font-header-h4);
   color: var(--color-gray-gray-1);
-  text-transform: lowercase;
 }
 
 .modal__description {
-  margin-top: 16px;
+  margin-top: 12px;
   padding: 0 16px;
-  font: var(--font-body-b2);
+  font: var(--font-body-b3);
   color: var(--color-gray-gray-1);
-  text-transform: lowercase;
+}
+
+.modal__volume {
+  margin-top: 24px;
+  padding: 0 16px;
+  font: var(--font-body-b3);
+  color: var(--color-gray-gray-4);
 }
 
 .modal__close {

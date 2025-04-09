@@ -6,6 +6,7 @@ export interface IFoodItem {
   new: boolean
   spicy: boolean
   vegan: boolean
+  weight: number
   energyValue: number
   proteins: number
   fats: number
@@ -27,6 +28,7 @@ export interface IDrinkItem {
   description: string
   price: number
   new: boolean
+  volume: number
   picture: string
   category: string
   subcategory: string | null

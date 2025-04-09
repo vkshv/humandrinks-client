@@ -15,7 +15,7 @@
         <path d="M5 12H19" stroke="#141416"/>
       </svg>
     </button>
-    <div class="value">{{ props.modelValue }}</div>
+    <div class="value">{{ computedValue }}</div>
     <button
       :disabled="props.modelValue as number >= props.maxValue"
       @click="update(1)"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 
 const props = defineProps({
   modelValue: Number,
@@ -48,6 +48,11 @@ onMounted(() => {
   if (props.modelValue === undefined) emit('update:modelValue', props.minValue)
   else if (props.modelValue < props.minValue) emit('update:modelValue', props.minValue)
   else if (props.modelValue > props.maxValue) emit('update:modelValue', props.maxValue)
+})
+
+const computedValue = computed(() => {
+  if (props.modelValue === props.maxValue) return `${props.modelValue - 1}+`
+  return props.modelValue?.toString()
 })
 
 function update(value: number) {

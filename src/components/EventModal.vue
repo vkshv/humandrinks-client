@@ -1,12 +1,12 @@
 <template>
-  <ItemModal v-model="store.isShowEvent">
+  <ItemModal v-model="store.isShowEvent" full-height>
     <div class="modal">
       <div
         class="modal__picture"
         :style="{ backgroundImage: `url(${config.STRAPI_URL + store.contentEvent?.picture})` }"
       >
         <div class="modal__tags">
-          <div v-if="store.contentEvent?.almostFull" class="modal__tag">мало мест</div>
+          <!-- <div v-if="store.contentEvent?.almostFull" class="modal__tag">мало мест</div> -->
         </div>
       </div>
       <div class="modal__price">
@@ -24,13 +24,13 @@
       <div class="modal__title">
         {{ store.contentEvent?.title }}
       </div>
+      <div class="modal__description">
+        {{ store.contentEvent?.description }}
+      </div>
       <div class="modal__info">
         <div class="">{{ formatDate(store.contentEvent?.date) }}</div>
         <div class="">{{ store.contentEvent?.time }}</div>
         <div class="">{{ store.contentEvent?.category }}</div>
-      </div>
-      <div class="modal__description">
-        {{ store.contentEvent?.description }}
       </div>
       <div class="modal__extra">
         <div
@@ -43,7 +43,7 @@
           class-name="button--primary"
           @click="reserve"
         >
-          забронировать
+          Забронировать
         </ui-button>
       </div>
     </div>
@@ -61,8 +61,9 @@ const store = useItemModalStore()
 
 const extra = computed(() => {
   const _ = []
-  _.push(`вход ${store.contentEvent?.price} ₽`)
-  if (store.contentEvent?.bonusPayment) _.push('можно баллами')
+  if (store.contentEvent?.almostFull) _.push('Мало мест')
+  _.push(`Вход ${store.contentEvent?.price} ₽`)
+  if (store.contentEvent?.bonusPayment) _.push('Можно баллами')
   return _
 })
 
@@ -86,7 +87,7 @@ function reserve() {
 .modal__picture {
   position: relative;
   border-radius: 0 0 16px 16px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 375 / 466;
   background-position: 50% 50%;
   background-size: cover;
 }
@@ -124,22 +125,21 @@ function reserve() {
 
 .modal__price-bonus {
   color: var(--color-accent-rust);
+  font-style: italic;
 }
 
 .modal__title {
-  margin-top: 2px;
+  margin-top: 4px;
   padding: 0 16px;
-  font: var(--font-header-h3);
+  font: var(--font-header-h4);
   color: var(--color-gray-gray-1);
-  text-transform: lowercase;
 }
 
 .modal__description {
-  margin-top: 24px;
+  margin-top: 12px;
   padding: 0 16px;
-  font: var(--font-body-b2);
+  font: var(--font-body-b3);
   color: var(--color-gray-gray-1);
-  text-transform: lowercase;
 }
 
 .modal__info {
@@ -177,7 +177,6 @@ function reserve() {
   font: var(--font-caption-c1);
   color: var(--color-gray-gray-1);
   background-color: var(--color-gray-gray-7);
-  text-transform: lowercase;
 }
 
 .modal__action {
