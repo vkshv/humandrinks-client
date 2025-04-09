@@ -8,7 +8,7 @@
     >
       <div
         class="event__img"
-        :style="{ backgroundImage: `url(${config.STRAPI_URL + currentEvent.picture})` }"
+        :style="{ backgroundImage: `url(${currentEvent.picture})` }"
       >
       </div>
       <div class="event__title">

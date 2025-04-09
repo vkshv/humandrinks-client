@@ -3,7 +3,7 @@
     <div class="modal">
       <div
         class="modal__picture"
-        :style="{ backgroundImage: `url(${config.STRAPI_URL + store.contentMerch?.picture})` }"
+        :style="{ backgroundImage: `url(${store.contentMerch?.picture})` }"
       >
         <div class="modal__tags">
           <div v-if="store.contentMerch && (store.contentMerch?.count < 4)" class="modal__tag">3 осталось</div>

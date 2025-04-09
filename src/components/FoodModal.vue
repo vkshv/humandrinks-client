@@ -3,7 +3,7 @@
     <div class="modal">
       <div
         class="modal__picture"
-        :style="{ backgroundImage: `url(${config.STRAPI_URL + store.contentFood?.picture})` }"
+        :style="{ backgroundImage: `url(${store.contentFood?.picture})` }"
       >
         <div class="modal__tags">
           <div v-if="store.contentFood?.new" class="modal__tag">new</div>

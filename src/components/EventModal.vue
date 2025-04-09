@@ -3,7 +3,7 @@
     <div class="modal">
       <div
         class="modal__picture"
-        :style="{ backgroundImage: `url(${config.STRAPI_URL + store.contentEvent?.picture})` }"
+        :style="{ backgroundImage: `url(${store.contentEvent?.picture})` }"
       >
         <div class="modal__tags">
           <!-- <div v-if="store.contentEvent?.almostFull" class="modal__tag">мало мест</div> -->
@@ -30,7 +30,7 @@
       <div class="modal__info">
         <div class="">{{ formatDate(store.contentEvent?.date) }}</div>
         <div class="">{{ store.contentEvent?.time }}</div>
-        <div class="">{{ store.contentEvent?.category }}</div>
+        <!-- <div class="">{{ store.contentEvent?.category }}</div> -->
       </div>
       <div class="modal__extra">
         <div

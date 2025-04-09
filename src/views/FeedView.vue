@@ -100,7 +100,7 @@
                 'events__item-img': true,
                 'events__item-img_almost-full': item.almostFull
               }"
-              :style="{ backgroundImage: `url(${config.STRAPI_URL + item.picture})` }"
+              :style="{ backgroundImage: `url(${item.picture})` }"
             >
             </div>
             <div
@@ -129,7 +129,7 @@
         >
           <div
             class="merch__item-img"
-            :style="{ backgroundImage: `url(${config.STRAPI_URL + item.picture})` }"
+            :style="{ backgroundImage: `url(${item.picture})` }"
           >
             <div
               v-if="item.count < 4"
@@ -187,7 +187,7 @@
               >
                 <div
                   class="menu-category__item-img"
-                  :style="{ backgroundImage: `url(${config.STRAPI_URL + item.picture})` }"
+                  :style="{ backgroundImage: `url(${item.picture})` }"
                 >
                   <div class="menu-category__item-tags">
                     <div v-if="item.new" class="menu-category__item-tag">new</div>

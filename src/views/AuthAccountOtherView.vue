@@ -41,7 +41,7 @@
         class-name="button--primary"
         @click="register"
       >
-        готово
+        Готово
       </ui-button>
     </div>
   </div>
