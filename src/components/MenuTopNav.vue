@@ -207,6 +207,7 @@ function categoryClickHandler(_dropdownMenuType: string, item: string) {
   font: var(--font-body-b2-bold);
   color: var(--color-support-coral-3);
   scroll-snap-align: start;
+  white-space: nowrap;
 }
 
 .menu-top-nav__carousel-item-active {
