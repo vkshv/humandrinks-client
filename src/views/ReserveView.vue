@@ -148,7 +148,7 @@ function reserve() {
     : `Здравствуйте! Хочу забронировать стол ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
     window.Telegram.WebApp.openTelegramLink('https://t.me/human_drinks_bot?start=' + encodeURIComponent(message))
   } catch (error) {
-    
+    console.error(error)
   }
 }
 </script>
