@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function sendCode(_phone: string) {
     phone.value = _phone
-    const response = await http.post('auth/send-code', { phone: _phone })
+    const response = await http.post('auth/call-password', { phone: _phone })
     return response
   }
 

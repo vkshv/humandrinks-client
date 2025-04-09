@@ -80,8 +80,8 @@ async function sendCode() {
   } catch (error: any) {
     if (error.response?.status === STATUS_CODE.TOO_MANY_REQUESTS) {
       phoneError.value = 'Попробуйте снова через минуту'
-    } else if (error.response?.status === STATUS_CODE.FORBIDDEN) {
-      phoneError.value = 'Ваш оператор не поддерживается'
+    // } else if (error.response?.status === STATUS_CODE.FORBIDDEN) {
+    //   phoneError.value = 'Ваш оператор не поддерживается'
     } else {
       phoneError.value = 'Что-то пошло не так, повторите попытку позже'
     }
