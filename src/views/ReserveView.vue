@@ -144,9 +144,9 @@ function reserve() {
 
   try {
     const message = currentEvent.value
-    ? `Здравствуйте! Хочу забронировать место на ${currentEvent.value.title} ${formatDate(date.value)} на ${counter.value} чел.`
-    : `Здравствуйте! Хочу забронировать стол ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
-    window.Telegram.WebApp.openTelegramLink('https://t.me/human_drinks_bot?start=' + encodeURIComponent(message))
+    ? `action_send_message:Здравствуйте! Хочу забронировать место на ${currentEvent.value.title} ${formatDate(date.value)} на ${counter.value} чел.`
+    : `action_send_message:Здравствуйте! Хочу забронировать стол ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
+    window.Telegram.WebApp.openTelegramLink('https://t.me/human_drinks_bot?startapp=' + encodeURIComponent(message))
   } catch (error) {
     console.error(error)
   }
