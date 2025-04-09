@@ -1,7 +1,7 @@
 <template>
   <div class="reserve-view">
     <div class="top-spacer-footer"></div>
-    <div class="title">Бронирование</div>
+    <div class="title">Бронирование {{ currentEvent ? '' : 'стола' }}</div>
     <div
       v-if="currentEvent"
       class="event"
@@ -142,7 +142,14 @@ function reserve() {
   validate()
   if (hasError.value) return
 
-  // 
+  try {
+    const message = currentEvent.value
+    ? `Здравствуйте! Хочу забронировать место на ${currentEvent.value.title} ${formatDate(date.value)} на ${counter.value} чел.`
+    : `Здравствуйте! Хочу забронировать стол ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
+    window.Telegram.WebApp.openTelegramLink('https://t.me/human_drinks_bot?start=' + encodeURIComponent(message))
+  } catch (error) {
+    
+  }
 }
 </script>
 
