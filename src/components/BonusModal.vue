@@ -13,12 +13,12 @@
           <span v-if="authStore.userRegData.cardNumber">№ {{ authStore.userRegData.cardNumber }}</span>
         </div>
         <div class="card__add-card">
-          <ui-button
+          <!-- <ui-button
             class-name="button--secondary-3"
             @click="add"
           >
             Добавить карту в кошелёк
-          </ui-button>
+          </ui-button> -->
         </div>
         <div class="card__promo">
           <PromocodeField
@@ -116,7 +116,9 @@ function showHowItWorks() {
   margin-top: 16px;
   padding: 4px;
   border-radius: 16px;
-  background-color: var(--color-accent-rust);
+  background-image: url('../assets/card.jpg');
+  background-position: center center;
+  background-size: cover;
 }
 
 .card__count {

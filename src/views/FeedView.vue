@@ -422,6 +422,10 @@ function scrollToMenu() {
   margin: 8px;
   width: 168px;
   height: 108px;
+  border-radius: 8px;
+  background-image: url('../assets/card.jpg');
+  background-position: center center;
+  background-size: cover;
 }
 
 .bonus__value {
