@@ -151,6 +151,8 @@ function reserve() {
     contentStore.sendBotMessage({ initData, message: user + message })
     window.Telegram.WebApp.showPopup({
       message: 'Заявка принята. Оператор свяжется с вами в Telegram в ближайшее время'
+    }, () => {
+      window.history.back()
     })
   } catch (error) {
     console.error(error)
