@@ -39,7 +39,7 @@ const store = useItemModalStore()
 <style scoped>
 .modal {
   padding: 24px 16px var(--bottom-spacer-height) 16px;
-  background-color: var(--color-gray-white);
+  /* background-color: var(--color-gray-white); */
 }
 
 .steps {

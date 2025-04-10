@@ -112,6 +112,7 @@ watch(() => props.modelValue, (newVal) => {
   max-height: calc(100vh - var(--top-spacer-height) - 22px);
   overflow-y: auto;
   border-radius: 16px 16px 0 0;
+  background-color: var(--color-gray-white);
 }
 
 .modal-content_full-height {

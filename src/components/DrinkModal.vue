@@ -43,7 +43,7 @@ const store = useItemModalStore()
 <style scoped>
 .modal {
   padding-bottom: var(--bottom-spacer-height);
-  background-color: var(--color-gray-white);
+  /* background-color: var(--color-gray-white); */
 }
 
 .modal__picture {
