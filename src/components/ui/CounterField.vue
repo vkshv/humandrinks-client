@@ -61,9 +61,4 @@ function update(value: number) {
 </script>
 
 <style scoped>
-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 </style>

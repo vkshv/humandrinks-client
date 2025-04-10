@@ -84,6 +84,8 @@ defineEmits(['update:modelValue', 'apply'])
   align-self: center;
   width: 40px;
   height: 40px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   background-color: var(--color-accent-green);

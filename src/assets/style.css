@@ -235,6 +235,8 @@ body.modal {
 .button--primary {
   width: 100%;
   height: 56px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   color: var(--color-gray-white);
@@ -245,6 +247,8 @@ body.modal {
 .button--secondary {
   width: 100%;
   height: 56px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   color: var(--color-gray-gray-1);
@@ -255,6 +259,7 @@ body.modal {
 .button--secondary-3 {
   width: 100%;
   height: 30px;
+  margin: 0px;
   padding: 0 16px;
   border: none;
   border-radius: 30px;
@@ -266,6 +271,8 @@ body.modal {
 .button--tertiary {
   width: 100%;
   height: 56px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   color: var(--color-gray-gray-3);
@@ -276,6 +283,8 @@ body.modal {
 .button--success {
   width: 100%;
   height: 56px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   color: var(--color-gray-white);
@@ -284,6 +293,8 @@ body.modal {
 }
 
 .button--text {
+  margin: 0px;
+  padding: 0px;
   border: none;
   color: var(--color-gray-gray-4);
   background-color: transparent;
@@ -293,6 +304,7 @@ body.modal {
 .button--hero {
   width: 100%;
   height: 56px;
+  margin: 0px;
   border: 1px solid color-mix(in srgb, var(--color-support-coral-1), transparent 80%);
   border-radius: 12px;
   color: var(--color-gray-white);
@@ -310,6 +322,8 @@ body.modal {
   position: relative;
   display: flex;
   align-items: start;
+  margin: 0px;
+  padding: 0px;
   padding-top: 18px;
   height: 116px;
 }
@@ -381,6 +395,8 @@ body.modal {
 .counter-field--default > button {
   width: 40px;
   height: 40px;
+  margin: 0px;
+  padding: 0px;
   border: none;
   border-radius: 12px;
   font: var(--font-body-b1);
