@@ -17,6 +17,7 @@ export const useItemModalStore = defineStore('itemModal', () => {
   const isShowBonusHowItWorks = ref(false)
   const isShowBonus = ref(false)
   const isShowWhatsnew = ref(false)
+  const isShowPolicy = ref(false)
   const contentFood = ref<IFoodItem | null>(null)
   const contentDrink = ref<IDrinkItem | null>(null)
   const contentEvent = ref<IEventItem | null>(null)
@@ -60,6 +61,10 @@ export const useItemModalStore = defineStore('itemModal', () => {
     contentWhatsnew.value = data
   }
 
+  function openPolicy() {
+    isShowPolicy.value = true
+  }
+
   return {
     isShowFood,
     isShowDrink,
@@ -69,6 +74,7 @@ export const useItemModalStore = defineStore('itemModal', () => {
     isShowBonusHowItWorks,
     isShowBonus,
     isShowWhatsnew,
+    isShowPolicy,
     contentFood,
     contentDrink,
     contentEvent,
@@ -81,6 +87,7 @@ export const useItemModalStore = defineStore('itemModal', () => {
     openMerch,
     openBonusHowItWorks,
     openBonus,
-    openWhatsnew
+    openWhatsnew,
+    openPolicy
   }
 })

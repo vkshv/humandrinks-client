@@ -27,6 +27,9 @@
         Получить код
       </ui-button>
     </div>
+    <div class="policy" @click="itemModalStore.openPolicy">
+      Нажимая «Получить код», вы принимаете<br/> <span>Политику обработки персональных данных</span><br/> и соглашаетесь на их обработку
+    </div>
     <div class="restore">
       <ui-button
         class-name="button--text"
@@ -36,6 +39,7 @@
       </ui-button>
     </div>
   </div>
+  <PolicyModal/>
 </template>
 
 <script setup lang="ts">
@@ -43,12 +47,17 @@ import { ref } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
+import { useItemModalStore } from '@/stores/itemModal'
+import { useContentStore } from '@/stores/content'
 import { STATUS_CODE } from '@/const/http'
 import router from '@/router'
+import PolicyModal from '@/components/PolicyModal.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
+const itemModalStore = useItemModalStore()
+const contentStore = useContentStore()
 
 const phone = ref('')
 const phoneError = ref('')
@@ -90,8 +99,18 @@ async function sendCode() {
   sendCodeLoader.value = false
 }
 
-function restoreAccess() {
-  
+async function restoreAccess() {
+  appStore.loader = true
+  try {
+    const initData = window.Telegram.WebApp.initData
+    await contentStore.sendBotMessage({ initData, message: 'Заявка на восстановление доступа' })
+    window.Telegram.WebApp.showPopup({
+      message: 'Заявка принята. Оператор свяжется с вами в Telegram в ближайшее время'
+    })
+  } catch (error) {
+    
+  }
+  appStore.loader = false
 }
 </script>
 
@@ -99,7 +118,7 @@ function restoreAccess() {
 .auth-phone-view {
   min-height: var(--safe-viewport-height);
   display: grid;
-  grid-template-rows: repeat(5, max-content) 1fr;
+  grid-template-rows: repeat(5, max-content) 1fr max-content;
 }
 
 .top-spacer-footer {
@@ -134,9 +153,21 @@ function restoreAccess() {
   padding: 0 16px;
 }
 
-.restore {
+.policy {
   align-self: end;
   justify-self: center;
+  font: var(--font-caption-c1);
+  color: var(--color-gray-gray-4);
+  text-align: center;
+}
+
+.policy > span {
+  text-decoration: underline dotted;
+}
+
+.restore {
+  justify-self: center;
+  margin-top: 32px;
   margin-bottom: var(--bottom-spacer-height);
 }
 </style>
