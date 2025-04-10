@@ -14,41 +14,49 @@ export const useContentStore = defineStore('content', () => {
   const whatsnewItems = ref<IWhatsnewItem[]>([])
 
   async function loadFoodItems() {
+    if (foodItems.value.length) return
     const response = await http.get('content/food-items')
     foodItems.value = response.data
   }
 
   async function loadFoodCategories() {
+    if (foodCategories.value.length) return
     const response = await http.get('content/food-categories')
     foodCategories.value = response.data
   }
 
   async function loadDrinkItems() {
+    if (drinkItems.value.length) return
     const response = await http.get('content/drink-items')
     drinkItems.value = response.data
   }
 
   async function loadDrinkCategories() {
+    if (drinkCategories.value.length) return
     const response = await http.get('content/drink-categories')
     drinkCategories.value = response.data
   }
 
   async function loadEventItems() {
+    if (eventItems.value.length) return
     const response = await http.get('content/event-items')
     eventItems.value = response.data
   }
 
   async function loadEventCategories() {
+    if (eventCategories.value.length) return
     const response = await http.get('content/event-categories')
     eventCategories.value = response.data
   }
 
   async function loadMerchItems() {
+    if (merchItems.value.length) return
     const response = await http.get('content/merch-items')
     merchItems.value = response.data
   }
 
   async function loadWhatsnewItems() {
+    if (whatsnewItems.value.length) return
     const response = await http.get('content/whats-new-items')
     whatsnewItems.value = response.data
   }
