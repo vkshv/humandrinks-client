@@ -89,7 +89,7 @@
       <!-- <div class="events__all" @click="router.push('/events')">Все</div> -->
       <div class="events__list">
         <div
-          v-for="item in contentStore.eventItems"
+          v-for="item in contentStore.eventItems.sortDate()"
           :key="item.documentId"
           class="events__item"
           @click="itemModalStore.openEvent(item)"
@@ -122,7 +122,7 @@
       <!-- <div class="merch__all" @click="router.push('/merch')">Все</div> -->
       <div class="merch__list">
         <div
-          v-for="item in contentStore.merchItems"
+          v-for="item in contentStore.merchItems.sortWeight()"
           :key="item.documentId"
           class="merch__item"
           @click="itemModalStore.openMerch(item)"
@@ -149,7 +149,7 @@
       <div class="whats-new__title">Что нового?</div>
       <div class="whats-new__list">
         <div
-          v-for="item in contentStore.whatsnewItems"
+          v-for="item in contentStore.whatsnewItems.sortDate().reverse()"
           :key="item.documentId"
           class="whats-new__item"
           @click="itemModalStore.openWhatsnew(item)"
@@ -181,7 +181,7 @@
             <div v-if="subcategory" class="menu-category__subcategory">{{ subcategory }}</div>
             <div class="menu-category__items">
               <div
-                v-for="item in getCategoryItems(menuType, category.name, subcategory)"
+                v-for="item in getCategoryItems(menuType, category.name, subcategory).sortWeight()"
                 class="menu-category__item"
                 @click="openMenuModal(menuType, item)"
               >

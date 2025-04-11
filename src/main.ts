@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 // @ts-ignore
 import VueTheMask from 'vue-the-mask'
 import App from './App.vue'
+import './helpers/extensions'
 
 import Button from './components/ui/TheButton.vue'
 import TextField from './components/ui/TextField.vue'
