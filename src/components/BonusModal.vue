@@ -74,13 +74,17 @@ function inputPromocodeHandler() {}
 
 async function applyPromocodeHandler() {
   promocode_processing.value = true
-  appStore.loader = true
+  // appStore.loader = true
   try {
     const response = await authStore.redeemPromocode(promocode.value)
     promocode.value = ''
     promocode_error.value = ''
     promocode_success.value = ''
     if (response.data.bonus) {
+      try {
+        const initData = window.Telegram.WebApp.initData
+        await authStore.getUser(initData)
+      } catch (error) {}
       promocode_success.value = `Промокод применён: +${response.data.bonus} бонусов`
     }
   } catch (error) {
@@ -88,7 +92,7 @@ async function applyPromocodeHandler() {
     promocode_success.value = ''
   }
   promocode_processing.value = false
-  appStore.loader = false
+  // appStore.loader = false
 }
 
 function showHowItWorks() {

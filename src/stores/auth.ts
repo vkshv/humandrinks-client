@@ -14,6 +14,12 @@ export const useAuthStore = defineStore('auth', () => {
     return http.post('auth/authenticate-user', { initData })
   }
 
+  async function getUser(initData: any) {
+    const response = await http.post('auth/get-user', { initData })
+    userRegData.value = response.data
+    return response
+  }
+
   function setInitData() {
     initData.value = window.Telegram.WebApp.initDataUnsafe
   }
@@ -59,6 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
     userRegData,
     ACCESS_TOKEN,
     authenticateUser,
+    getUser,
     setInitData,
     sendCode,
     validateCode,
