@@ -132,7 +132,7 @@ async function birthInputHandler() {
 }
 
 function addressChangeHandler(addressSuggestion: AddressSuggestion) {
-  if (addressSuggestion.level < 8) {
+  if (addressSuggestion.level < 7) {
     addressError.value = 'Укажите полный адрес'
   } else {
     addressError.value = ''
