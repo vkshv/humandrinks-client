@@ -2,7 +2,8 @@
   <div class="auth-verification-view">
     <div class="top-spacer-footer"></div>
     <div class="title">Введите код</div>
-    <div class="info">На номер {{ authStore.phone }} придёт смс-код</div>
+    <!-- <div class="info">На номер {{ authStore.phone }} придёт смс-код</div> -->
+    <div class="info">Скоро вам позвонит робот.<br/> Введите последние 4 цифры номера,<br/> с которого будет звонок</div>
     <div class="otp-field">
       <ui-otp-field
         :modelValue="code"
@@ -143,7 +144,7 @@ function startTimer() {
 
 .info {
   justify-self: center;
-  max-width: 240px;
+  /* max-width: 240px; */
   margin-top: 8px;
   font: var(--font-body-b2);
   color: var(--color-gray-gray-4);
