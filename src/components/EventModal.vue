@@ -9,7 +9,7 @@
           <!-- <div v-if="store.contentEvent?.almostFull" class="modal__tag">мало мест</div> -->
         </div>
       </div>
-      <div class="modal__price">
+      <div v-if="store.contentEvent?.price" class="modal__price">
         <div class="">{{ store.contentEvent?.price }} ₽</div>
         <template v-if="store.contentEvent?.bonusPayment">
           <div class="modal__price-separator">/</div>
@@ -21,6 +21,7 @@
           </div>
         </template>
       </div>
+      <div v-else class="modal__price">Свободный вход</div>
       <div class="modal__title">
         {{ store.contentEvent?.title }}
       </div>
@@ -62,7 +63,12 @@ const store = useItemModalStore()
 const extra = computed(() => {
   const _ = []
   if (store.contentEvent?.almostFull) _.push('Мало мест')
-  _.push(`Вход ${store.contentEvent?.price} ₽`)
+  if (store.contentEvent?.price) {
+    _.push(`Вход ${store.contentEvent?.price} ₽`)
+  } else {
+    _.push('Свободный вход')
+  }
+  
   if (store.contentEvent?.bonusPayment) _.push('Можно баллами')
   return _
 })
