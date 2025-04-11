@@ -31,11 +31,11 @@
         {{ store.contentFood?.description }}
       </div>
       <div class="modal__energy">
-        <div class="">{{ store.contentFood?.weight }} г</div>
-        <div class="">{{ store.contentFood?.energyValue }} Ккал</div>
-        <div class="">{{ store.contentFood?.proteins }}Б</div>
-        <div class="">{{ store.contentFood?.fats }}Ж</div>
-        <div class="">{{ store.contentFood?.carbohydrates }}У</div>
+        <div v-if="store.contentFood?.weight">{{ store.contentFood?.weight }} г</div>
+        <div v-if="store.contentFood?.energyValue">{{ store.contentFood?.energyValue }} Ккал</div>
+        <div v-if="store.contentFood?.proteins">{{ store.contentFood?.proteins }}Б</div>
+        <div v-if="store.contentFood?.fats">{{ store.contentFood?.fats }}Ж</div>
+        <div v-if="store.contentFood?.carbohydrates">{{ store.contentFood?.carbohydrates }}У</div>
       </div>
       <div class="modal__ingredients">
         <div
