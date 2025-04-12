@@ -284,6 +284,13 @@ const sliderItems = computed(() => {
   return contentStore.eventItems.slice(0, 3)
 })
 
+const topSpacerHeight = computed(() => {
+  const rootStyles = getComputedStyle(document.documentElement)
+  const insetTop = rootStyles.getPropertyValue('--tg-safe-area-inset-top')
+  const contentInsetTop = rootStyles.getPropertyValue('--tg-content-safe-area-inset-top')
+  return parseInt(insetTop) + parseInt(contentInsetTop)
+})
+
 const menuTypes = ['food', 'drink']
 
 onMounted(async () => {
@@ -343,7 +350,7 @@ function checkContentVisibility() {
     .filter(([_key, el]) => {
       if (!el) return false
       const rect = el.getBoundingClientRect()
-      return rect.bottom > 0 && rect.top < window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top + 36
+      return rect.bottom > 0 && rect.top < topSpacerHeight.value + 41
     })
     .sort(([_keyA, a], [_keyB, b]) => b.getBoundingClientRect().top - a.getBoundingClientRect().top)
     .map(([key, _el]) => key)
@@ -353,7 +360,7 @@ function scrollTo(menuType: 'food' | 'drink', category?: string) {
   const el = category ? category_refs.value[`${menuType}___${category}`] : refs.value[`menu_${menuType}`]
   let offset = 40
   try {
-    offset + window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top
+    offset = offset + topSpacerHeight.value
   } catch (error) {}
   const y = el.getBoundingClientRect().top + window.scrollY - offset
   window.scrollTo({ top: y, behavior: 'smooth' })
@@ -362,7 +369,7 @@ function scrollTo(menuType: 'food' | 'drink', category?: string) {
 function scrollToMenu() {
   let offset = 40
   try {
-    offset + window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top
+    offset = offset + topSpacerHeight.value
   } catch (error) {}
   const y = (menu_ref.value?.getBoundingClientRect().top ?? 0) + window.scrollY - offset
   window.scrollTo({ top: y, behavior: 'smooth' })
