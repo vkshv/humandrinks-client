@@ -38,7 +38,9 @@ onMounted(async () => {
   appStore.init = true
   try {
     await loadTelegramWebAppScript()
-    window.Telegram.WebApp.requestFullscreen()
+    if (['android', 'ios'].includes(window.Telegram.WebApp.platform)) {
+      window.Telegram.WebApp.requestFullscreen()
+    }
     window.Telegram.WebApp.onEvent('backButtonClicked', function() {
       window.history.back()
     })
