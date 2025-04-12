@@ -59,6 +59,15 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function syncVisitor() {
+    const response = await http.post('auth/sync-visitor', userRegData.value)
+    if (response.data.bonus || response.data.cardNumber) {
+      userRegData.value.bonus = response.data.bonus
+      userRegData.value.cardNumber = response.data.cardNumber
+    }
+    return response
+  }
+
   return {
     initData,
     phone,
@@ -72,6 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     checkRegPromocode,
     redeemPromocode,
-    suggestAddress
+    suggestAddress,
+    syncVisitor
   }
 })
