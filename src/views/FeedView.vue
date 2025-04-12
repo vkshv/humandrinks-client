@@ -343,9 +343,9 @@ function checkContentVisibility() {
     .filter(([_key, el]) => {
       if (!el) return false
       const rect = el.getBoundingClientRect()
-      return rect.bottom > 0 && rect.top < window.innerHeight
+      return rect.bottom > 0 && rect.top < window.Telegram.WebApp.SafeAreaInset.top + window.Telegram.WebApp.ContentSafeAreaInset.top + 36
     })
-    .sort(([_keyA, a], [_keyB, b]) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+    .sort(([_keyA, a], [_keyB, b]) => b.getBoundingClientRect().top - a.getBoundingClientRect().top)
     .map(([key, _el]) => key)
 }
 
