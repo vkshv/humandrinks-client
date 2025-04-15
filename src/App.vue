@@ -61,10 +61,6 @@ onMounted(async () => {
   }
   appStore.init = false
 
-  try {
-    authStore.syncVisitor() // not await call!
-  } catch (error) {}
-
   // Telegram WebView перехватывает события касания (touchstart, touchend), из-за чего blur() не вызывается при клике вне инпута
   document.addEventListener('touchstart', function(event) {
     if (event.target instanceof Element && !event.target.closest('input, textarea')) {
