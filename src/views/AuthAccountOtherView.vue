@@ -199,6 +199,11 @@ async function register() {
     const { token, ...userRegData } = response.data
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
+
+    try {
+      authStore.syncVisitor() // not await call!
+    } catch (error) {}
+
     router.push('/feed')
   } catch (error) {
     notificationsStore.error('Что-то пошло не так. Повторите попытку позже')
