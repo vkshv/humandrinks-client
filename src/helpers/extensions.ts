@@ -18,7 +18,7 @@ declare global {
 Array.prototype.sortWeight = function () {
   return [...this].sort((a, b) => {
     if (typeof a.sort_weight === 'number' && typeof b.sort_weight === 'number') {
-      return b.sort_weight - a.sort_weight
+      return a.sort_weight - b.sort_weight
     }
     return 0
   })
