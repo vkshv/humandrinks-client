@@ -49,7 +49,7 @@
           class-name="text-field--primary-extended"
           label="Когда"
           :error="dateError"
-          @input="dateError = ''"
+          @input="validate_date"
         />
       </div>
       <div class="field">
@@ -60,7 +60,7 @@
           class-name="text-field--primary-extended"
           label="Время"
           :error="timeError"
-          @input="timeError = ''"
+          @input="validate_time"
         />
       </div>
       <div class="field">
@@ -112,9 +112,47 @@ const hasError = computed(() => {
   return dateError.value || timeError.value
 })
 
+const date_day = computed(() => {
+  if (!date.value) return
+  const _ = new Date(date.value)
+  return _.getDay()
+})
+
+function validate_date() {
+  dateError.value = ''
+  if (!date.value) {
+    dateError.value = 'Не заполнено'
+    return
+  }
+  if (date_day.value === 1) {
+    dateError.value = 'По понедельникам у нас выходной'
+    return
+  }
+}
+
+function validate_time() {
+  timeError.value = ''
+  if (!time.value) {
+    timeError.value = 'Не заполнено'
+    return
+  }
+  if (date_day.value === undefined) {
+    return
+  }
+  const [hours, minutes] = time.value.split(':').map(Number)
+  const inputMinutes = hours * 60 + minutes
+  const startMinutes = 18 * 60
+  const endHours = [5, 6].includes(date_day.value) ? 4 : 2
+  const endMinutes = endHours * 60
+  if (!(inputMinutes >= startMinutes || inputMinutes <= endMinutes)) {
+    const weekdays = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"]
+    timeError.value = `В ${weekdays[date_day.value]} мы работаем до 0${endHours}:00`
+  }
+}
+
 function validate() {
-  if (!date.value) dateError.value = 'Не заполнено'
-  if (!time.value) timeError.value = 'Не заполнено'
+  validate_date()
+  validate_time()
 }
 
 const currentEvent = computed(() => {
