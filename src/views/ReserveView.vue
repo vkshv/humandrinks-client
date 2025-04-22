@@ -148,7 +148,7 @@ function validate_time() {
   const endHours = [5, 6].includes(date_day.value) ? 4 : 2
   const endMinutes = endHours * 60
   if (!(inputMinutes >= startMinutes || inputMinutes <= endMinutes)) {
-    if (inputMinutes < startMinutes && inputMinutes >= endMinutes) {
+    if (inputMinutes < startMinutes && inputMinutes >= 8 * 60) {
       timeError.value = 'Мы работаем с 18:00'
     } else {
       const weekdays = ["воскресенье", "понедельник", "вторник", "среду", "четверг", "пятницу", "субботу"]
