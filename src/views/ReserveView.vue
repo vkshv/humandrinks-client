@@ -148,8 +148,8 @@ function validate_time() {
   const endHours = [5, 6].includes(date_day.value) ? 4 : 2
   const endMinutes = endHours * 60
   if (!(inputMinutes >= startMinutes || inputMinutes <= endMinutes)) {
-    const weekdays = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"]
-    timeError.value = `В ${weekdays[date_day.value]} мы работаем до 0${endHours}:00`
+    const weekdays = ["воскресенье", "понедельник", "вторник", "среду", "четверг", "пятницу", "субботу"]
+    timeError.value = `В${date_day.value === 2 ? 'о' : ''} ${weekdays[date_day.value]} мы работаем до 0${endHours}:00`
   }
 }
 
