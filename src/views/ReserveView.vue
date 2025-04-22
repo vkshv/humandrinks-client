@@ -139,6 +139,9 @@ function validate_time() {
   if (date_day.value === undefined) {
     return
   }
+  if (date_day.value === 1) {
+    return
+  }
   const [hours, minutes] = time.value.split(':').map(Number)
   const inputMinutes = hours * 60 + minutes
   const startMinutes = 18 * 60
