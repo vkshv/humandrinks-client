@@ -29,8 +29,8 @@
         {{ store.contentEvent?.description }}
       </div>
       <div class="modal__info">
-        <div class="">{{ formatDate(store.contentEvent?.date) }}</div>
-        <div class="">{{ store.contentEvent?.time }}</div>
+        <div class="" v-if="store.contentEvent?.date">{{ formatDate(store.contentEvent?.date) }}</div>
+        <div class="" v-if="store.contentEvent?.time">{{ store.contentEvent?.time }}</div>
         <!-- <div class="">{{ store.contentEvent?.category }}</div> -->
       </div>
       <div class="modal__extra">
