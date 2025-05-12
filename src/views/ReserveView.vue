@@ -43,7 +43,7 @@
     <div class="fields">
       <div class="field field_date">
         <ui-text-field
-          v-if="!currentEvent"
+          v-if="!currentEvent || isUnspecifiedDate"
           v-model="date"
           type="date"
           class-name="text-field--primary-extended"
@@ -165,6 +165,10 @@ function validate() {
 const currentEvent = computed(() => {
   if (!route.query.event) return
   return contentStore.eventItems.find((e) => e.documentId === route.query.event)
+})
+
+const isUnspecifiedDate = computed(() => {
+  return !contentStore.eventItems.find((e) => e.documentId === route.query.event)?.date
 })
 
 onMounted(() => {
