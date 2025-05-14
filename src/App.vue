@@ -14,6 +14,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
+import { useRoute } from 'vue-router'
 import router from '@/router'
 import { STATUS_CODE, STATUS_TEXT } from '@/const/http'
 import TheNotifications from '@/components/TheNotifications.vue'
@@ -23,6 +24,7 @@ import TopSpacer from '@/components/TopSpacer.vue'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
+const route = useRoute()
 
 function loadTelegramWebAppScript() {
   return new Promise<void>((resolve, reject) => {
@@ -35,6 +37,8 @@ function loadTelegramWebAppScript() {
 }
 
 onMounted(async () => {
+  if (route.query.utm_source) authStore.utm_source = route.query.utm_source as string
+
   appStore.init = true
   try {
     await loadTelegramWebAppScript()
