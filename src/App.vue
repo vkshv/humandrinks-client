@@ -50,7 +50,10 @@ onMounted(async () => {
     // что-то пошло не так с telegram-web-app
   }
   try {
+    console.log('log')
+    console.log('window.Telegram.WebApp.initDataUnsafe', window.Telegram.WebApp.initDataUnsafe)
     const start_param = parseQueryString(window.Telegram.WebApp.initDataUnsafe.start_param)
+    console.log('start_param', start_param)
     if (start_param.utm_source) authStore.utm_source = start_param.utm_source
   } catch (error) {
     // 
