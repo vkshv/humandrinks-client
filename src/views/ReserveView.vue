@@ -193,7 +193,9 @@ function reserve() {
 
   try {
     const initData = window.Telegram.WebApp.initData
-    const user = `${authStore.userRegData.name} ${authStore.userRegData.patronymic} ${authStore.userRegData.surname}\n+${authStore.userRegData.phone}\n`
+    let user = `${authStore.userRegData.name} ${authStore.userRegData.patronymic} ${authStore.userRegData.surname}\n+${authStore.userRegData.phone}\n`
+    if (authStore.utm_source) user = user + `${authStore.utm_source}\n`
+
     const message = currentEvent.value
       ? `Бронирование места на ивент «${currentEvent.value.title}» ${formatDate(date.value)} на ${counter.value} чел.`
       : `Бронирование стола ${formatDate(date.value)} в ${time.value} на ${counter.value} чел.`
