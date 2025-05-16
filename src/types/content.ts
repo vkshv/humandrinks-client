@@ -50,6 +50,7 @@ export interface IEventItem {
   price: number
   bonusPrice: number
   almostFull: boolean
+  isFull: boolean
   picture: string
   category: string
   bonusPayment: boolean

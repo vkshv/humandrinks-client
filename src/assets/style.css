@@ -244,6 +244,11 @@ body.modal {
   font: var(--font-body-b1-bold);
 }
 
+.button--primary:disabled {
+  color: var(--color-gray-gray-4);
+  background-color: var(--color-gray-gray-7);
+}
+
 .button--secondary {
   width: 100%;
   height: 56px;

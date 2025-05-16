@@ -41,10 +41,18 @@
       </div>
       <div class="modal__action">
         <ui-button
+          v-if="!store.contentEvent?.isFull"
           class-name="button--primary"
           @click="reserve"
         >
           Забронировать
+        </ui-button>
+        <ui-button
+          v-else
+          class-name="button--primary"
+          disabled
+        >
+          Ой, пока всё занято
         </ui-button>
       </div>
     </div>
@@ -62,7 +70,11 @@ const store = useItemModalStore()
 
 const extra = computed(() => {
   const _ = []
-  if (store.contentEvent?.almostFull) _.push('Мало мест')
+  if (store.contentEvent?.isFull) {
+    _.push('Мест нет')
+  } else if (store.contentEvent?.almostFull) {
+    _.push('Мало мест')
+  }
   if (store.contentEvent?.price) {
     _.push(`Вход ${store.contentEvent?.price} ₽`)
   } else {
