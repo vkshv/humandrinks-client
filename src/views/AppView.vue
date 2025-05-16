@@ -9,6 +9,7 @@
   <BonusModal />
   <BonusHowItWorksModal />
   <WhatsnewModal />
+  <!-- <FeedbackModal /> -->
   <!-- <EventHowItWorksModal /> -->
 </template>
 
@@ -22,13 +23,14 @@ import BonusHowItWorksModal from '@/components/BonusHowItWorksModal.vue'
 // import EventHowItWorksModal from '@/components/EventHowItWorksModal.vue'
 import BonusModal from '@/components/BonusModal.vue'
 import WhatsnewModal from '@/components/WhatsnewModal.vue'
+// import FeedbackModal from '@/components/FeedbackModal.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
 onMounted(async () => {
   try {
-    authStore.syncVisitor() // not await call!
+    await authStore.syncVisitor()
   } catch (error) {}
 })
 </script>
