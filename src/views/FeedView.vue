@@ -104,7 +104,11 @@
             >
             </div>
             <div
-              v-if="item.almostFull"
+              v-if="item.isFull"
+              class="events__item-is-full"
+            >мест нет</div>
+            <div
+              v-else-if="item.almostFull"
               class="events__item-almost-full"
             >мало мест</div>
           </div>
@@ -572,6 +576,15 @@ function scrollToMenu() {
 
 .events__item-img_almost-full {
   opacity: 0.8;
+}
+
+.events__item-is-full {
+  position: relative;
+  padding: 4px 8px;
+  border-radius: 18px;
+  background-color: var(--color-gray-white);
+  color: var(--color-gray-gray-1);
+  font: var(--font-caption-c2-bold);
 }
 
 .events__item-almost-full {
