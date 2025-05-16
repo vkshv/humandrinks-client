@@ -11,6 +11,7 @@
   <WhatsnewModal />
   <!-- <FeedbackModal /> -->
   <!-- <EventHowItWorksModal /> -->
+  <FeedbackFab />
 </template>
 
 <script setup lang="ts">
@@ -24,6 +25,7 @@ import BonusHowItWorksModal from '@/components/BonusHowItWorksModal.vue'
 import BonusModal from '@/components/BonusModal.vue'
 import WhatsnewModal from '@/components/WhatsnewModal.vue'
 // import FeedbackModal from '@/components/FeedbackModal.vue'
+import FeedbackFab from '@/components/FeedbackFab.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
