@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { TelegramWebAppInitData } from '@/types/telegram'
-import type { IUserRegData } from '@/types/auth'
+import type { IUserRegData, IReferralProgram } from '@/types/auth'
 import http from '@/services/http'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -10,7 +10,8 @@ export const useAuthStore = defineStore('auth', () => {
   const userRegData = ref<IUserRegData>({})
   const ACCESS_TOKEN = ref<string>('')
   const utm_source = ref<string | undefined>()
-  const referral_code = ref<string | undefined>()
+  const reg_referral_code = ref<string | undefined>()
+  const referralProgram = ref<IReferralProgram | null>(null)
 
   function authenticateUser(initData: any) {
     return http.post('auth/authenticate-user', { initData, utm_source: utm_source.value })
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
     const response = await http.post('auth/register', {
       ...data,
       utm_source: utm_source.value,
-      referral_code: referral_code.value
+      referral_code: reg_referral_code.value
     })
     return response
   }
@@ -74,13 +75,19 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function loadReferralProgram(slug: string) {
+    const response = await http.get('auth/get-referral-program', { params: { slug } })
+    referralProgram.value = response.data
+  }
+
   return {
     initData,
     phone,
     userRegData,
     ACCESS_TOKEN,
     utm_source,
-    referral_code,
+    reg_referral_code,
+    referralProgram,
     authenticateUser,
     getUser,
     setInitData,
@@ -90,6 +97,7 @@ export const useAuthStore = defineStore('auth', () => {
     checkRegPromocode,
     redeemPromocode,
     suggestAddress,
-    syncVisitor
+    syncVisitor,
+    loadReferralProgram
   }
 })

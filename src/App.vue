@@ -52,7 +52,7 @@ onMounted(async () => {
   try {
     const start_param = parseQueryString(window.Telegram.WebApp.initDataUnsafe.start_param)
     if (start_param.utm_source) authStore.utm_source = start_param.utm_source
-    if (start_param.referral_code) authStore.referral_code = start_param.referral_code
+    if (start_param.referral_code) authStore.reg_referral_code = start_param.referral_code
   } catch (error) {
     // 
   }
@@ -61,6 +61,9 @@ onMounted(async () => {
     const { token, ...userRegData } = response.data
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
+    if (authStore.userRegData.referralProgram && !authStore.userRegData.referralProgram.activated) {
+      authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string) // not await call
+    }
     router.push('/feed')
   } catch (error: any) {
     if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {

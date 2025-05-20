@@ -326,6 +326,7 @@ onUnmounted(() => {
 })
 
 function showBonus() {
+  navigator.clipboard.writeText(authStore.userRegData.referralCode as string) // TODO: delete after
   itemModalStore.openBonus()
 }
 
