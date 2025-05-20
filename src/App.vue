@@ -52,6 +52,7 @@ onMounted(async () => {
   try {
     const start_param = parseQueryString(window.Telegram.WebApp.initDataUnsafe.start_param)
     if (start_param.utm_source) authStore.utm_source = start_param.utm_source
+    if (start_param.referral_code) authStore.referral_code = start_param.referral_code
   } catch (error) {
     // 
   }

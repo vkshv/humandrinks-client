@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
   const userRegData = ref<IUserRegData>({})
   const ACCESS_TOKEN = ref<string>('')
   const utm_source = ref<string | undefined>()
+  const referral_code = ref<string | undefined>()
 
   function authenticateUser(initData: any) {
     return http.post('auth/authenticate-user', { initData, utm_source: utm_source.value })
@@ -41,7 +42,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function register(data: any) {
-    const response = await http.post('auth/register', { ...data, utm_source: utm_source.value })
+    const response = await http.post('auth/register', {
+      ...data,
+      utm_source: utm_source.value,
+      referral_code: referral_code.value
+    })
     return response
   }
 
@@ -75,6 +80,7 @@ export const useAuthStore = defineStore('auth', () => {
     userRegData,
     ACCESS_TOKEN,
     utm_source,
+    referral_code,
     authenticateUser,
     getUser,
     setInitData,
