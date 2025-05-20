@@ -199,6 +199,9 @@ async function register() {
     const { token, ...userRegData } = response.data
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
+    if (authStore.userRegData.referralProgram && !authStore.userRegData.referralProgram.activated) {
+      authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string) // not await call
+    }
 
     router.push('/feed')
   } catch (error) {
