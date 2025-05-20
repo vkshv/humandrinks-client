@@ -12,8 +12,12 @@ import config from '@/config'
 
 function clickHandler() {
   try {
-    window.open(config.FEEDBACK_TG_LINK, '_blank')
-    window.Telegram.WebApp.close()
+    window.Telegram.WebApp.showConfirm('Мы откроем telegram-чат с поддержкой, а приложение закроется. Продолжить?', (answer: boolean) => {
+      if (answer) {
+        window.open(config.FEEDBACK_TG_LINK, '_blank')
+        window.Telegram.WebApp.close()
+      }
+    })
   } catch (error) {
     // 
   }
@@ -23,7 +27,7 @@ function clickHandler() {
 <style scoped>
 .feedback-fab {
   position: fixed;
-  bottom: calc(var(--bottom-spacer-height));
+  bottom: calc(var(--bottom-spacer-height) - 2px);
   display: flex;
   align-items: center;
   justify-content: center;
