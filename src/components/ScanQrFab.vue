@@ -15,6 +15,11 @@
 import config from '@/config'
 
 function clickHandler() {
+  try {
+    window.Telegram.WebApp.showScanQrPopup({}, (text: string) => {
+      window.Telegram.WebApp.showPopup({ message: text })
+    })
+  } catch (error) {}
 }
 </script>
 
