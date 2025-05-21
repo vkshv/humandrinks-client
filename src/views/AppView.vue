@@ -11,7 +11,8 @@
   <WhatsnewModal />
   <!-- <FeedbackModal /> -->
   <!-- <EventHowItWorksModal /> -->
-  <FeedbackFab />
+  <ScanQrFab v-if="authStore.userRegData.isAdmin" />
+  <FeedbackFab v-else />
 </template>
 
 <script setup lang="ts">
@@ -26,6 +27,7 @@ import BonusModal from '@/components/BonusModal.vue'
 import WhatsnewModal from '@/components/WhatsnewModal.vue'
 // import FeedbackModal from '@/components/FeedbackModal.vue'
 import FeedbackFab from '@/components/FeedbackFab.vue'
+import ScanQrFab from '@/components/ScanQrFab.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
