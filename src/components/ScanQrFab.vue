@@ -13,13 +13,40 @@
 
 <script setup lang="ts">
 import config from '@/config'
+import { useAppStore } from '@/stores/app'
+import { useAgentStore } from '@/stores/agent'
+import { QrActionType } from '@/const/common'
+
+const appStore = useAppStore()
+const agentStore = useAgentStore()
 
 function clickHandler() {
-  try {
-    window.Telegram.WebApp.showScanQrPopup({}, (text: string) => {
-      window.Telegram.WebApp.showPopup({ message: text })
-    })
-  } catch (error) {}
+  window.Telegram.WebApp.showScanQrPopup({}, async (text: string) => {
+    window.Telegram.WebApp.closeScanQrPopup()
+    let qr_data = null
+    try {
+      qr_data = JSON.parse(text)
+      if (!Object.values(QrActionType).includes(qr_data.ACTN)) throw new Error()
+    } catch (error) {
+      window.Telegram.WebApp.showPopup({ message: 'ОШИБКА. Некорректный QR-код' })
+      return
+    }
+
+    // Активация реферального кода
+    if (qr_data.ACTN === QrActionType.ACTIVATE_REFERRAL_PROGRAM) {
+      if (!+qr_data.DT) {
+        window.Telegram.WebApp.showPopup({ message: 'ОШИБКА. Некорректный QR-код' })
+      }
+      appStore.loader = true
+      try {
+        await agentStore.activateReferralProgram(qr_data.DT)
+        window.Telegram.WebApp.showPopup({ message: 'Реферальная программа активирована' })
+      } catch (error: any) {
+        window.Telegram.WebApp.showPopup({ message: 'ОШИБКА. ' + error.response.data.message })
+      }
+      appStore.loader = false
+    }
+  })
 }
 </script>
 
