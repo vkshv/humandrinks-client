@@ -326,7 +326,7 @@ onUnmounted(() => {
 })
 
 function showBonus() {
-  navigator.clipboard.writeText(authStore.userRegData.referralCode as string) // TODO: delete after
+  navigator.clipboard.writeText('https://t.me/human_drinks_bot/app?startapp=referral_code=' + authStore.userRegData.referralCode as string) // TODO: delete after
   itemModalStore.openBonus()
 }
 

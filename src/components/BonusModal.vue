@@ -38,6 +38,15 @@
         class="how-it-works"
         @click="showHowItWorks"
       >Как работают бонусы?</div>
+
+      <!--  -->
+      <div
+        v-if="authStore.userRegData.referralProgram?.activated === false"
+        class=""
+        @click="store.isShowReferralBonus = true"
+      >РЕФ БОНУС</div>
+      <!--  -->
+
       <div class="close">
         <ui-button
           class-name="button--tertiary"

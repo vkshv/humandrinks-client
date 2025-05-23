@@ -52,6 +52,7 @@ import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
+import { useItemModalStore } from '@/stores/itemModal'
 import { STATUS_CODE } from '@/const/http'
 import type { AddressSuggestion } from '@/types/auth'
 import router from '@/router'
@@ -61,6 +62,7 @@ import AddressSuggestionField from '@/components/AddressSuggestionField.vue'
 const appStore = useAppStore()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
+const itemModalStore = useItemModalStore()
 
 const birthError = ref('')
 const addressError = ref('')
@@ -200,7 +202,7 @@ async function register() {
     authStore.ACCESS_TOKEN = token
     authStore.userRegData = userRegData
     if (authStore.userRegData.referralProgram && !authStore.userRegData.referralProgram.activated) {
-      authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string) // not await call
+      authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string).then(() => itemModalStore.isShowReferralBonus = true) // not await call
     }
 
     router.push('/feed')
