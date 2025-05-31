@@ -262,7 +262,7 @@ function copyRefLink() {
 
 .referral-program {
   display: grid;
-  grid-template-columns: max-content 1fr max-content;
+  grid-template-columns: 80px 1fr max-content;
   grid-template-rows: 1fr max-content;
   column-gap: 16px;
   height: 80px;
