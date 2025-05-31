@@ -11,10 +11,12 @@
       <div class="modal__description">
         {{ authStore.referralProgram?.referral_description }}
       </div>
-      <div
-        class="modal__qr"
-        :style="{ backgroundImage: `url(${qrDataURL})` }"
-      >
+      <div class="modal__qr-box">
+        <div
+          class="modal__qr"
+          :style="{ backgroundImage: `url(${qrDataURL})` }"
+        >
+        </div>
       </div>
       <div class="modal__close">
         <ui-button
@@ -41,13 +43,24 @@ const authStore = useAuthStore()
 
 const qrDataURL = ref('')
 
-watch(() => store.isShowReferralBonus, (value) => {
+watch(() => store.isShowReferralBonus, async (value) => {
   if (value) {
     const qrData = JSON.stringify({ ACTN: QrActionType.ACTIVATE_REFERRAL_PROGRAM, DT: authStore.initData?.user?.id })
-    QRCode.toDataURL(qrData)
+    QRCode.toDataURL(qrData, {
+      color: {
+        dark: '#FFFFFF',
+        light: '#D45135'
+      },
+      margin: 0,
+      width: 640
+    })
       .then((dataURL: string) => {
         qrDataURL.value = dataURL
       })
+  } else {
+    try {
+      await authStore.getUser(window.Telegram.WebApp.initData)
+    } catch (error) {}
   }
 })
 </script>
@@ -67,9 +80,9 @@ watch(() => store.isShowReferralBonus, (value) => {
 }
 
 .modal__title {
-  margin-top: 4px;
+  margin-top: 24px;
   padding: 0 16px;
-  font: var(--font-header-h4);
+  font: var(--font-header-h2);
   color: var(--color-gray-gray-1);
 }
 
@@ -80,12 +93,20 @@ watch(() => store.isShowReferralBonus, (value) => {
   color: var(--color-gray-gray-1);
 }
 
+.modal__qr-box {
+  width: 50%;
+  margin: 48px auto;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--color-accent-rust);
+}
+
 .modal__qr {
-  margin-top: 24px;
-  padding: 0 16px;
   aspect-ratio: 1 / 1;
   background-position: 50% 50%;
   background-size: contain;
+  background-repeat: no-repeat;
+  background-color: var(--color-accent-rust);
 }
 
 .modal__close {

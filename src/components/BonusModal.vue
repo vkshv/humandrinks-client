@@ -1,7 +1,7 @@
 <template>
-  <ItemModal v-model="store.isShowBonus">
+  <ItemModal v-model="store.isShowBonus" full-height>
     <div class="modal">
-      <div class="title">Бонусы</div>
+      <div class="title">Бонусная система</div>
       <div class="card">
         <div class="card__count">
           <span>{{ authStore.userRegData.bonus }}</span>
@@ -34,18 +34,52 @@
       </div>
       <div v-if="promocode_error" class="promo-error">{{ promocode_error }}</div>
       <div v-if="promocode_success" class="promo-success">{{ promocode_success }}</div>
+      
+      <div
+        v-if="authStore.userRegData.referralProgram?.activated === false && referralProgramCountdown > 0"
+        class="referral-program"
+        @click="store.isShowReferralBonus = true"
+      >
+        <div
+          class="referral-program__picture"
+          :style="{ backgroundImage: `url(${authStore.referralProgram?.referral_picture})` }"
+        ></div>
+        <div class="referral-program__title">
+          {{ authStore.referralProgram?.referral_title }}
+        </div>
+        <div :class="{
+          'referral-program__countdown': true,
+          [referralProgramCountdownClassName]: true
+        }">
+          Осталось {{ referralProgramCountdown }} {{ pluralize(referralProgramCountdown, 'день', 'дня', 'дней') }}
+        </div>
+        <div class="referral-program__action">
+          <ui-button class-name="button--secondary-3">
+            Получить
+          </ui-button>
+        </div>
+      </div>
+
+      <div class="invite-user" v-if="authStore.userRegData.isAdmin">
+        <div class="invite-user__title">Приглашай друзей!</div>
+        <div class="invite-user__invited-count">Друзей приведено: {{ authStore.userRegData.referralsCount }}</div>
+        <div
+          class="invite-user__qr"
+          :style="{ backgroundImage: `url(${qrDataURL})` }"
+        ></div>
+        <div class="invite-user__copy-link">
+          <ui-button
+            class-name="button--secondary-compact"
+            @click="copyRefLink"
+          >
+            Поделиться
+          </ui-button>
+        </div>
+      </div>
       <div
         class="how-it-works"
         @click="showHowItWorks"
-      >Как работают бонусы?</div>
-
-      <!--  -->
-      <div
-        v-if="authStore.userRegData.referralProgram?.activated === false"
-        class=""
-        @click="store.isShowReferralBonus = true"
-      >РЕФ БОНУС</div>
-      <!--  -->
+      >Как работает бонусная система?</div>
 
       <div class="close">
         <ui-button
@@ -60,20 +94,61 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+// @ts-ignore
+import QRCode from 'qrcode'
 import { useItemModalStore } from '@/stores/itemModal'
 import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
+import { useNotificationsStore } from '@/stores/notifications'
 import PromocodeField from '@/components/PromocodeField.vue'
+import config from '@/config'
+import { pluralize } from '@/helpers'
 
 const store = useItemModalStore()
 const authStore = useAuthStore()
 const appStore = useAppStore()
+const notificationsStore = useNotificationsStore()
 
 const promocode = ref('')
 const promocode_error = ref('')
 const promocode_success = ref('')
 const promocode_processing = ref(false)
+
+const qrDataURL = ref('')
+
+const referralProgramCountdown = computed(() => {
+  const createdDate = new Date(authStore.userRegData.createdAt ?? '1970-01-01T00:00:00.000Z')
+  const expireDate = new Date(createdDate)
+  expireDate.setDate(expireDate.getDate() + 30)
+
+  const now = new Date()
+  const diffMs = +expireDate - +now
+  return Math.max(Math.ceil(diffMs / (1000 * 60 * 60 * 24)), 0)
+})
+
+const referralProgramCountdownClassName = computed(() => {
+  if (referralProgramCountdown.value <= 5) return 'referral-program__countdown_danger'
+  if (referralProgramCountdown.value <= 15) return 'referral-program__countdown_warning'
+  return ''
+})
+
+watch(() => store.isShowBonus, (value) => {
+  if (value) {
+    const qrData = config.TG_APP_URL + '?startapp=referral_code=' + authStore.userRegData.referralCode as string
+    QRCode.toDataURL(qrData, {
+      color: {
+        dark: '#FFFFFF',
+        light: '#D45135'
+      },
+      margin: 0,
+      width: 640
+    })
+      .then((dataURL: string) => {
+        qrDataURL.value = dataURL
+      })
+  }
+})
 
 function copy() {}
 
@@ -97,7 +172,7 @@ async function applyPromocodeHandler() {
       promocode_success.value = `Промокод применён: +${response.data.bonus} бонусов`
     }
   } catch (error) {
-    promocode_error.value = 'Промокод недействителен или истек'
+    promocode_error.value = 'Промокод недействителен или истёк'
     promocode_success.value = ''
   }
   promocode_processing.value = false
@@ -106,6 +181,15 @@ async function applyPromocodeHandler() {
 
 function showHowItWorks() {
   store.openBonusHowItWorks()
+}
+
+function copyRefLink() {
+  try {
+    navigator.clipboard.writeText(`Мы уже залетели в «Роботов», гоу с нами? Регистрируйся и получи свой первый авторский коктейль за счёт заведения 🤖🍸
+    ${config.TG_APP_URL}?startapp=referral_code=${authStore.userRegData.referralCode}`)
+
+    window.Telegram.WebApp.showPopup({ message: 'Ссылка скопирована. Поделись ей с друзьями!' })
+  } catch (error) {}
 }
 </script>
 
@@ -174,6 +258,87 @@ function showHowItWorks() {
   font: var(--font-caption-c1);
   color: var(--color-accent-green);
   text-align: center;
+}
+
+.referral-program {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  grid-template-rows: 1fr max-content;
+  column-gap: 16px;
+  height: 80px;
+  margin-top: 16px;
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.referral-program__picture {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  aspect-ratio: 1 / 1;
+  background-position: 50% 50%;
+  background-size: cover;
+  border-radius: 12px;
+}
+
+.referral-program__title {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+  margin-top: 8px;
+  font: 900 16px / 16px TTDrugs;
+  color: var(--color-gray-gray-1);
+}
+
+.referral-program__countdown {
+  align-self: end;
+  margin-bottom: 12px;
+  font: 700 12px / 12px TTDrugs;
+  color: var(--color-gray-gray-3);
+}
+
+.referral-program__countdown_warning {
+  color: var(--color-gray-gray-3);
+}
+
+.referral-program__countdown_danger {
+  color: var(--color-accent-rust);
+}
+
+.referral-program__action {
+  margin: 0 4px 4px 0;
+}
+
+.invite-user {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, max-content) 1fr;
+  column-gap: 16px;
+  margin-top: 16px;
+  padding: 8px;
+  border-radius: 16px;
+  color: var(--color-gray-white);
+  background-color: var(--color-accent-rust);
+}
+
+.invite-user__title {
+  margin: 8px 0 0 8px;
+  font: 900 20px / 20px TTDrugs;
+}
+
+.invite-user__invited-count {
+  margin: 8px 0 0 8px;
+  font: 700 12px / 12px TTDrugs;
+}
+
+.invite-user__qr {
+  grid-column: 2 / 3;
+  grid-row: 1 / 4;
+  aspect-ratio: 1 / 1;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+
+.invite-user__copy-link {
+  align-self: end;
 }
 
 .how-it-works {

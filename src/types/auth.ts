@@ -10,6 +10,8 @@ export interface IUserRegData {
   cardNumber?: string | null
   referralProgram?: IUserReferralProgram | null
   referralCode?: string
+  referralsCount?: number
+  createdAt?: string
   isAdmin?: boolean
 }
 

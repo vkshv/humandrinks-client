@@ -5,7 +5,13 @@
         Привет,<br/>{{ authStore.userRegData.name }}!
       </div>
       <div class="bonus">
-        <div class="bonus__title">Бонусная<br/> карта</div>
+        <div class="bonus__title" @click="showBonus">
+          Бонусная<br/> система
+          <div
+            v-if="bonusBadgeCounter > 0"
+            class="bonus__badge"
+          >{{ bonusBadgeCounter }}</div>
+        </div>
         <div class="bonus__read-more" @click="showBonus">Подробнее</div>
         <div class="bonus__card">
           <div class="bonus__value">
@@ -295,6 +301,14 @@ const topSpacerHeight = computed(() => {
   return parseInt(insetTop) + parseInt(contentInsetTop)
 })
 
+const bonusBadgeCounter = computed(() => {
+  let count = 0
+  if (authStore.userRegData.referralProgram?.activated === false) {
+    count++
+  }
+  return count
+})
+
 const menuTypes = ['food', 'drink']
 
 onMounted(async () => {
@@ -326,7 +340,6 @@ onUnmounted(() => {
 })
 
 function showBonus() {
-  navigator.clipboard.writeText('https://t.me/human_drinks_bot/app?startapp=referral_code=' + authStore.userRegData.referralCode as string) // TODO: delete after
   itemModalStore.openBonus()
 }
 
@@ -410,11 +423,45 @@ function scrollToMenu() {
 }
 
 .bonus__title {
+  position: relative;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+  width: max-content;
   margin: 16px 0 0 16px;
   font: 900 20px/20px TTDrugs;
   color: var(--color-gray-white);
+}
+
+.bonus__badge {
+  position: absolute;
+  top: -8px;
+  right: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  background-color: var(--color-accent-yellow);
+  color: var(--color-gray-gray-1);
+  font: var(--font-body-b3-bold);
+  font-size: 12px;
+  animation: periodicBounce 5s infinite;
+}
+
+@keyframes periodicBounce {
+  0%, 96%, 100% {
+    transform: translateY(0);
+  }
+  97% {
+    transform: translateY(-5px);
+  }
+  98% {
+    transform: translateY(0);
+  }
+  99% {
+    transform: translateY(-3px);
+  }
 }
 
 .bonus__read-more {
