@@ -95,7 +95,7 @@
       <!-- <div class="events__all" @click="router.push('/events')">Все</div> -->
       <div class="events__list">
         <div
-          v-for="item in contentStore.eventItems.sortDate()"
+          v-for="item in contentStore.eventItems.reverse()"
           :key="item.documentId"
           class="events__item"
           @click="itemModalStore.openEvent(item)"
