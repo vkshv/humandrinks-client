@@ -91,6 +91,8 @@ watch(() => store.isShowReferralBonus, async (value) => {
   padding: 0 16px;
   font: var(--font-body-b3);
   color: var(--color-gray-gray-1);
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .modal__qr-box {
