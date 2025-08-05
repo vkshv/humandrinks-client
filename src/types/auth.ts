@@ -12,6 +12,7 @@ export interface IUserRegData {
   referralCode?: string
   referralsCount?: number
   createdAt?: string
+  isPersonalDataConsented?: boolean
   isAdmin?: boolean
 }
 

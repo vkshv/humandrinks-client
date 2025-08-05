@@ -16,6 +16,7 @@
         class="modal"
       >
         <div
+          v-if="!props.disableClose"
           class="close"
           @click="emit('update:modelValue', false)"
         >
@@ -47,7 +48,8 @@ import { watch } from 'vue'
 
 const props = defineProps({
   modelValue: Boolean,
-  fullHeight: Boolean
+  fullHeight: Boolean,
+  disableClose: Boolean
 })
 
 const emit = defineEmits(['update:modelValue'])

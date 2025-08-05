@@ -298,6 +298,10 @@ body.modal {
   font: var(--font-body-b1-bold);
 }
 
+.button--tertiary > .loading > div {
+  background-color: var(--color-gray-gray-3);
+}
+
 .button--success {
   width: 100%;
   height: 56px;

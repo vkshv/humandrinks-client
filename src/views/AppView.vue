@@ -10,6 +10,7 @@
   <BonusHowItWorksModal />
   <WhatsnewModal />
   <ReferralBonusModal />
+  <PersonalDataConsentModal />
   <!-- <FeedbackModal /> -->
   <!-- <EventHowItWorksModal /> -->
   <ScanQrFab v-if="authStore.userRegData.isAdmin" />
@@ -27,6 +28,7 @@ import BonusHowItWorksModal from '@/components/BonusHowItWorksModal.vue'
 import BonusModal from '@/components/BonusModal.vue'
 import WhatsnewModal from '@/components/WhatsnewModal.vue'
 import ReferralBonusModal from '@/components/ReferralBonusModal.vue'
+import PersonalDataConsentModal from '@/components/PersonalDataConsentModal.vue'
 // import FeedbackModal from '@/components/FeedbackModal.vue'
 import FeedbackFab from '@/components/FeedbackFab.vue'
 import ScanQrFab from '@/components/ScanQrFab.vue'

@@ -20,6 +20,7 @@ export const useItemModalStore = defineStore('itemModal', () => {
   const isShowPolicy = ref(false)
   const isShowFeedback = ref(false)
   const isShowReferralBonus = ref(false)
+  const isShowPersonalDataConsent = ref(false)
   const contentFood = ref<IFoodItem | null>(null)
   const contentDrink = ref<IDrinkItem | null>(null)
   const contentEvent = ref<IEventItem | null>(null)
@@ -79,6 +80,7 @@ export const useItemModalStore = defineStore('itemModal', () => {
     isShowPolicy,
     isShowFeedback,
     isShowReferralBonus,
+    isShowPersonalDataConsent,
     contentFood,
     contentDrink,
     contentEvent,

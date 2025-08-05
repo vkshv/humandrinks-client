@@ -11,6 +11,7 @@ import Button from './components/ui/TheButton.vue'
 import TextField from './components/ui/TextField.vue'
 import OtpField from './components/ui/OtpField.vue'
 import CounterField from './components/ui/CounterField.vue'
+import Checkbox from './components/ui/TheCheckbox.vue'
 import ItemModal from './components/ItemModal.vue'
 
 import { vClickOutside } from './helpers/directives'
@@ -23,6 +24,7 @@ app.component('UiButton', Button)
 app.component('UiTextField', TextField)
 app.component('UiOtpField', OtpField)
 app.component('UiCounterField', CounterField)
+app.component('UiCheckbox', Checkbox)
 app.component('ItemModal', ItemModal)
 
 app.use(createPinia())

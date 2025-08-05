@@ -312,6 +312,9 @@ const bonusBadgeCounter = computed(() => {
 const menuTypes = ['food', 'drink']
 
 onMounted(async () => {
+  if (!authStore.userRegData.isPersonalDataConsented) {
+    itemModalStore.isShowPersonalDataConsent = true
+  }
   appStore.loader = true
   try {
     await Promise.all([

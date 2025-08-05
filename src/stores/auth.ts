@@ -51,6 +51,11 @@ export const useAuthStore = defineStore('auth', () => {
     return response
   }
 
+  async function consentPersonalData() {
+    const response = await http.post('auth/consent-personal-data')
+    return response
+  }
+
   async function checkRegPromocode(promocode: string) {
     const response = await http.get('auth/check-reg-promocode', { params: { promocode } })
     return response
@@ -94,6 +99,7 @@ export const useAuthStore = defineStore('auth', () => {
     sendCode,
     validateCode,
     register,
+    consentPersonalData,
     checkRegPromocode,
     redeemPromocode,
     suggestAddress,
