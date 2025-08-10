@@ -15,8 +15,8 @@
       <div class="modal__close">
         <ui-button
           v-if="isConfirmed"
-          class-name="button--tertiary"
           :loading="loading"
+          class-name="button--tertiary"
           @click="consent"
         >
           Продолжить
