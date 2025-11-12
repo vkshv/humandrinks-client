@@ -352,7 +352,7 @@ function getCategories(menuType: string) {
 
 function getCategoryItems(menuType: string, category: string, subcategory: string | null): any {
   const items = menuType === 'food' ? contentStore.foodItems : contentStore.drinkItems
-  return items.filter((e) => e.category === category && (!subcategory || e.subcategory === subcategory))
+  return items.filter((e) => e.category === category && (!subcategory || e.subcategory === subcategory) && e.title)
 }
 
 function openMenuModal(menuType: string, item: IFoodItem | IDrinkItem) {
