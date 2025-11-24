@@ -39,7 +39,7 @@
       </div>
       <div class="modal__ingredients">
         <div
-          v-for="ingredient in store.contentFood?.ingredients"
+          v-for="ingredient in store.contentFood?.ingredients?.filter((e) => e)"
           class="modal__ingredient"
         >{{ ingredient }}</div>
       </div>

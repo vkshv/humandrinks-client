@@ -17,7 +17,7 @@
       <div class="events__title">Ивенты</div>
       <div class="events__list">
         <div
-          v-for="item in [...contentStore.eventItems].reverse()"
+          v-for="item in events"
           :key="item.documentId"
           class="events__item"
           @click="itemModalStore.openEvent(item)"
@@ -175,6 +175,19 @@ const visibleCategoryKeys = ref<string[]>([])
 const isFoodUnderViewport = ref(false)
 const isDrinkUnderViewport = ref(false)
 const isHeroOverViewport = ref(false)
+
+const events = computed(() => {
+  return [...contentStore.eventItems].sort((a, b) => {
+    const dateA = a?.date ? new Date(a.date).getTime() : NaN
+    const dateB = b?.date ? new Date(b.date).getTime() : NaN
+
+    if (isNaN(dateA) && isNaN(dateB)) return 0
+    if (isNaN(dateA)) return -1
+    if (isNaN(dateB)) return 1
+
+    return dateA - dateB
+  })
+})
 
 // const sliderItems = computed(() => {
 //   return contentStore.eventItems.slice(0, 3)

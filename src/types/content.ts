@@ -11,7 +11,7 @@ export interface IFoodItem {
   proteins: number
   fats: number
   carbohydrates: number
-  ingredients: string
+  ingredients: string[] | null
   picture: string
   category: string
   subcategory: string | null
