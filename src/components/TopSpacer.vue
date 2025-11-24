@@ -9,7 +9,7 @@
   top: 0;
   width: 100vw;
   height: var(--top-spacer-height);
-  background-color: var(--color-accent-rust);
+  background-color: var(--color-gray-gray-1);
   z-index: 1000;
 }
 </style>

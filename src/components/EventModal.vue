@@ -9,7 +9,7 @@
           <!-- <div v-if="store.contentEvent?.almostFull" class="modal__tag">мало мест</div> -->
         </div>
       </div>
-      <div v-if="store.contentEvent?.price" class="modal__price">
+      <!-- <div v-if="store.contentEvent?.price" class="modal__price">
         <div class="">{{ store.contentEvent?.price }} ₽</div>
         <template v-if="store.contentEvent?.bonusPayment">
           <div class="modal__price-separator">/</div>
@@ -21,12 +21,12 @@
           </div>
         </template>
       </div>
-      <div v-else class="modal__price">Свободный вход</div>
+      <div v-else class="modal__price">Свободный вход</div> -->
       <div class="modal__title">
         {{ store.contentEvent?.title }}
       </div>
       <div class="modal__description">
-        {{ store.contentEvent?.description }}
+        {{ description }}
       </div>
       <div class="modal__info">
         <div class="" v-if="store.contentEvent?.date">{{ formatDate(store.contentEvent?.date) }}</div>
@@ -45,7 +45,7 @@
           class-name="button--primary"
           @click="reserve"
         >
-          Забронировать
+          ХОЧУ!
         </ui-button>
         <ui-button
           v-else
@@ -68,6 +68,10 @@ import router from '@/router'
 
 const store = useItemModalStore()
 
+const description = computed(() => {
+  return store.contentEvent?.description?.split('\n###')[0]
+})
+
 const extra = computed(() => {
   const _ = []
   if (store.contentEvent?.isFull) {
@@ -75,24 +79,34 @@ const extra = computed(() => {
   } else if (store.contentEvent?.almostFull) {
     _.push('Мало мест')
   }
-  if (store.contentEvent?.price) {
-    _.push(`Вход ${store.contentEvent?.price} ₽`)
-  } else {
-    _.push('Свободный вход')
-  }
+  // if (store.contentEvent?.price) {
+  //   _.push(`Вход ${store.contentEvent?.price} ₽`)
+  // } else {
+  //   _.push('Свободный вход')
+  // }
   
-  if (store.contentEvent?.bonusPayment) _.push('Можно баллами')
-  return _
+  // if (store.contentEvent?.bonusPayment) _.push('Можно баллами')
+  return _.concat(store.contentEvent?.description?.split('\n###').slice(1) ?? [])
 })
 
 function reserve() {
-  store.isShowEvent = false
-  router.push({
-    name: 'app-reserve',
-    query: {
-      event: store.contentEvent?.documentId
-    }
-  })
+  try {
+    window.Telegram.WebApp.showConfirm('Мы откроем telegram-чат, а приложение закроется. Продолжить?', (answer: boolean) => {
+      if (answer) {
+        window.Telegram.WebApp.openTelegramLink('https://t.me/humandrinks')
+        window.Telegram.WebApp.close()
+      }
+    })
+  } catch (error) {
+    // 
+  }
+  // store.isShowEvent = false
+  // router.push({
+  //   name: 'app-reserve',
+  //   query: {
+  //     event: store.contentEvent?.documentId
+  //   }
+  // })
 }
 </script>
 
@@ -147,7 +161,8 @@ function reserve() {
 }
 
 .modal__title {
-  margin-top: 4px;
+  margin-top: 24px;
+  /* margin-top: 4px; */
   padding: 0 16px;
   font: var(--font-header-h4);
   color: var(--color-gray-gray-1);
@@ -157,7 +172,7 @@ function reserve() {
   margin-top: 12px;
   padding: 0 16px;
   font: var(--font-body-b3);
-  color: var(--color-gray-gray-1);
+  color: var(--color-gray-gray-3);
   word-break: break-word;
   white-space: pre-wrap;
 }

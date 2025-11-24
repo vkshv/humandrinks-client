@@ -49,27 +49,28 @@ onMounted(async () => {
   } catch (error) {
     // что-то пошло не так с telegram-web-app
   }
-  try {
-    const start_param = parseQueryString(window.Telegram.WebApp.initDataUnsafe.start_param)
-    if (start_param.utm_source) authStore.utm_source = start_param.utm_source
-    if (start_param.referral_code) authStore.reg_referral_code = start_param.referral_code
-  } catch (error) {
-    // 
-  }
-  try {
-    const response = await authStore.authenticateUser(window.Telegram.WebApp.initData)
-    const { token, ...userRegData } = response.data
-    authStore.ACCESS_TOKEN = token
-    authStore.userRegData = userRegData
-    if (authStore.userRegData.referralProgram && !authStore.userRegData.referralProgram.activated) {
-      authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string) // not await call
-    }
-    router.push('/feed')
-  } catch (error: any) {
-    if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {
-      router.push('/enter-phone')
-    }
-  }
+  // try {
+  //   const start_param = parseQueryString(window.Telegram.WebApp.initDataUnsafe.start_param)
+  //   if (start_param.utm_source) authStore.utm_source = start_param.utm_source
+  //   if (start_param.referral_code) authStore.reg_referral_code = start_param.referral_code
+  // } catch (error) {
+  //   // 
+  // }
+  // try {
+  //   const response = await authStore.authenticateUser(window.Telegram.WebApp.initData)
+  //   const { token, ...userRegData } = response.data
+  //   authStore.ACCESS_TOKEN = token
+  //   authStore.userRegData = userRegData
+  //   if (authStore.userRegData.referralProgram && !authStore.userRegData.referralProgram.activated) {
+  //     authStore.loadReferralProgram(authStore.userRegData.referralProgram.programSlug as string) // not await call
+  //   }
+  //   router.push('/feed')
+  // } catch (error: any) {
+  //   if (error.response?.status === STATUS_CODE.UNAUTHORIZED) {
+  //     router.push('/enter-phone')
+  //   }
+  // }
+  router.push('/feed')
   appStore.init = false
 
   // Telegram WebView перехватывает события касания (touchstart, touchend), из-за чего blur() не вызывается при клике вне инпута

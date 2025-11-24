@@ -3,18 +3,18 @@
     <RouterView />
   </div>
   <FoodModal />
-  <DrinkModal />
+  <!-- <DrinkModal /> -->
   <EventModal />
   <MerchModal />
-  <BonusModal />
-  <BonusHowItWorksModal />
-  <WhatsnewModal />
-  <ReferralBonusModal />
-  <PersonalDataConsentModal />
+  <!-- <BonusModal /> -->
+  <!-- <BonusHowItWorksModal /> -->
+  <!-- <WhatsnewModal /> -->
+  <!-- <ReferralBonusModal /> -->
+  <!-- <PersonalDataConsentModal /> -->
   <!-- <FeedbackModal /> -->
   <!-- <EventHowItWorksModal /> -->
-  <ScanQrFab v-if="authStore.userRegData.isAdmin" />
-  <FeedbackFab v-else />
+  <!-- <ScanQrFab v-if="authStore.userRegData.isAdmin" /> -->
+  <!-- <FeedbackFab v-else /> -->
 </template>
 
 <script setup lang="ts">
@@ -36,9 +36,9 @@ import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
-onMounted(async () => {
-  try {
-    await authStore.syncVisitor()
-  } catch (error) {}
-})
+// onMounted(async () => {
+//   try {
+//     await authStore.syncVisitor()
+//   } catch (error) {}
+// })
 </script>

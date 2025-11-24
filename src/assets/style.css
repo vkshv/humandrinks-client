@@ -52,6 +52,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("/fonts/JetBrainsMono-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -65,16 +86,22 @@ body.modal {
 }
 
 :root {
+  /* --tg-safe-area-inset-top: 24px;
+  --tg-content-safe-area-inset-top: 12px;
+  --tg-safe-area-inset-bottom: 16px;
+  --tg-viewport-height: 100vh; */
+
   --safe-viewport-height: calc(100vh - var(--tg-safe-area-inset-top) - var(--tg-content-safe-area-inset-top) + 4px);
   --top-spacer-height: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top) - 4px);
   --bottom-spacer-height: calc(24px + var(--tg-safe-area-inset-bottom));
 
   --font-header-h1: 900 32px/28px TTDrugs;
-  --font-header-h2: 700 24px/22px TTDrugs;
-  --font-header-h3: 700 20px/20px TTDrugs;
+  --font-header-h2: 800 24px/22px JetBrainsMono;
+  --font-header-h2-secondary: 500 24px/22px TTHoves;
+  --font-header-h3: 600 20px/20px JetBrainsMono;
   --font-header-h4: 500 18px/24px TTHoves;
   --font-body-b1: 400 18px/18px Arvo;
-  --font-body-b1-bold: 700 18px/18px TTDrugs;
+  --font-body-b1-bold: 800 18px/18px JetBrainsMono;
   --font-body-b2: 400 16px/16px TTHoves;
   --font-body-b2-bold: 500 16px/16px TTHoves;
   --font-body-b3: 400 14px/14px TTHoves;
@@ -88,6 +115,7 @@ body.modal {
 
   --color-gray-white: #FFFFFF;
   --color-gray-gray-1: rgb(17,17,15);
+  --color-gray-gray-2: #24262F;
   --color-gray-gray-3: #353945;
   --color-gray-gray-4: #8088A0;
   --color-gray-gray-5: #B0B8D0;
@@ -240,8 +268,9 @@ body.modal {
   border: none;
   border-radius: 12px;
   color: var(--color-gray-white);
-  background-color: var(--color-accent-rust);
+  background-color: var(--color-gray-gray-1);
   font: var(--font-body-b1-bold);
+  text-transform: uppercase;
 }
 
 .button--primary:disabled {
@@ -256,9 +285,10 @@ body.modal {
   padding: 0px;
   border: none;
   border-radius: 12px;
-  color: var(--color-gray-gray-1);
-  background-color: var(--color-gray-white);
+  color: var(--color-gray-white);
+  background-color: var(--color-gray-gray-2);
   font: var(--font-body-b1-bold);
+  text-transform: uppercase;
 }
 
 .button--secondary-compact {

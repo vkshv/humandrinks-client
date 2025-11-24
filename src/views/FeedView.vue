@@ -1,98 +1,20 @@
 <template>
   <div class="feed-view">
     <div class="hero" ref="hero_ref">
-      <div class="greetings">
-        Привет,<br/>{{ authStore.userRegData.name }}!
-      </div>
-      <div class="bonus">
-        <div class="bonus__title" @click="showBonus">
-          Бонусная<br/> система
-          <div
-            v-if="bonusBadgeCounter > 0"
-            class="bonus__badge"
-          >{{ bonusBadgeCounter }}</div>
-        </div>
-        <div class="bonus__read-more" @click="showBonus">Подробнее</div>
-        <div class="bonus__card">
-          <div class="bonus__value">
-            {{ authStore.userRegData.bonus }}
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.3071 0.0813043C11.4363 0.151156 11.5377 0.261025 11.5951 0.393383C11.6525 0.525741 11.6627 0.672963 11.6239 0.811565L9.86625 7.07107H16.2792C16.4082 7.07108 16.5343 7.10769 16.6422 7.17641C16.75 7.24512 16.8348 7.34295 16.8862 7.45786C16.9376 7.57277 16.9532 7.69976 16.9313 7.82321C16.9094 7.94666 16.8508 8.0612 16.7628 8.15275L7.498 17.7953C7.39709 17.9005 7.26276 17.9699 7.11649 17.9922C6.97022 18.0145 6.82047 17.9886 6.69118 17.9185C6.5619 17.8484 6.46055 17.7382 6.40334 17.6055C6.34614 17.4729 6.33638 17.3254 6.37564 17.1867L8.1333 10.9281H1.72032C1.59135 10.9281 1.4652 10.8915 1.35737 10.8227C1.24953 10.754 1.16472 10.6562 1.11335 10.5413C1.06198 10.4264 1.0463 10.2994 1.06823 10.1759C1.09016 10.0525 1.14875 9.93795 1.23679 9.8464L10.5015 0.203872C10.6025 0.0990004 10.7366 0.0299568 10.8826 0.00774378C11.0286 -0.0144693 11.178 0.0114265 11.3071 0.0813043Z" fill="white"/>
-            </svg>
-          </div>
-          <div class="bonus__card-number">
-            <span v-if="authStore.userRegData.cardNumber">№ {{ authStore.userRegData.cardNumber }}</span>
-          </div>
-        </div>
+      <div class="logo">
+        <img src="../assets/logo_new.svg" alt="">
       </div>
       <div class="reserve">
         <ui-button
           class-name="button--secondary"
-          @click="router.push('/reserve')"
+          @click="reserve"
         >
           Забронировать стол
         </ui-button>
       </div>
-      <!-- <div class="event-slider">
-        <Slider :slot-names="sliderItems.map((e) => e.documentId)">
-          <template
-            v-for="item in sliderItems"
-            :key="item.documentId"
-            v-slot:[item.documentId]
-          >
-            <div
-              class="event-slider__item"
-              :style="{ backgroundImage: `url(${config.STRAPI_URL + item.picture})` }"
-              @click="itemModalStore.openEvent(item)"
-            >
-              <div class="event-slider__title">{{ item.title }}</div>
-              <div class="event-slider__subtitle">{{ formatDate(item.date) }}&nbsp;&nbsp;·&nbsp;&nbsp;{{ item.category }}</div>
-            </div>
-          </template>
-        </Slider>
-      </div> -->
-      <!-- <div class="actions">
-        <ui-button
-          class="actions__bonus"
-          class-name="button--hero button--hero-tall"
-          @click="showBonus"
-        >
-          <span>бонусы</span>
-          <template #extra>
-            <div class="actions__bonus-extra">
-              <div class="">{{ authStore.userRegData.bonus }}</div>
-              <div class="">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9612 1.19614C11.071 1.25727 11.1572 1.3534 11.206 1.46922C11.2548 1.58504 11.2634 1.71386 11.2305 1.83514L9.73647 7.31239H15.1875C15.2971 7.3124 15.4043 7.34444 15.496 7.40457C15.5876 7.4647 15.6597 7.5503 15.7034 7.65085C15.747 7.7514 15.7604 7.86252 15.7417 7.97054C15.7231 8.07857 15.6733 8.17879 15.5985 8.25889L7.72346 16.6964C7.63769 16.7885 7.52351 16.8492 7.39918 16.8687C7.27486 16.8883 7.14757 16.8655 7.03768 16.8042C6.92778 16.7429 6.84164 16.6464 6.79301 16.5304C6.74439 16.4143 6.7361 16.2852 6.76946 16.1639L8.26346 10.6874H2.81246C2.70284 10.6874 2.59561 10.6553 2.50396 10.5952C2.4123 10.5351 2.34021 10.4495 2.29654 10.3489C2.25288 10.2484 2.23955 10.1373 2.25819 10.0292C2.27683 9.92122 2.32663 9.821 2.40146 9.74089L10.2765 1.30339C10.3622 1.21163 10.4763 1.15121 10.6004 1.13178C10.7245 1.11234 10.8515 1.135 10.9612 1.19614Z" fill="white"/>
-                </svg>
-              </div>
-            </div>
-          </template>
-        </ui-button>
-        <ui-button
-          class-name="button--hero"
-          @click="router.push('/merch')"
-        >
-          мерч
-        </ui-button>
-        <ui-button
-          class-name="button--hero"
-          @click="router.push('/events')"
-        >
-          ивенты
-        </ui-button>
-        <ui-button
-          class="actions__reserve"
-          class-name="button--secondary"
-          @click="router.push('/reserve')"
-        >
-          забронировать стол
-        </ui-button>
-      </div> -->
     </div>
     <div class="events">
       <div class="events__title">Ивенты</div>
-      <!-- <div class="events__all" @click="router.push('/events')">Все</div> -->
       <div class="events__list">
         <div
           v-for="item in [...contentStore.eventItems].reverse()"
@@ -110,6 +32,12 @@
             >
             </div>
             <div
+              v-if="item.date"
+              class="events__item-date"
+            >
+              {{ formatDateShort(item.date) }}
+            </div>
+            <div
               v-if="item.isFull"
               class="events__item-is-full"
             >мест нет</div>
@@ -118,18 +46,11 @@
               class="events__item-almost-full"
             >мало мест</div>
           </div>
-          <div class="events__item-title">
-            {{ item.title }}
-          </div>
-          <div class="events__item-date">
-            {{ formatDate(item.date) }}
-          </div>
         </div>
       </div>
     </div>
     <div class="merch">
       <div class="merch__title">Мерч</div>
-      <!-- <div class="merch__all" @click="router.push('/merch')">Все</div> -->
       <div class="merch__list">
         <div
           v-for="item in contentStore.merchItems.sortWeight()"
@@ -146,28 +67,7 @@
               class="merch__item-count"
             >{{ item.count }} осталось</div>
             <div class="merch__item-bonus-price">
-              <span>{{ item.bonusPrice }}</span>
-              <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.69852 1.23098C6.76563 1.26833 6.8183 1.32708 6.84812 1.39786C6.87794 1.46863 6.8832 1.54736 6.86306 1.62148L5.95006 4.96868H9.28123C9.34822 4.96869 9.41375 4.98827 9.46976 5.02501C9.52577 5.06176 9.56983 5.11407 9.59651 5.17552C9.62319 5.23697 9.63134 5.30487 9.61995 5.37089C9.60856 5.4369 9.57813 5.49815 9.5324 5.5471L4.7199 10.7034C4.66748 10.7596 4.5977 10.7967 4.52172 10.8087C4.44575 10.8206 4.36796 10.8067 4.3008 10.7692C4.23365 10.7317 4.181 10.6728 4.15128 10.6019C4.12157 10.5309 4.1165 10.4521 4.1369 10.3779L5.0499 7.03118H1.71873C1.65174 7.03118 1.58621 7.0116 1.5302 6.97486C1.47418 6.93811 1.43013 6.8858 1.40344 6.82435C1.37676 6.7629 1.36862 6.695 1.38001 6.62898C1.3914 6.56297 1.42183 6.50172 1.46756 6.45277L6.28006 1.29652C6.33248 1.24044 6.40216 1.20352 6.478 1.19164C6.55383 1.17976 6.63147 1.19361 6.69852 1.23098Z" fill="#11110F"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="whats-new">
-      <div class="whats-new__title">Что нового?</div>
-      <div class="whats-new__list">
-        <div
-          v-for="item in contentStore.whatsnewItems.sortDate().reverse()"
-          :key="item.documentId"
-          class="whats-new__item"
-          @click="itemModalStore.openWhatsnew(item)"
-        >
-          <div class="whats-new__item-outer">
-            <div class="whats-new__item-inner">
-              <div class="whats-new__item-title">{{ item.title }}</div>
-              <div class="whats-new__item-date">{{ formatPastDate(item.date) }}</div>
+              {{ item.bonusPrice }}
             </div>
           </div>
         </div>
@@ -230,24 +130,10 @@
   </div>
   <ScrollLink
     position="bottom"
-    :show="isFoodUnderViewport && isDrinkUnderViewport"
+    :show="isFoodUnderViewport"
     @click="scrollToMenu"
   >
     меню
-  </ScrollLink>
-  <ScrollLink
-    position="bottom"
-    :show="!isFoodUnderViewport && isDrinkUnderViewport"
-    @click="scrollTo('drink')"
-  >
-    бар
-  </ScrollLink>
-  <ScrollLink
-    position="top"
-    :show="!isFoodUnderViewport && !isDrinkUnderViewport"
-    @click="scrollTo('food')"
-  >
-    еда
   </ScrollLink>
   <MenuTopNav
     :food-categories="contentStore.foodCategories.map((e) => e.name)"
@@ -265,7 +151,7 @@ import { useAppStore } from '@/stores/app'
 import { useContentStore } from '@/stores/content'
 import { useItemModalStore } from '@/stores/itemModal'
 import { useAuthStore } from '@/stores/auth'
-import { formatDate, formatPastDate } from '@/helpers'
+import { formatDateShort } from '@/helpers'
 import type { IFoodItem, IDrinkItem } from '@/types/content'
 import Slider from '@/components/TheSlider.vue'
 import ScrollLink from '@/components/ScrollLink.vue'
@@ -290,9 +176,9 @@ const isFoodUnderViewport = ref(false)
 const isDrinkUnderViewport = ref(false)
 const isHeroOverViewport = ref(false)
 
-const sliderItems = computed(() => {
-  return contentStore.eventItems.slice(0, 3)
-})
+// const sliderItems = computed(() => {
+//   return contentStore.eventItems.slice(0, 3)
+// })
 
 const topSpacerHeight = computed(() => {
   const rootStyles = getComputedStyle(document.documentElement)
@@ -301,31 +187,31 @@ const topSpacerHeight = computed(() => {
   return parseInt(insetTop) + parseInt(contentInsetTop)
 })
 
-const bonusBadgeCounter = computed(() => {
-  let count = 0
-  if (authStore.userRegData.referralProgram?.activated === false) {
-    count++
-  }
-  return count
-})
+// const bonusBadgeCounter = computed(() => {
+//   let count = 0
+//   if (authStore.userRegData.referralProgram?.activated === false) {
+//     count++
+//   }
+//   return count
+// })
 
 const menuTypes = ['food', 'drink']
 
 onMounted(async () => {
-  if (!authStore.userRegData.isPersonalDataConsented) {
-    itemModalStore.isShowPersonalDataConsent = true
-  }
+  // if (!authStore.userRegData.isPersonalDataConsented) {
+  //   itemModalStore.isShowPersonalDataConsent = true
+  // }
   appStore.loader = true
   try {
     await Promise.all([
       contentStore.loadFoodCategories(),
       contentStore.loadFoodItems(),
-      contentStore.loadDrinkCategories(),
-      contentStore.loadDrinkItems(),
-      contentStore.loadEventCategories(),
+      // contentStore.loadDrinkCategories(),
+      // contentStore.loadDrinkItems(),
+      // contentStore.loadEventCategories(),
       contentStore.loadEventItems(),
       contentStore.loadMerchItems(),
-      contentStore.loadWhatsnewItems()
+      // contentStore.loadWhatsnewItems()
     ])
   } catch (error) {
     
@@ -341,6 +227,19 @@ onUnmounted(() => {
   window.removeEventListener('scroll', checkContentVisibility)
   window.removeEventListener('resize', checkContentVisibility)
 })
+
+function reserve() {
+  try {
+    window.Telegram.WebApp.showConfirm('Мы откроем telegram-чат, а приложение закроется. Продолжить?', (answer: boolean) => {
+      if (answer) {
+        window.Telegram.WebApp.openTelegramLink('https://t.me/humandrinks')
+        window.Telegram.WebApp.close()
+      }
+    })
+  } catch (error) {
+    // 
+  }
+}
 
 function showBonus() {
   itemModalStore.openBonus()
@@ -403,166 +302,22 @@ function scrollToMenu() {
 }
 
 .hero {
-  padding: 12px 8px 8px 8px;
-  background-color: var(--color-accent-rust);
+  padding: 16px;
+  background-color: var(--color-gray-gray-1);
   border-radius: 0 0 16px 16px;
 }
 
-.greetings {
-  font: 900 40px/40px TTDrugs;
-  color: var(--color-gray-white);
-  text-align: center;
-}
-
-.bonus {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  grid-template-rows: repeat(2, 1fr);
-  margin-top: 16px;
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--color-support-coral-1), transparent 80%);
-  background-color: color-mix(in srgb, var(--color-gray-gray-1), transparent 80%);
-  background-clip: padding-box;
-}
-
-.bonus__title {
-  position: relative;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  width: max-content;
-  margin: 16px 0 0 16px;
-  font: 900 20px/20px TTDrugs;
-  color: var(--color-gray-white);
-}
-
-.bonus__badge {
-  position: absolute;
-  top: -8px;
-  right: -20px;
+.logo {
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 16px;
-  background-color: var(--color-accent-yellow);
-  color: var(--color-gray-gray-1);
-  font: var(--font-body-b3-bold);
-  font-size: 12px;
-  animation: periodicBounce 5s infinite;
-}
-
-@keyframes periodicBounce {
-  0%, 96%, 100% {
-    transform: translateY(0);
-  }
-  97% {
-    transform: translateY(-5px);
-  }
-  98% {
-    transform: translateY(0);
-  }
-  99% {
-    transform: translateY(-3px);
-  }
-}
-
-.bonus__read-more {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  align-self: end;
-  margin: 0 0 16px 16px;
-  font: 700 12px/16px TTDrugs;
-  color: var(--color-gray-white);
-}
-
-.bonus__card {
-  grid-column: 2 / 3;
-  grid-row: 1 / 3;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  margin: 8px;
-  width: 168px;
-  height: 108px;
-  border-radius: 8px;
-  background-image: url('../assets/card.jpg');
-  background-position: center center;
-  background-size: cover;
-}
-
-.bonus__value {
-  padding: 12px;
-  font: italic 900 25px/18px TTDrugs;
-  color: var(--color-gray-white);
-}
-
-.bonus__card-number {
-  align-self: end;
-  justify-self: end;
-  padding: 8px;
-  font: var(--font-body-b2-bold);
-  color: var(--color-gray-white);
 }
 
 .reserve {
-  margin-top: 8px;
+  margin-top: 24px;
 }
-
-/* .event-slider {
-  height: 202px;
-}
-
-.event-slider__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 4px;
-  height: 202px;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.event-slider__title {
-  font: var(--font-header-h1);
-  color: var(--color-gray-white);
-  text-transform: lowercase;
-}
-
-.event-slider__subtitle {
-  font: var(--font-body-b3);
-  color: var(--color-gray-white);
-  text-transform: lowercase;
-} */
-
-/* .actions {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, max-content);
-  gap: 4px;
-  margin-top: 8px;
-}
-
-.actions__bonus {
-  grid-row: 1 / 3;
-}
-
-.actions__reserve {
-  grid-column: 1 / 3;
-  margin-top: 4px;
-}
-
-.actions__bonus-extra {
-  display: flex;
-  column-gap: 4px;
-  font: 400 18px/18px Biform;
-  letter-spacing: -1.5px;
-} */
 
 .events {
   display: grid;
-  /* grid-template-columns: 1fr max-content; */
   grid-template-rows: repeat(2, max-content);
   margin-top: 32px;
 }
@@ -571,16 +326,10 @@ function scrollToMenu() {
   margin-left: 16px;
   font: var(--font-header-h2);
   color: var(--color-gray-gray-1);
+  text-transform: uppercase;
 }
 
-/* .events__all {
-  margin-right: 16px;
-  font: var(--font-body-b3-bold);
-  color: var(--color-gray-gray-4);
-} */
-
 .events__list {
-  /* grid-column: 1 / 3; */
   display: flex;
   margin-top: 16px;
   overflow-x: auto;
@@ -594,7 +343,7 @@ function scrollToMenu() {
 
 .events__item {
   scroll-snap-align: start;
-  padding-left: 5px;
+  padding-left: 4px;
 }
 
 .events__item:first-child {
@@ -629,6 +378,18 @@ function scrollToMenu() {
   opacity: 0.8;
 }
 
+.events__item-date {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 4px 8px;
+  border-radius: 18px;
+  background-color: var(--color-gray-white);
+  color: var(--color-gray-gray-1);
+  font: var(--font-caption-c2-bold);
+  text-transform: uppercase;
+}
+
 .events__item-is-full {
   position: relative;
   padding: 4px 8px;
@@ -647,23 +408,8 @@ function scrollToMenu() {
   font: var(--font-caption-c2-bold);
 }
 
-.events__item-title {
-  margin-top: 12px;
-  font: var(--font-caption-c1-bold);
-  color: var(--color-gray-gray-1);
-  text-align: center;
-}
-
-.events__item-date {
-  margin-top: 2px;
-  font: var(--font-caption-c2);
-  color: var(--color-gray-gray-4);
-  text-align: center;
-}
-
 .merch {
   display: grid;
-  /* grid-template-columns: 1fr max-content; */
   grid-template-rows: repeat(2, max-content);
   margin-top: 32px;
 }
@@ -672,16 +418,10 @@ function scrollToMenu() {
   margin-left: 16px;
   font: var(--font-header-h2);
   color: var(--color-gray-gray-1);
+  text-transform: uppercase;
 }
 
-/* .merch__all {
-  margin-right: 16px;
-  font: var(--font-body-b3-bold);
-  color: var(--color-gray-gray-4);
-} */
-
 .merch__list {
-  /* grid-column: 1 / 3; */
   display: flex;
   margin-top: 16px;
   overflow-x: auto;
@@ -737,78 +477,7 @@ function scrollToMenu() {
   border-radius: 24px;
   background-color: var(--color-gray-white);
   color: var(--color-gray-gray-1);
-  font: italic 700 16px/16px TTDrugs;
-}
-
-.merch__item-bonus-price > span {
-  margin-right: 2px;
-}
-
-.whats-new {
-  display: grid;
-  grid-template-rows: repeat(2, max-content);
-  margin-top: 32px;
-}
-
-.whats-new__title {
-  margin-left: 16px;
-  font: var(--font-header-h2);
-  color: var(--color-gray-gray-1);
-}
-
-.whats-new__list {
-  display: flex;
-  margin-top: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.whats-new__list::-webkit-scrollbar {
-  display: none;
-}
-
-.whats-new__item {
-  scroll-snap-align: start;
-  padding-left: 8px;
-}
-
-.whats-new__item:first-child {
-  padding-left: 16px;
-}
-
-.whats-new__item:last-child {
-  padding-right: 16px;
-}
-
-.whats-new__item-outer {
-  width: 220px;
-  height: 138px;
-  padding: 2px;
-  border-radius: 12px;
-  background-color: var(--color-accent-rust);
-}
-
-.whats-new__item-inner {
-  display: grid;
-  grid-template-rows: 1fr max-content;
-  height: 100%;
-  border: 1px solid var(--color-gray-white);
-  border-radius: 10px;
-  background-color: var(--color-accent-rust);
-  box-sizing: border-box;
-}
-
-.whats-new__item-title {
-  padding: 13px 13px 0 13px;
-  font: 900 18px/18px TTDrugs;
-  color: var(--color-gray-white);
-}
-
-.whats-new__item-date {
-  padding: 0 13px 13px 13px;
-  font: var(--font-caption-c1);
-  color: var(--color-gray-white);
+  font: 700 16px/16px JetBrainsMono;
 }
 
 .menu {
@@ -819,6 +488,7 @@ function scrollToMenu() {
 .menu__title {
   color: var(--color-gray-gray-1);
   font: var(--font-header-h2);
+  text-transform: uppercase;
 }
 
 .menu__category {
@@ -828,6 +498,7 @@ function scrollToMenu() {
 .menu-category__title {
   color: var(--color-gray-gray-1);
   font: var(--font-header-h3);
+  text-transform: uppercase;
 }
 
 .menu-category__subcategory {
@@ -895,11 +566,11 @@ function scrollToMenu() {
 }
 
 .menu-category__item-price {
-  font: 700 14px/16px TTDrugs;
+  font: 500 14px/16px TTHoves;
 }
 
 .menu-category__item-weight {
-  font: 700 10px/10px TTDrugs;
+  font: 500 10px/10px TTHoves;
   color: var(--color-gray-gray-4);
   align-self: end;
   transform: translateY(-2px);

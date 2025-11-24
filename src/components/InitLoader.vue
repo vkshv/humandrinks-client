@@ -20,7 +20,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: var(--color-accent-rust);
+  background-color: var(--color-gray-gray-1);
 }
 
 .init-loader > .circle {

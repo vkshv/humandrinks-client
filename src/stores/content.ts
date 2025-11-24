@@ -15,13 +15,13 @@ export const useContentStore = defineStore('content', () => {
 
   async function loadFoodItems() {
     if (foodItems.value.length) return
-    const response = await http.get('content/food-items')
+    const response = await http.post('content/food-items', { initData: window.Telegram.WebApp.initData })
     foodItems.value = response.data
   }
 
   async function loadFoodCategories() {
     if (foodCategories.value.length) return
-    const response = await http.get('content/food-categories')
+    const response = await http.post('content/food-categories', { initData: window.Telegram.WebApp.initData })
     foodCategories.value = response.data
   }
 
@@ -39,7 +39,7 @@ export const useContentStore = defineStore('content', () => {
 
   async function loadEventItems() {
     if (eventItems.value.length) return
-    const response = await http.get('content/event-items')
+    const response = await http.post('content/event-items', { initData: window.Telegram.WebApp.initData })
     eventItems.value = response.data
   }
 
@@ -51,7 +51,7 @@ export const useContentStore = defineStore('content', () => {
 
   async function loadMerchItems() {
     if (merchItems.value.length) return
-    const response = await http.get('content/merch-items')
+    const response = await http.post('content/merch-items', { initData: window.Telegram.WebApp.initData })
     merchItems.value = response.data
   }
 

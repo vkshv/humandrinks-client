@@ -104,7 +104,7 @@ const store = useItemModalStore()
 .modal__price {
   margin-top: 24px;
   padding: 0 16px;
-  font: var(--font-header-h2);
+  font: var(--font-header-h2-secondary);
   color: var(--color-gray-gray-1);
 }
 
@@ -119,7 +119,7 @@ const store = useItemModalStore()
   margin-top: 12px;
   padding: 0 16px;
   font: var(--font-body-b3);
-  color: var(--color-gray-gray-1);
+  color: var(--color-gray-gray-3);
   word-break: break-word;
   white-space: pre-wrap;
 }
@@ -172,5 +172,6 @@ const store = useItemModalStore()
   bottom: var(--bottom-spacer-height);
   left: 16px;
   width: calc(100% - 32px);
+  text-transform: uppercase;
 }
 </style>

@@ -12,6 +12,19 @@ export const formatDate = function(dateString: string | undefined) {
   return `${day} ${month}, ${weekday}`
 }
 
+export const formatDateShort = function(dateString: string | undefined) {
+  if (!dateString) return ''
+
+  const weekdays = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"]
+
+  const date = new Date(dateString)
+  const day = date.getDate()
+  const month = date.getMonth() + 1
+  const weekday = weekdays[date.getDay()]
+
+  return `${day}.${('0' + month).slice(-2)} ${weekday}`
+}
+
 export const formatPastDate = function(dateString: string | undefined) {
   if (!dateString) return ''
 

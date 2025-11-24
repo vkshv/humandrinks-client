@@ -40,7 +40,7 @@
   width: 4px;
   height: 9px;
   border-radius: 4px;
-  background-color: var(--color-accent-rust);
+  background-color: var(--color-gray-gray-2);
   transform-origin: center 15px;
   animation: spinner 0.8s linear infinite;
 }
