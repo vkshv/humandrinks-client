@@ -40,7 +40,7 @@ function howToGet() {
   try {
     window.Telegram.WebApp.showConfirm('Мы откроем telegram-чат, а приложение закроется. Продолжить?', (answer: boolean) => {
       if (answer) {
-        window.Telegram.WebApp.openTelegramLink('https://t.me/humandrinks')
+        window.Telegram.WebApp.openTelegramLink(config.MERCH_TG_LINK)
         window.Telegram.WebApp.close()
       }
     })
