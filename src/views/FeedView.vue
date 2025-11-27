@@ -28,7 +28,7 @@
                 'events__item-img': true,
                 'events__item-img_almost-full': item.almostFull
               }"
-              :style="{ backgroundImage: `url(${item.picture})` }"
+              :style="{ backgroundImage: `url(${resolveStrapiImageUrl(item.pictureExtended)})` }"
             >
             </div>
             <div
@@ -60,7 +60,7 @@
         >
           <div
             class="merch__item-img"
-            :style="{ backgroundImage: `url(${item.picture})` }"
+            :style="{ backgroundImage: `url(${resolveStrapiImageUrl(item.pictureExtended)})` }"
           >
             <div
               v-if="item.count < 4"
@@ -97,7 +97,7 @@
               >
                 <div
                   class="menu-category__item-img"
-                  :style="{ backgroundImage: `url(${item.picture})` }"
+                  :style="{ backgroundImage: `url(${resolveStrapiImageUrl(item.pictureExtended)})` }"
                 >
                   <div class="menu-category__item-tags">
                     <div v-if="item.new" class="menu-category__item-tag">new</div>
@@ -127,6 +127,12 @@
         </div>
       </div>
     </div>
+    <div class="policy">
+      <div
+        class="policy__link"
+        @click="openPolicyModal"
+      >Политика обработки персональных данных</div>
+    </div>
   </div>
   <ScrollLink
     position="bottom"
@@ -151,7 +157,7 @@ import { useAppStore } from '@/stores/app'
 import { useContentStore } from '@/stores/content'
 import { useItemModalStore } from '@/stores/itemModal'
 import { useAuthStore } from '@/stores/auth'
-import { formatDateShort } from '@/helpers'
+import { formatDateShort, resolveStrapiImageUrl } from '@/helpers'
 import type { IFoodItem, IDrinkItem } from '@/types/content'
 import Slider from '@/components/TheSlider.vue'
 import ScrollLink from '@/components/ScrollLink.vue'
@@ -269,6 +275,10 @@ function getCategoryItems(menuType: string, category: string, subcategory: strin
 
 function openMenuModal(menuType: string, item: IFoodItem | IDrinkItem) {
   menuType === 'food' ? itemModalStore.openFood(item as IFoodItem) : itemModalStore.openDrink(item as IDrinkItem)
+}
+
+function openPolicyModal() {
+  itemModalStore.openPolicy()
 }
 
 function checkContentVisibility() {
@@ -594,5 +604,19 @@ function scrollToMenu() {
   color: var(--color-gray-gray-4);
   align-self: end;
   transform: translateY(-2px);
+}
+
+.policy {
+  display: flex;
+  justify-content: center;
+  padding: 56px 16px 16px 16px;
+}
+
+.policy__link {
+  font: var(--font-caption-c1);
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: var(--color-gray-gray-4);
 }
 </style>

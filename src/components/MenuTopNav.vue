@@ -84,7 +84,9 @@ const carouselItems = computed(() => {
 
 .menu-top-nav__carousel-item {
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex: 1;
   height: 32px;
   padding: 0 12px;
   border-radius: 32px;

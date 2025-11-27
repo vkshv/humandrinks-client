@@ -1,3 +1,5 @@
+import type { StrapiImageExtended } from '@/types/strapi'
+
 export interface IFoodItem {
   documentId: string
   title: string
@@ -13,6 +15,7 @@ export interface IFoodItem {
   carbohydrates: number
   ingredients: string[] | null
   picture: string
+  pictureExtended: StrapiImageExtended
   category: string
   subcategory: string | null
 }
@@ -30,6 +33,7 @@ export interface IDrinkItem {
   new: boolean
   volume: number
   picture: string
+  pictureExtended: StrapiImageExtended
   category: string
   subcategory: string | null
   priceBottle: number
@@ -52,6 +56,7 @@ export interface IEventItem {
   almostFull: boolean
   isFull: boolean
   picture: string
+  pictureExtended: StrapiImageExtended
   category: string
   bonusPayment: boolean
 }
@@ -64,6 +69,7 @@ export interface IMerchItem {
   bonusPrice: number
   count: number
   picture: string
+  pictureExtended: StrapiImageExtended
 }
 
 export interface IWhatsnewItem {

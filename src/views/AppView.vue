@@ -15,6 +15,7 @@
   <!-- <EventHowItWorksModal /> -->
   <!-- <ScanQrFab v-if="authStore.userRegData.isAdmin" /> -->
   <!-- <FeedbackFab v-else /> -->
+  <PolicyModal/>
 </template>
 
 <script setup lang="ts">
@@ -32,6 +33,7 @@ import PersonalDataConsentModal from '@/components/PersonalDataConsentModal.vue'
 // import FeedbackModal from '@/components/FeedbackModal.vue'
 import FeedbackFab from '@/components/FeedbackFab.vue'
 import ScanQrFab from '@/components/ScanQrFab.vue'
+import PolicyModal from '@/components/PolicyModal.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()

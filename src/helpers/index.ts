@@ -1,3 +1,5 @@
+import type { StrapiImageExtended } from '@/types/strapi'
+
 export const formatDate = function(dateString: string | undefined) {
   if (!dateString) return ''
 
@@ -63,4 +65,16 @@ export const parseQueryString = function(queryString = '') {
     result[key] = value
   }
   return result
+}
+
+export const resolveStrapiImageUrl = function(strapiImage: StrapiImageExtended | undefined, format: 'thumbnail' | 'small' | 'medium' | 'large' = 'medium'): string {
+  if (!strapiImage) return '' // TODO: add fallback value (something like /no-image.png)
+  if (!strapiImage.formats) return strapiImage.url
+
+  const formats = ['large', 'medium', 'small', 'thumbnail']
+  const formatsToCheck = formats.slice(formats.indexOf(format))
+  const optimalFormat = formatsToCheck.find((e) => strapiImage.formats.hasOwnProperty(e))
+  if (!optimalFormat) return strapiImage.url // fallback
+
+  return strapiImage.formats[optimalFormat as 'thumbnail' | 'small' | 'medium' | 'large']?.url as string
 }
